@@ -82,12 +82,9 @@ HOME_HTML = """
             text-shadow: 2px 2px 4px #000;
         }
         main {
-           max-width: 1000px;
+            max-width: 1000px;
             margin: 40px auto;
             padding: 0 20px;
-            background-color: #e8f0fa; /* 淺藍背景 */
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
         }
         h2 {
             color: var(--primary-blue);
