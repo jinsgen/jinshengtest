@@ -1,5 +1,4 @@
 from flask import Flask, render_template_string
-import os
 
 app = Flask(__name__)
 
@@ -269,4 +268,8 @@ def robotic():
     return render_template_string(SUB_TEMPLATE, title="自動化機械手臂")
 
 @app.route("/certification")
-def certification
+def certification():
+    return render_template_string(SUB_TEMPLATE, title="關於證照")
+
+if __name__ == "__main__":
+    app.run(debug=True)
