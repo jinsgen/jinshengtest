@@ -14,6 +14,7 @@ HOME_HTML = """<!DOCTYPE html>
             margin: 0;
             padding: 0;
         }
+
         header {
             background-color: #004080;
             padding: 15px 30px;
@@ -23,20 +24,18 @@ HOME_HTML = """<!DOCTYPE html>
             justify-content: space-between;
             align-items: center;
         }
+
         .title {
             font-size: 20px;
             line-height: 1.5;
             white-space: pre-line;
-            text-align: right;
         }
+
         nav {
-            flex: 1 1 100%;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 15px;
         }
+
         nav a {
             color: white;
             text-decoration: none;
@@ -44,18 +43,26 @@ HOME_HTML = """<!DOCTYPE html>
             padding: 8px 12px;
             border-radius: 4px;
         }
+
         nav a:hover {
             background-color: rgba(255,255,255,0.2);
         }
 
         @media (max-width: 600px) {
-            .title {
-                text-align: left;
-                flex: 1 1 100%;
-                margin-bottom: 10px;
+            header {
+                flex-direction: column;
+                align-items: flex-start;
             }
+
+            .title {
+                margin-bottom: 10px;
+                text-align: left;
+            }
+
             nav {
+                flex-wrap: wrap;
                 justify-content: flex-start;
+                width: 100%;
             }
         }
 
@@ -72,27 +79,33 @@ HOME_HTML = """<!DOCTYPE html>
             font-weight: bold;
             text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
         }
+
         main {
             max-width: 1000px;
             margin: 40px auto;
             padding: 0 20px;
         }
+
         section {
             margin-bottom: 40px;
         }
+
         h2 {
             border-bottom: 2px solid #004080;
             padding-bottom: 8px;
             color: #004080;
         }
+
         .about {
             display: flex;
             flex-wrap: wrap;
             gap: 30px;
         }
+
         .about p {
             flex: 1 1 400px;
         }
+
         .contact-info {
             flex: 1 1 400px;
             background-color: #f2f7fb;
@@ -100,6 +113,7 @@ HOME_HTML = """<!DOCTYPE html>
             border-radius: 6px;
             line-height: 1.8;
         }
+
         .contact-info a {
             display: inline-block;
             margin-top: 10px;
@@ -107,6 +121,7 @@ HOME_HTML = """<!DOCTYPE html>
             font-weight: bold;
             text-decoration: none;
         }
+
         .contact-info a:hover {
             text-decoration: underline;
         }
@@ -115,7 +130,7 @@ HOME_HTML = """<!DOCTYPE html>
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
-            justify-content: space-between;
+            justify-content: flex-start;
         }
 
         .service-item {
@@ -135,6 +150,7 @@ HOME_HTML = """<!DOCTYPE html>
             justify-content: flex-end;
             overflow: hidden;
         }
+
         .service-item::before {
             content: "";
             position: absolute;
@@ -142,24 +158,15 @@ HOME_HTML = """<!DOCTYPE html>
             background: rgba(0, 0, 0, 0.45);
             z-index: 0;
         }
+
         .service-item * {
             position: relative;
             z-index: 1;
         }
+
         .service-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        /* 廢水處理為置中大格 */
-        .service-full {
-            flex: 1 1 100%;
-            max-width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-        .service-full .service-item {
-            width: 60%;
         }
 
         @media (max-width: 992px) {
@@ -167,18 +174,12 @@ HOME_HTML = """<!DOCTYPE html>
                 flex: 1 1 45%;
                 max-width: 45%;
             }
-            .service-full .service-item {
-                width: 80%;
-            }
         }
 
         @media (max-width: 600px) {
             .service-item {
                 flex: 1 1 100%;
                 max-width: 100%;
-            }
-            .service-full .service-item {
-                width: 100%;
             }
         }
     </style>
@@ -234,12 +235,10 @@ HOME_HTML = """<!DOCTYPE html>
                     <h3>自動化機械手臂</h3>
                     <p>可搭配砂輪、去毛邊刷、氣動磨筆等工具，快速更換、即插即用。</p>
                 </a>
-                <div class="service-full">
-                    <a href="/wastewater" class="service-item" style="background-image: url('/static/wastewater.jpg');">
-                        <h3>廢水處理</h3>
-                        <p>淨化廢水、達標排放，降低環境污染，促進資源循環與永續經營。</p>
-                    </a>
-                </div>
+                <a href="/wastewater" class="service-item" style="background-image: url('/static/wastewater.jpg');">
+                    <h3>廢水處理</h3>
+                    <p>淨化廢水、達標排放，降低環境污染，促進資源循環與永續經營。</p>
+                </a>
             </div>
         </section>
     </main>
