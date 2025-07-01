@@ -3,8 +3,7 @@ from flask import Flask, render_template_string
 app = Flask(__name__)
 
 # 首頁 HTML
-HOME_HTML = """
-<!DOCTYPE html>
+HOME_HTML = """<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8" />
@@ -21,37 +20,31 @@ HOME_HTML = """
             padding: 15px 30px;
             color: white;
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
             align-items: center;
-            flex-wrap: wrap; /* 允許換行，手機版友好 */
         }
         header .title {
-            margin: 0;
             font-size: 20px;
             line-height: 1.5;
             white-space: pre-line;
-            flex: 1 1 100%; /* 手機時佔滿一行 */
-            margin-bottom: 10px;
+            flex: 1 1 100%;
         }
         nav {
-            flex: 1 1 100%; /* 手機時佔滿一行 */
+            flex: 1 1 100%;
             display: flex;
-            justify-content: flex-start;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
+            margin-top: 10px;
         }
         nav a {
             color: white;
             text-decoration: none;
-            margin-left: 0; /* 取消左邊距 */
             font-weight: 600;
             padding: 8px 12px;
             border-radius: 4px;
-            transition: background-color 0.3s;
         }
         nav a:hover {
-            text-decoration: underline;
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(255,255,255,0.2);
         }
         .banner {
             background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80');
@@ -79,44 +72,37 @@ HOME_HTML = """
             padding-bottom: 8px;
             color: #004080;
         }
-
         .about {
             display: flex;
             flex-wrap: wrap;
             gap: 30px;
         }
-
         .about p {
             flex: 1 1 400px;
         }
-
-        .about .contact-info {
+        .contact-info {
             flex: 1 1 400px;
             background-color: #f2f7fb;
             padding: 20px;
             border-radius: 6px;
             line-height: 1.8;
         }
-
-        .about .contact-info a {
+        .contact-info a {
             display: inline-block;
             margin-top: 10px;
             color: #004080;
             font-weight: bold;
             text-decoration: none;
         }
-
-        .about .contact-info a:hover {
+        .contact-info a:hover {
             text-decoration: underline;
         }
-
         .services {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: space-between;
         }
-
         .service-item {
             position: relative;
             flex: 1 1 calc(25% - 20px);
@@ -126,49 +112,38 @@ HOME_HTML = """
             border-radius: 6px;
             color: white;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-            box-shadow: 0 0 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            background-size: cover;
+            background-position: center;
+            text-decoration: none;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            text-decoration: none;
-            background-size: cover;
-            background-position: center;
             overflow: hidden;
         }
-
         .service-item::before {
             content: "";
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, 0.45);
             z-index: 0;
-            border-radius: 6px;
         }
-
         .service-item * {
             position: relative;
             z-index: 1;
         }
-
         .service-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            cursor: pointer;
         }
-
-        /* 992px 以下調整成兩欄 */
         @media (max-width: 992px) {
             .service-item {
                 flex: 1 1 45%;
                 max-width: 45%;
             }
         }
-
-        /* 600px 以下手機排版，單欄 */
         @media (max-width: 600px) {
             header {
-                padding: 15px 15px;
+                padding: 15px;
             }
             .service-item {
                 flex: 1 1 100%;
@@ -266,4 +241,38 @@ SUB_TEMPLATE = """
 <body>
     <h1>{{ title }}</h1>
     <p>這是「{{ title }}」頁面的內容。</p>
-    <p
+    <p><a href="/">← 回首頁</a></p>
+</body>
+</html>
+"""
+
+@app.route("/")
+def home():
+    return render_template_string(HOME_HTML)
+
+@app.route("/vibration")
+def vibration():
+    return render_template_string(SUB_TEMPLATE, title="振動研磨")
+
+@app.route("/sealing")
+def sealing():
+    return render_template_string(SUB_TEMPLATE, title="含浸封孔")
+
+@app.route("/coating")
+def coating():
+    return render_template_string(SUB_TEMPLATE, title="皮膜化成")
+
+@app.route("/robotic")
+def robotic():
+    return render_template_string(SUB_TEMPLATE, title="自動化機械手臂")
+
+@app.route("/wastewater")
+def wastewater():
+    return render_template_string(SUB_TEMPLATE, title="廢水處理")
+
+@app.route("/certification")
+def certification():
+    return render_template_string(SUB_TEMPLATE, title="公司證照")
+
+if __name__ == "__main__":
+    app.run(debug=True)
