@@ -18,9 +18,8 @@ HOME_HTML = """
     </script>
     <style>
         :root {
-            --primary-blue: #6d8ec7;  /* 調淡色 */
+            --primary-blue: #6d8ec7;
             --accent-yellow: #FFD85A;
-            --background-soft: #e8f0fa;  /* 柔色背景 */
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -109,6 +108,11 @@ HOME_HTML = """
             justify-content: flex-end;
             text-decoration: none;
             overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .service-item:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
         .service-item::before {
             content: "";
@@ -251,12 +255,99 @@ SUB_TEMPLATE = """
 <html lang=\"zh-Hant\">
 <head>
     <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
     <title>{{ title }}</title>
+    <link rel=\"icon\" href=\"/static/favicon.ico\" type=\"image/x-icon\">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #6d8ec7;
+            padding: 15px 30px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+        }
+        .brand img {
+            height: 60px;
+            margin-right: 14px;
+        }
+        .title {
+            font-size: 20px;
+            line-height: 1.2;
+            white-space: pre-line;
+        }
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        nav a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        main {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            color: #6d8ec7;
+        }
+        .contact-info {
+            background-color: #f2f7fb;
+            padding: 20px;
+            border-radius: 6px;
+            line-height: 1.8;
+            margin-top: 40px;
+        }
+        .contact-info a {
+            color: #6d8ec7;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>{{ title }}</h1>
-    <p>這是「{{ title }}」頁面的內容。</p>
-    <p><a href=\"/\">← 回首頁</a></p>
+    <header>
+        <div class=\"brand\">
+            <img src=\"/static/logo_transparent.png\" alt=\"LOGO\">
+            <div class=\"title\">溍慎有限公司<br>鈦吉有限公司</div>
+        </div>
+        <nav>
+            <a href=\"/\">首頁</a>
+            <a href=\"/#about\">關於溍慎</a>
+            <a href=\"/#services\">服務項目</a>
+            <a href=\"/#contact\">聯絡我們</a>
+        </nav>
+    </header>
+    <main>
+        <h1>{{ title }}</h1>
+        <p>這是「{{ title }}」頁面的內容。</p>
+        <div class=\"contact-info\">
+            地址：<a href=\"https://maps.app.goo.gl/8dkFhGhkzxeEaBYaA\" target=\"_blank\">台南市仁德區義林路148巷16號</a><br>
+            Tel：06-2708989<br>
+            Fax：06-2707878<br>
+            Mobile：0975124624（鄭先生）<br>
+            Email：<a href=\"mailto:js42915245@gmail.com\">js42915245@gmail.com</a>
+        </div>
+    </main>
 </body>
 </html>
 """
