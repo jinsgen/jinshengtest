@@ -9,6 +9,7 @@ HOME_HTML = """
     <meta charset=\"UTF-8\" />
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
     <title>溍慎/鈦吉有限公司</title>
+    <link rel=\"icon\" href=\"/static/favicon.ico\" type=\"image/x-icon\">
     <!-- AOS 動畫庫 -->
     <link href=\"https://unpkg.com/aos@2.3.4/dist/aos.css\" rel=\"stylesheet\">
     <script src=\"https://unpkg.com/aos@2.3.4/dist/aos.js\"></script>
@@ -17,13 +18,15 @@ HOME_HTML = """
     </script>
     <style>
         :root {
-            --primary-blue: #004080;
-            --accent-yellow: #FFC107;
+            --primary-blue: #2d5d9f;  /* 調淡色 */
+            --accent-yellow: #FFD85A;
+            --background-soft: #f8f9fb;  /* 柔色背景 */
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: var(--background-soft);
         }
         header {
             background-color: var(--primary-blue);
@@ -33,6 +36,10 @@ HOME_HTML = """
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .brand {
             display: flex;
@@ -177,7 +184,7 @@ HOME_HTML = """
 <body>
     <header>
         <div class=\"brand\">
-            <img src=\"/static/logo.png\" alt=\"LOGO\">
+            <img src=\"/static/logo_transparent.png\" alt=\"LOGO\">
             <div class=\"title\">溍慎有限公司<br>鈦吉有限公司</div>
         </div>
         <nav>
@@ -242,15 +249,15 @@ HOME_HTML = """
 
 SUB_TEMPLATE = """
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang=\"zh-Hant\">
 <head>
-    <meta charset="UTF-8">
+    <meta charset=\"UTF-8\">
     <title>{{ title }}</title>
 </head>
 <body>
     <h1>{{ title }}</h1>
     <p>這是「{{ title }}」頁面的內容。</p>
-    <p><a href="/">← 回首頁</a></p>
+    <p><a href=\"/\">← 回首頁</a></p>
 </body>
 </html>
 """
@@ -282,6 +289,10 @@ def wastewater():
 @app.route("/certification")
 def certification():
     return render_template_string(SUB_TEMPLATE, title="關於證照")
+
+@app.route('/favicon.ico')
+def favicon():
+    return app.send_static_file('favicon.ico')
 
 if __name__ == "__main__":
     app.run(debug=True)
