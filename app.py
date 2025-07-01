@@ -65,17 +65,14 @@ HOME_HTML = """
             padding-bottom: 8px;
             color: #004080;
         }
-
         .about {
             display: flex;
             flex-wrap: wrap;
             gap: 30px;
         }
-
         .about p {
             flex: 1 1 400px;
         }
-
         .about .contact-info {
             flex: 1 1 400px;
             background-color: #f2f7fb;
@@ -83,7 +80,6 @@ HOME_HTML = """
             border-radius: 6px;
             line-height: 1.8;
         }
-
         .about .contact-info a {
             display: inline-block;
             margin-top: 10px;
@@ -91,18 +87,15 @@ HOME_HTML = """
             font-weight: bold;
             text-decoration: none;
         }
-
         .about .contact-info a:hover {
             text-decoration: underline;
         }
-
         .services {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: space-between;
         }
-
         .service-item {
             position: relative;
             flex: 1 1 calc(25% - 20px);
@@ -122,7 +115,6 @@ HOME_HTML = """
             background-position: center;
             overflow: hidden;
         }
-
         .service-item::before {
             content: "";
             position: absolute;
@@ -130,25 +122,21 @@ HOME_HTML = """
             background: rgba(0, 0, 0, 0.45);
             z-index: 0;
         }
-
         .service-item * {
             position: relative;
             z-index: 1;
         }
-
         .service-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             cursor: pointer;
         }
-
         @media (max-width: 992px) {
             .service-item {
                 flex: 1 1 45%;
                 max-width: 45%;
             }
         }
-
         @media (max-width: 600px) {
             .service-item {
                 flex: 1 1 100%;
@@ -215,29 +203,4 @@ HOME_HTML = """
 </html>
 """
 
-# 子頁模板（內容尚未編寫）
-SUB_TEMPLATE = """
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            padding: 40px;
-            background-color: #f9f9f9;
-            color: #333;
-        }
-        a {
-            text-decoration: none;
-            color: #004080;
-            font-weight: bold;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <h1>{{ title }}</
+# 子頁面模
