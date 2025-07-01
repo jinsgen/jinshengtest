@@ -2,14 +2,14 @@ from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
-# --- 首頁 HTML ---
+# 首頁 HTML
 HOME_HTML = """
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>溍慎鈦吉有限公司</title>
+    <title>溍慎/鈦吉有限公司</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
         header {
@@ -66,12 +66,12 @@ HOME_HTML = """
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
+            justify-content: space-between;
         }
 
         .service-item {
+            position: relative;
             flex: 1 1 calc(25% - 20px);
-            background-size: cover;
-            background-position: center;
             height: 220px;
             padding: 20px;
             border-radius: 6px;
@@ -83,6 +83,22 @@ HOME_HTML = """
             flex-direction: column;
             justify-content: flex-end;
             text-decoration: none;
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        .service-item::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45); /* 暗色遮罩 */
+            z-index: 0;
+        }
+
+        .service-item * {
+            position: relative;
+            z-index: 1;
         }
 
         .service-item:hover {
@@ -148,7 +164,7 @@ HOME_HTML = """
 </html>
 """
 
-# --- 子頁面通用模板 ---
+# 子頁面模板
 SUB_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -169,7 +185,7 @@ SUB_TEMPLATE = """
 </html>
 """
 
-# 路由設定
+# Flask 路由
 @app.route("/")
 def home():
     return render_template_string(HOME_HTML)
