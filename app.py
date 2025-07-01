@@ -18,9 +18,9 @@ HOME_HTML = """
     </script>
     <style>
         :root {
-            --primary-blue: #2d5d9f;  /* 調淡色 */
+            --primary-blue: #6d8ec7;  /* 調淡色 */
             --accent-yellow: #FFD85A;
-            --background-soft: #f8f9fb;  /* 柔色背景 */
+            --background-soft: #e8f0fa;  /* 柔色背景 */
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
