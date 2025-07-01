@@ -2,7 +2,6 @@ from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
-# 首頁 HTML
 HOME_HTML = """<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -21,18 +20,20 @@ HOME_HTML = """<!DOCTYPE html>
             color: white;
             display: flex;
             flex-wrap: wrap;
+            justify-content: space-between;
             align-items: center;
         }
-        header .title {
+        .title {
             font-size: 20px;
             line-height: 1.5;
             white-space: pre-line;
-            flex: 1 1 100%;
+            text-align: right;
         }
         nav {
             flex: 1 1 100%;
             display: flex;
             flex-wrap: wrap;
+            justify-content: flex-start;
             gap: 10px;
             margin-top: 10px;
         }
@@ -46,6 +47,18 @@ HOME_HTML = """<!DOCTYPE html>
         nav a:hover {
             background-color: rgba(255,255,255,0.2);
         }
+
+        @media (max-width: 600px) {
+            .title {
+                text-align: left;
+                flex: 1 1 100%;
+                margin-bottom: 10px;
+            }
+            nav {
+                justify-content: flex-start;
+            }
+        }
+
         .banner {
             background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
@@ -97,12 +110,14 @@ HOME_HTML = """<!DOCTYPE html>
         .contact-info a:hover {
             text-decoration: underline;
         }
+
         .services {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: space-between;
         }
+
         .service-item {
             position: relative;
             flex: 1 1 calc(25% - 20px);
@@ -135,19 +150,35 @@ HOME_HTML = """<!DOCTYPE html>
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
+
+        /* 廢水處理為置中大格 */
+        .service-full {
+            flex: 1 1 100%;
+            max-width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .service-full .service-item {
+            width: 60%;
+        }
+
         @media (max-width: 992px) {
             .service-item {
                 flex: 1 1 45%;
                 max-width: 45%;
             }
-        }
-        @media (max-width: 600px) {
-            header {
-                padding: 15px;
+            .service-full .service-item {
+                width: 80%;
             }
+        }
+
+        @media (max-width: 600px) {
             .service-item {
                 flex: 1 1 100%;
                 max-width: 100%;
+            }
+            .service-full .service-item {
+                width: 100%;
             }
         }
     </style>
@@ -203,10 +234,12 @@ HOME_HTML = """<!DOCTYPE html>
                     <h3>自動化機械手臂</h3>
                     <p>可搭配砂輪、去毛邊刷、氣動磨筆等工具，快速更換、即插即用。</p>
                 </a>
-                <a href="/wastewater" class="service-item" style="background-image: url('/static/wastewater.jpg');">
-                    <h3>廢水處理</h3>
-                    <p>淨化廢水、達標排放，降低環境污染，促進資源循環與永續經營。</p>
-                </a>
+                <div class="service-full">
+                    <a href="/wastewater" class="service-item" style="background-image: url('/static/wastewater.jpg');">
+                        <h3>廢水處理</h3>
+                        <p>淨化廢水、達標排放，降低環境污染，促進資源循環與永續經營。</p>
+                    </a>
+                </div>
             </div>
         </section>
     </main>
@@ -214,7 +247,6 @@ HOME_HTML = """<!DOCTYPE html>
 </html>
 """
 
-# 子頁模板
 SUB_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="zh-Hant">
