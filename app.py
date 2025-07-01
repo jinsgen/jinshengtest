@@ -8,7 +8,7 @@ HTML = """
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>企業網站範例</title>
+    <title>溍慎鈦吉有限公司</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
         header {
@@ -78,7 +78,7 @@ HTML = """
 </head>
 <body>
     <header>
-        <h1>簡單企業</h1>
+        <h1>溍慎鈦吉有限公司</h1>
         <nav>
             <a href="#">首頁</a>
             <a href="#">關於我們</a>
@@ -92,7 +92,10 @@ HTML = """
     <main>
         <section id="about">
             <h2>關於我們</h2>
-            <p>我們是一家專注於提供優質服務的企業，致力於創新與客戶滿意，打造專業且值得信賴的品牌形象。</p>
+            <p>本公司專營鋁合金與鋅合金產品之表面處理，服務內容涵蓋：
+            • 振動研磨邊角鈍化
+            • 含浸封孔處理
+            • 金屬皮膜化成處理。</p>
         </section>
 
         <section id="services">
