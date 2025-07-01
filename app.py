@@ -26,7 +26,6 @@ HOME_HTML = """
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--background-soft);
         }
         header {
             background-color: var(--primary-blue);
