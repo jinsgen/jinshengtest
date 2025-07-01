@@ -2,7 +2,8 @@ from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
-HTML = """
+# --- 首頁 HTML ---
+HOME_HTML = """
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -19,9 +20,11 @@ HTML = """
             justify-content: space-between;
             align-items: center;
         }
-        header h1 {
+        header .title {
             margin: 0;
-            font-size: 24px;
+            font-size: 20px;
+            line-height: 1.5;
+            white-space: pre-line;
         }
         nav a {
             color: white;
@@ -58,26 +61,36 @@ HTML = """
             padding-bottom: 8px;
             color: #004080;
         }
+
         .services {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
         }
+
         .service-item {
             flex: 1 1 calc(25% - 20px);
-            background: #f0f4f8;
+            background-size: cover;
+            background-position: center;
+            height: 220px;
             padding: 20px;
             border-radius: 6px;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
             box-shadow: 0 0 8px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
             text-decoration: none;
-            color: inherit;
         }
+
         .service-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             cursor: pointer;
         }
+
         @media (max-width: 768px) {
             .service-item {
                 flex: 1 1 100%;
@@ -87,12 +100,12 @@ HTML = """
 </head>
 <body>
     <header>
-        <h1>溍慎鈦吉有限公司</h1>
+        <div class="title">溍慎有限公司<br>鈦吉有限公司</div>
         <nav>
             <a href="/">首頁</a>
             <a href="#about">關於我們</a>
             <a href="#services">服務項目</a>
-            <a href="https://www.facebook.com/JinShenTaiji/" target="_blank" rel="noopener noreferrer">聯絡我們</a>
+            <a href="https://www.facebook.com/JinShenTaiji/" target="_blank">聯絡我們</a>
         </nav>
     </header>
 
@@ -112,19 +125,19 @@ HTML = """
         <section id="services">
             <h2>服務項目</h2>
             <div class="services">
-                <a href="/vibration" class="service-item">
+                <a href="/vibration" class="service-item" style="background-image: url('/static/vibration.jpg');">
                     <h3>振動研磨</h3>
                     <p>去除毛邊、表面鈍化及拋光、表面均化／去除加工痕跡、細微倒角。</p>
                 </a>
-                <a href="/sealing" class="service-item">
+                <a href="/sealing" class="service-item" style="background-image: url('/static/sealing.jpg');">
                     <h3>含浸封孔</h3>
-                    <p>提高氣密度、降低洩漏量、加強零件強度與耐用性增加物件穩定性。</p>
+                    <p>提高氣密度、降低洩漏量、加強零件強度與耐用性，增加物件穩定性。</p>
                 </a>
-                <a href="/coating" class="service-item">
+                <a href="/coating" class="service-item" style="background-image: url('/static/coating.jpg');">
                     <h3>皮膜化成</h3>
                     <p>耐蝕保護、塗裝前處理，全部實現自動化產線。</p>
                 </a>
-                <a href="/robotic" class="service-item">
+                <a href="/robotic" class="service-item" style="background-image: url('/static/robotic.jpg');">
                     <h3>自動化機械手臂</h3>
                     <p>可搭配砂輪、去毛邊刷、氣動磨筆等工具，快速更換、即插即用。</p>
                 </a>
@@ -135,27 +148,47 @@ HTML = """
 </html>
 """
 
-# 首頁
+# --- 子頁面通用模板 ---
+SUB_TEMPLATE = """
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; padding: 40px; background-color: #f9f9f9; color: #333; }
+        a { text-decoration: none; color: #004080; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <p>目前內容規劃中，敬請期待。</p>
+    <p><a href="/">← 回首頁</a></p>
+</body>
+</html>
+"""
+
+# 路由設定
 @app.route("/")
 def home():
-    return render_template_string(HTML)
+    return render_template_string(HOME_HTML)
 
-# 各服務子頁面
 @app.route("/vibration")
 def vibration():
-    return "<h1>振動研磨服務詳情</h1><p>這裡是振動研磨的詳細說明頁面。</p>"
+    return render_template_string(SUB_TEMPLATE, title="振動研磨")
 
 @app.route("/sealing")
 def sealing():
-    return "<h1>含浸封孔服務詳情</h1><p>這裡是含浸封孔的詳細說明頁面。</p>"
+    return render_template_string(SUB_TEMPLATE, title="含浸封孔")
 
 @app.route("/coating")
 def coating():
-    return "<h1>皮膜化成服務詳情</h1><p>這裡是皮膜化成的詳細說明頁面。</p>"
+    return render_template_string(SUB_TEMPLATE, title="皮膜化成")
 
 @app.route("/robotic")
 def robotic():
-    return "<h1>自動化機械手臂服務詳情</h1><p>這裡是自動化機械手臂的詳細說明頁面。</p>"
+    return render_template_string(SUB_TEMPLATE, title="自動化機械手臂")
 
 if __name__ == "__main__":
     app.run(debug=True)
