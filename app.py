@@ -46,8 +46,8 @@ HOME_HTML = """
             align-items: center;
         }
         .brand img {
-            height: 40px;
-            margin-right: 10px;
+            height: 60px;
+            margin-right: 14px;
         }
         .title {
             font-size: 20px;
