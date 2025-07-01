@@ -23,21 +23,35 @@ HOME_HTML = """
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap; /* 允許換行，手機版友好 */
         }
         header .title {
             margin: 0;
             font-size: 20px;
             line-height: 1.5;
             white-space: pre-line;
+            flex: 1 1 100%; /* 手機時佔滿一行 */
+            margin-bottom: 10px;
+        }
+        nav {
+            flex: 1 1 100%; /* 手機時佔滿一行 */
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         nav a {
             color: white;
             text-decoration: none;
-            margin-left: 20px;
+            margin-left: 0; /* 取消左邊距 */
             font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
         }
         nav a:hover {
             text-decoration: underline;
+            background-color: rgba(255, 255, 255, 0.15);
         }
         .banner {
             background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80');
@@ -129,6 +143,7 @@ HOME_HTML = """
             inset: 0;
             background: rgba(0, 0, 0, 0.45);
             z-index: 0;
+            border-radius: 6px;
         }
 
         .service-item * {
@@ -142,6 +157,7 @@ HOME_HTML = """
             cursor: pointer;
         }
 
+        /* 992px 以下調整成兩欄 */
         @media (max-width: 992px) {
             .service-item {
                 flex: 1 1 45%;
@@ -149,7 +165,11 @@ HOME_HTML = """
             }
         }
 
+        /* 600px 以下手機排版，單欄 */
         @media (max-width: 600px) {
+            header {
+                padding: 15px 15px;
+            }
             .service-item {
                 flex: 1 1 100%;
                 max-width: 100%;
@@ -208,6 +228,10 @@ HOME_HTML = """
                     <h3>自動化機械手臂</h3>
                     <p>可搭配砂輪、去毛邊刷、氣動磨筆等工具，快速更換、即插即用。</p>
                 </a>
+                <a href="/wastewater" class="service-item" style="background-image: url('/static/wastewater.jpg');">
+                    <h3>廢水處理</h3>
+                    <p>淨化廢水、達標排放，降低環境污染，促進資源循環與永續經營。</p>
+                </a>
             </div>
         </section>
     </main>
@@ -242,34 +266,4 @@ SUB_TEMPLATE = """
 <body>
     <h1>{{ title }}</h1>
     <p>這是「{{ title }}」頁面的內容。</p>
-    <p><a href="/">← 回首頁</a></p>
-</body>
-</html>
-"""
-
-@app.route("/")
-def home():
-    return render_template_string(HOME_HTML)
-
-@app.route("/vibration")
-def vibration():
-    return render_template_string(SUB_TEMPLATE, title="振動研磨")
-
-@app.route("/sealing")
-def sealing():
-    return render_template_string(SUB_TEMPLATE, title="含浸封孔")
-
-@app.route("/coating")
-def coating():
-    return render_template_string(SUB_TEMPLATE, title="皮膜化成")
-
-@app.route("/robotic")
-def robotic():
-    return render_template_string(SUB_TEMPLATE, title="自動化機械手臂")
-
-@app.route("/certification")
-def certification():
-    return render_template_string(SUB_TEMPLATE, title="關於證照")
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    <p
