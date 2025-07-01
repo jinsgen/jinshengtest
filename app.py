@@ -90,13 +90,15 @@ HTML = """
     <div class="banner">專業服務，信賴首選</div>
 
     <main>
-        <section id="about">
-            <h2>關於我們</h2>
-            <p>本公司專營鋁合金與鋅合金產品之表面處理，服務內容涵蓋：
-            • 振動研磨邊角鈍化
-            • 含浸封孔處理
-            • 金屬皮膜化成處理。</p>
-        </section>
+       <section id="about">
+    <h2>關於我們</h2>
+    <p>本公司專營鋁合金與鋅合金產品之表面處理，服務內容涵蓋：</p>
+    <ul>
+        <li>振動研磨邊角鈍化</li>
+        <li>含浸封孔處理</li>
+        <li>金屬皮膜化成處理</li>
+    </ul>
+</section>
 
         <section id="services">
             <h2>服務項目</h2>
