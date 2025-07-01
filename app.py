@@ -4,11 +4,17 @@ app = Flask(__name__)
 
 HOME_HTML = """
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang=\"zh-Hant\">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset=\"UTF-8\" />
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
     <title>溍慎/鈦吉有限公司</title>
+    <!-- AOS 動畫庫 -->
+    <link href=\"https://unpkg.com/aos@2.3.4/dist/aos.css\" rel=\"stylesheet\">
+    <script src=\"https://unpkg.com/aos@2.3.4/dist/aos.js\"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => AOS.init());
+    </script>
     <style>
         :root {
             --primary-blue: #004080;
@@ -56,14 +62,17 @@ HOME_HTML = """
             background-color: rgba(255,255,255,0.2);
         }
         .banner {
-            background-color: var(--accent-yellow);
-            color: var(--primary-blue);
-            height: 200px;
+            background-image: url('/static/banner.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 36px;
             font-weight: bold;
+            text-shadow: 2px 2px 4px #000;
         }
         main {
             max-width: 1000px;
@@ -119,8 +128,6 @@ HOME_HTML = """
         .contact-info a:hover {
             text-decoration: underline;
         }
-
-        /* 手機底部導航 */
         #mobile-footer-nav {
             display: none;
             position: fixed;
@@ -135,7 +142,6 @@ HOME_HTML = """
             text-decoration: none;
             font-size: 14px;
         }
-
         #topBtn {
             display: none;
             position: fixed;
@@ -148,14 +154,12 @@ HOME_HTML = """
             border: none;
             cursor: pointer;
         }
-
         @media (max-width: 992px) {
             .service-item {
                 flex: 1 1 45%;
                 max-width: 45%;
             }
         }
-
         @media (max-width: 600px) {
             .service-item {
                 flex: 1 1 100%;
@@ -172,74 +176,66 @@ HOME_HTML = """
 </head>
 <body>
     <header>
-        <div class="brand">
-            <img src="/static/logo.png" alt="LOGO">
-            <div class="title">溍慎有限公司<br>鈦吉有限公司</div>
+        <div class=\"brand\">
+            <img src=\"/static/logo.png\" alt=\"LOGO\">
+            <div class=\"title\">溍慎有限公司<br>鈦吉有限公司</div>
         </div>
         <nav>
-            <a href="/">首頁</a>
-            <a href="#about">關於溍慎</a>
-            <a href="#services">服務項目</a>
-            <a href="#contact">聯絡我們</a>
+            <a href=\"/\">首頁</a>
+            <a href=\"#about\">關於溍慎</a>
+            <a href=\"#services\">服務項目</a>
+            <a href=\"#contact\">聯絡我們</a>
         </nav>
     </header>
-
-    <div class="banner">專業服務，信賴首選</div>
-
+    <div class=\"banner\" data-aos=\"fade-in\">專業服務，信賴首選</div>
     <main>
-        <section id="about">
+        <section id=\"about\" data-aos=\"fade-up\">
             <h2>關於溍慎</h2>
             <p>本公司專營鋁合金與鋅合金產品之表面處理，服務內容涵蓋振動研磨、含浸封孔、金屬皮膜化成處理等。</p>
         </section>
-
-        <section id="services">
-            <h2>服務項目</h2>
-            <div class="services">
-                <a href="/vibration" class="service-item" style="background-image: url('/static/vibration.jpg');">
+        <section id=\"services\">
+            <h2 data-aos=\"fade-up\">服務項目</h2>
+            <div class=\"services\">
+                <a href=\"/vibration\" class=\"service-item\" style=\"background-image: url('/static/vibration.jpg');\" data-aos=\"zoom-in\">
                     <h3>振動研磨</h3>
                     <p>去除毛邊、拋光與表面均化。</p>
                 </a>
-                <a href="/sealing" class="service-item" style="background-image: url('/static/sealing.jpg');">
+                <a href=\"/sealing\" class=\"service-item\" style=\"background-image: url('/static/sealing.jpg');\" data-aos=\"zoom-in\">
                     <h3>含浸封孔</h3>
                     <p>提高氣密性與耐用性。</p>
                 </a>
-                <a href="/coating" class="service-item" style="background-image: url('/static/coating.jpg');">
+                <a href=\"/coating\" class=\"service-item\" style=\"background-image: url('/static/coating.jpg');\" data-aos=\"zoom-in\">
                     <h3>皮膜化成</h3>
                     <p>耐蝕塗裝處理，自動化產線。</p>
                 </a>
-                <a href="/robotic" class="service-item" style="background-image: url('/static/robotic.jpg');">
+                <a href=\"/robotic\" class=\"service-item\" style=\"background-image: url('/static/robotic.jpg');\" data-aos=\"zoom-in\">
                     <h3>自動化機械手臂</h3>
                     <p>搭配工具快速作業。</p>
                 </a>
-                <a href="/wastewater" class="service-item" style="background-image: url('/static/wastewater.jpg');">
+                <a href=\"/wastewater\" class=\"service-item\" style=\"background-image: url('/static/wastewater.jpg');\" data-aos=\"zoom-in\">
                     <h3>廢水處理</h3>
                     <p>淨化廢水、達標排放，降低污染。</p>
                 </a>
             </div>
         </section>
-
-        <section id="contact">
+        <section id=\"contact\" data-aos=\"fade-up\">
             <h2>聯絡資訊</h2>
-            <div class="contact-info">
-                地址：<a href="https://maps.app.goo.gl/8dkFhGhkzxeEaBYaA" target="_blank">台南市仁德區義林路148巷16號</a><br>
+            <div class=\"contact-info\">
+                地址：<a href=\"https://maps.app.goo.gl/8dkFhGhkzxeEaBYaA\" target=\"_blank\">台南市仁德區義林路148巷16號</a><br>
                 Tel：06-2708989<br>
                 Fax：06-2707878<br>
                 Mobile：0975124624（鄭先生）<br>
-                Email：<a href="mailto:js42915245@gmail.com">js42915245@gmail.com</a>
+                Email：<a href=\"mailto:js42915245@gmail.com\">js42915245@gmail.com</a>
             </div>
         </section>
     </main>
-
-    <!-- 手機底部導航 -->
-    <nav id="mobile-footer-nav">
-        <a href="/">首頁</a>
-        <a href="#about">關於</a>
-        <a href="#services">服務</a>
-        <a href="#contact">聯絡</a>
+    <nav id=\"mobile-footer-nav\">
+        <a href=\"/\">首頁</a>
+        <a href=\"#about\">關於</a>
+        <a href=\"#services\">服務</a>
+        <a href=\"#contact\">聯絡</a>
     </nav>
-
-    <!-- 返回頂端 -->
-    <button id="topBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">▲</button>
+    <button id=\"topBtn\" onclick=\"window.scrollTo({top: 0, behavior: 'smooth'})\">▲</button>
 </body>
 </html>
 """
