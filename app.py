@@ -11,7 +11,11 @@ HOME_HTML = """
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>溍慎/鈦吉有限公司</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
         header {
             background-color: #004080;
             padding: 15px 30px;
@@ -62,6 +66,36 @@ HOME_HTML = """
             color: #004080;
         }
 
+        .about {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .about p {
+            flex: 1 1 400px;
+        }
+
+        .about .contact-info {
+            flex: 1 1 400px;
+            background-color: #f2f7fb;
+            padding: 20px;
+            border-radius: 6px;
+            line-height: 1.8;
+        }
+
+        .about .contact-info a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #004080;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .about .contact-info a:hover {
+            text-decoration: underline;
+        }
+
         .services {
             display: flex;
             flex-wrap: wrap;
@@ -72,6 +106,7 @@ HOME_HTML = """
         .service-item {
             position: relative;
             flex: 1 1 calc(25% - 20px);
+            max-width: calc(25% - 20px);
             height: 220px;
             padding: 20px;
             border-radius: 6px;
@@ -92,7 +127,7 @@ HOME_HTML = """
             content: "";
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.45); /* 暗色遮罩 */
+            background: rgba(0, 0, 0, 0.45);
             z-index: 0;
         }
 
@@ -107,9 +142,17 @@ HOME_HTML = """
             cursor: pointer;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
+            .service-item {
+                flex: 1 1 45%;
+                max-width: 45%;
+            }
+        }
+
+        @media (max-width: 600px) {
             .service-item {
                 flex: 1 1 100%;
+                max-width: 100%;
             }
         }
     </style>
@@ -130,12 +173,20 @@ HOME_HTML = """
     <main>
         <section id="about">
             <h2>關於我們</h2>
-            <p>本公司專營鋁合金與鋅合金產品之表面處理，服務內容涵蓋：</p>
-            <ul>
-                <li>振動研磨邊角鈍化</li>
-                <li>含浸封孔處理</li>
-                <li>金屬皮膜化成處理</li>
-            </ul>
+            <div class="about">
+                <p>本公司專營鋁合金與鋅合金產品之表面處理，服務內容涵蓋：
+                <br>• 振動研磨邊角鈍化
+                <br>• 含浸封孔處理
+                <br>• 金屬皮膜化成處理</p>
+                <div class="contact-info">
+                    歡迎洽詢更多資訊<br>
+                    地址：台南市仁德區義林路148巷16號<br>
+                    電話：06-2708989<br>
+                    手機：0975124624（鄭先生）<br>
+                    Email：js42915245@gmail.com
+                    <br><a href="/certification">▶ 關於證照</a>
+                </div>
+            </div>
         </section>
 
         <section id="services">
@@ -164,7 +215,7 @@ HOME_HTML = """
 </html>
 """
 
-# 子頁面模板
+# 子頁模板（內容尚未編寫）
 SUB_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -172,39 +223,21 @@ SUB_TEMPLATE = """
     <meta charset="UTF-8">
     <title>{{ title }}</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; padding: 40px; background-color: #f9f9f9; color: #333; }
-        a { text-decoration: none; color: #004080; font-weight: bold; }
-        a:hover { text-decoration: underline; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            padding: 40px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        a {
+            text-decoration: none;
+            color: #004080;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <h1>{{ title }}</h1>
-    <p>目前內容規劃中，敬請期待。</p>
-    <p><a href="/">← 回首頁</a></p>
-</body>
-</html>
-"""
-
-# Flask 路由
-@app.route("/")
-def home():
-    return render_template_string(HOME_HTML)
-
-@app.route("/vibration")
-def vibration():
-    return render_template_string(SUB_TEMPLATE, title="振動研磨")
-
-@app.route("/sealing")
-def sealing():
-    return render_template_string(SUB_TEMPLATE, title="含浸封孔")
-
-@app.route("/coating")
-def coating():
-    return render_template_string(SUB_TEMPLATE, title="皮膜化成")
-
-@app.route("/robotic")
-def robotic():
-    return render_template_string(SUB_TEMPLATE, title="自動化機械手臂")
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    <h1>{{ title }}</
