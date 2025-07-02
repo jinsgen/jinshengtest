@@ -2,16 +2,14 @@ from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
-# -----------------------
 # 共用 Header & Footer
-# -----------------------
 HEADER_HTML = """
-<header style="background:#6d8ec7; padding:15px 30px; color:white; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999;">
+<header style="background:#6d8ec7; padding:15px 30px; color:white; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999;">
   <div style="display:flex; align-items:center;">
     <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
     <div style="font-size:20px; line-height:1.2; white-space:pre-line;">溍慎有限公司<br>鈦吉有限公司</div>
   </div>
-  <nav style="display:flex; gap:15px;">
+  <nav style="display:flex; gap:15px; flex-wrap:wrap; margin-top:8px;">
     <a href="/"           style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
     <a href="/about"      style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
     <a href="#services"   style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
@@ -31,14 +29,12 @@ FOOTER_HTML = """
 </footer>
 """
 
-# -----------------------
-# 首頁 HTML（含打字機動畫）
-# -----------------------
+# 首頁 HTML（含打字機動畫及響應式）
 HOME_HTML = f"""
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>溍慎/鈦吉有限公司</title>
 <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
 <!-- AOS 動畫 -->
@@ -58,6 +54,16 @@ HOME_HTML = f"""
   @keyframes blink {{
     50% {{ border-color: transparent; }}
   }}
+  /* 通用排版 */
+  html {{
+    scroll-padding-top: 120px;
+    scroll-behavior: smooth;
+  }}
+  body {{
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: white;
+  }}
   .banner {{
     background-color: var(--accent-yellow);
     color: var(--primary-blue);
@@ -66,9 +72,10 @@ HOME_HTML = f"""
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center; /* 水平置中文字 */
+    padding: 0 10px;
   }}
   .typewriter {{
-    display: inline-block;
     overflow: hidden;
     white-space: nowrap;
     border-right: .15em solid var(--primary-blue);
@@ -83,15 +90,6 @@ HOME_HTML = f"""
     animation:
       typing 2s steps(30,end) forwards 2.5s,
       blink .75s step-end infinite 2.5s;
-  }}
-  html {{
-    scroll-padding-top: 120px;
-    scroll-behavior: smooth;
-  }}
-  body {{
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: white;
   }}
   main {{
     max-width: 1000px;
@@ -124,8 +122,7 @@ HOME_HTML = f"""
   .service-item::before {{
     content: "";
     position: absolute; inset: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 0;
+    background: rgba(0,0,0,0.45); z-index:0;
   }}
   .service-item h3, .service-item p {{
     position: relative; z-index:1; margin:0; color:white;
@@ -134,6 +131,17 @@ HOME_HTML = f"""
   .service-item:hover {{
     transform: translateY(-5px) scale(1.02);
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  }}
+  /* 手機響應式 */
+  @media (max-width: 768px) {{
+    .banner {{ height: auto; padding: 30px 10px; }}
+    .typewriter, .typewriter.second {{ font-size: 24px; }}
+    .services {{ gap: 15px; }}
+    .service-item {{ flex: 1 1 calc(50% - 15px); max-width: calc(50% - 15px); }}
+  }}
+  @media (max-width: 480px) {{
+    .typewriter, .typewriter.second {{ font-size: 20px; }}
+    .service-item {{ flex: 1 1 100%; max-width: 100%; }}
   }}
 </style>
 </head>
@@ -170,9 +178,6 @@ HOME_HTML = f"""
 </html>
 """
 
-# -----------------------
-# 子頁面渲染函式
-# -----------------------
 def render_subpage(title, content_html, aos_effect="fade-up"):
     return render_template_string(f"""
 <!DOCTYPE html>
@@ -189,7 +194,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
   :root {{ --primary-blue:#6d8ec7; }}
   html {{ scroll-padding-top:120px; scroll-behavior:smooth; }}
   body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:white; }}
-  header {{ background:var(--primary-blue); padding:15px 30px; color:white; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999; }}
+  header {{ background:var(--primary-blue); padding:15px 30px; color:white; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999; }}
   header nav a {{ color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px; }}
   header nav a:hover {{ background:rgba(255,255,255,0.2); }}
   main {{ max-width:1000px; margin:40px auto; padding:0 20px; }}
@@ -209,9 +214,6 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
 </html>
 """)
 
-# -----------------------
-# 路由設定
-# -----------------------
 @app.route("/")
 def home():
     return render_template_string(HOME_HTML)
@@ -223,29 +225,28 @@ def about():
 @app.route("/onedragon")
 def onedragon():
     flow_html = """
-<h2 data-aos="fade-down">一條龍加工流程</h2>
-<div style="display:flex; flex-wrap:wrap; gap:30px; justify-content:space-around; max-width:1000px; margin:20px auto;">
-  <!-- 卡片全導回首頁服務項目 -->
+<h2 data-aos="fade-down" style="text-align:center;">一條龍加工流程</h2>
+<div style="display:flex; flex-wrap:wrap; gap:30px; justify-content:center; max-width:1000px; margin:20px auto;">
   <a href="#services" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="100">
-    <div style="transition:transform .3s, box-shadow .3s;" class="step-card">
+    <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
       <img src="/static/step1.jpg" alt="毛邊去除" style="width:100%; border-radius:8px; margin-bottom:10px;">
       <h3>毛邊去除</h3><p>可搭配自動化機械手臂</p>
     </div>
   </a>
   <a href="#services" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="200">
-    <div style="transition:transform .3s, box-shadow .3s;" class="step-card">
+    <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
       <img src="/static/step2.jpg" alt="振動研磨" style="width:100%; border-radius:8px; margin-bottom:10px;">
       <h3>振動研磨</h3><p>表面均化處理</p>
     </div>
   </a>
   <a href="#services" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="300">
-    <div style="transition:transform .3s, box-shadow .3s;" class="step-card">
+    <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
       <img src="/static/step3.jpg" alt="含浸封孔" style="width:100%; border-radius:8px; margin-bottom:10px;">
       <h3>含浸封孔</h3><p>提升氣密性與耐用性</p>
     </div>
   </a>
   <a href="#services" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="400">
-    <div style="transition:transform .3s, box-shadow .3s;" class="step-card">
+    <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
       <img src="/static/step4.jpg" alt="皮膜化成" style="width:100%; border-radius:8px; margin-bottom:10px;">
       <h3>皮膜化成</h3><p>依需求選擇性進行</p>
     </div>
@@ -253,15 +254,14 @@ def onedragon():
 </div>
 <p data-aos="fade-up" style="text-align:center;">我們提供整合式產線，節省客戶物流時間與管理成本。</p>
 <script>
-  // 打字機流程卡片懸浮效果
   document.querySelectorAll('.step-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      el.style.transform = 'translateY(-5px) scale(1.02)';
-      el.style.boxShadow = '0 8px 20px rgba(0,0,0,0.3)';
+    el.addEventListener('mouseenter',()=>{
+      el.style.transform='translateY(-5px) scale(1.02)';
+      el.style.boxShadow='0 8px 20px rgba(0,0,0,0.3)';
     });
-    el.addEventListener('mouseleave', () => {
-      el.style.transform = '';
-      el.style.boxShadow = '';
+    el.addEventListener('mouseleave',()=>{
+      el.style.transform='';
+      el.style.boxShadow='';
     });
   });
 </script>
