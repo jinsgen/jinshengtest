@@ -67,17 +67,21 @@ HOME_HTML = f"""
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: white;
   }}
-  .banner {{
-    background-color: var(--accent-yellow);
-    color: var(--primary-blue);
-    height: 240px;
+ .banner {
+    background-image: url('/static/banner_new.jpg'); /* 換成你的圖片 */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    height: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 0 10px;
-  }}
+    text-align: center;      /* 🔸讓字水平置中 */
+    padding: 0 10px;         /* 🔸防止手機貼邊 */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6); /* 讓字體清楚 */
+}
+
   .typewriter {{
     overflow: hidden;
     white-space: nowrap;
