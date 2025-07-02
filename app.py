@@ -2,15 +2,15 @@ from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
-# 共用 Header 與 Footer HTML
+# 共用 Header & Footer
 HEADER_HTML = """
 <header style="background-color:#6d8ec7; padding:15px 30px; color:white; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999;">
-    <div class="brand">
-        <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px;">
+    <div style="display:flex; align-items:center;">
+        <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
         <div style="font-size:20px; line-height:1.2; white-space:pre-line;">溍慎有限公司<br>鈦吉有限公司</div>
     </div>
     <nav style="display:flex; gap:15px;">
-        <a href="/" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
+        <a href="/"     style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
         <a href="/about" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
         <a href="/#services" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
         <a href="/onedragon" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">一條龍產線</a>
@@ -40,9 +40,7 @@ HOME_HTML = f"""
     <!-- AOS 動畫 -->
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => AOS.init());
-    </script>
+    <script>document.addEventListener('DOMContentLoaded', () => AOS.init());</script>
     <style>
         :root {{
             --primary-blue: #6d8ec7;
@@ -109,10 +107,6 @@ HOME_HTML = f"""
         .service-item:hover {{
             transform: translateY(-5px) scale(1.02);
         }}
-        .service-item * {{
-            position: relative;
-            z-index: 1;
-        }}
     </style>
 </head>
 <body>
@@ -123,24 +117,19 @@ HOME_HTML = f"""
             <h2 data-aos="fade-up">服務項目</h2>
             <div class="services">
                 <a href="/vibration" class="service-item" style="background-image:url('/static/vibration.jpg');" data-aos="zoom-in">
-                    <h3>振動研磨</h3>
-                    <p>去除毛邊、拋光與表面均化。</p>
+                    <h3>振動研磨</h3><p>去除毛邊、拋光與表面均化。</p>
                 </a>
                 <a href="/sealing" class="service-item" style="background-image:url('/static/sealing.jpg');" data-aos="zoom-in">
-                    <h3>含浸封孔</h3>
-                    <p>提高氣密性與耐用性。</p>
+                    <h3>含浸封孔</h3><p>提高氣密性與耐用性。</p>
                 </a>
                 <a href="/coating" class="service-item" style="background-image:url('/static/coating.jpg');" data-aos="zoom-in">
-                    <h3>皮膜化成</h3>
-                    <p>耐蝕塗裝處理，自動化產線。</p>
+                    <h3>皮膜化成</h3><p>耐蝕塗裝處理，自動化產線。</p>
                 </a>
                 <a href="/robotic" class="service-item" style="background-image:url('/static/robotic.jpg');" data-aos="zoom-in">
-                    <h3>自動化機械手臂</h3>
-                    <p>搭配工具快速作業。</p>
+                    <h3>自動化機械手臂</h3><p>搭配工具快速作業。</p>
                 </a>
                 <a href="/wastewater" class="service-item" style="background-image:url('/static/wastewater.jpg');" data-aos="zoom-in">
-                    <h3>廢水處理</h3>
-                    <p>淨化廢水、達標排放。</p>
+                    <h3>廢水處理</h3><p>淨化廢水、達標排放。</p>
                 </a>
             </div>
         </section>
@@ -164,10 +153,10 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     <style>
         :root {{ --primary-blue: #6d8ec7; }}
         html {{ scroll-padding-top: 120px; scroll-behavior: smooth; }}
-        body {{ margin:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana,sans-serif; background:white; }}
+        body {{ margin:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:white; }}
         header {{ background-color: var(--primary-blue); padding:15px 30px; color:white; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999; }}
-        nav a {{ color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px; }}
-        nav a:hover {{ background:rgba(255,255,255,0.2); }}
+        header nav a {{ color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px; }}
+        header nav a:hover {{ background:rgba(255,255,255,0.2); }}
         main {{ max-width:1000px; margin:40px auto; padding:0 20px; }}
         .contact-info {{ background:#f2f7fb; padding:20px; border-radius:6px; line-height:1.8; }}
         .contact-info a {{ color:var(--primary-blue); text-decoration:none; }}
@@ -191,20 +180,33 @@ def home():
 
 @app.route("/about")
 def about():
-    return render_subpage("關於溍慎", "<p>本頁可新增公司介紹內容。</p>")
+    return render_subpage("關於溍慎", "<p>本頁內容待補充。</p>")
 
 @app.route("/onedragon")
 def onedragon():
-    content = """
-<ol data-aos="fade-up">
-    <li>毛邊去除（可搭配機械手臂）</li>
-    <li>振動研磨</li>
-    <li>含浸封孔</li>
-    <li>皮膜化成（視需求）</li>
-</ol>
-<p data-aos="fade-up">我們提供整合式產線，節省客戶物流時間與管理成本。</p>
-"""
-    return render_subpage("一條龍產線服務", content, aos_effect="fade-down")
+    flow_html = """
+    <h2 data-aos="fade-down">一條龍加工流程</h2>
+    <div style="display:flex; flex-wrap:wrap; gap:30px; justify-content:space-around; max-width:1000px; margin:20px auto;">
+        <div style="width:200px; text-align:center;" data-aos="fade-right" data-aos-delay="100">
+            <img src="/static/step1.jpg" alt="毛邊去除" style="width:100%; border-radius:8px; margin-bottom:10px;">
+            <h3>毛邊去除</h3><p>可搭配自動化機械手臂</p>
+        </div>
+        <div style="width:200px; text-align:center;" data-aos="fade-right" data-aos-delay="200">
+            <img src="/static/step2.jpg" alt="振動研磨" style="width:100%; border-radius:8px; margin-bottom:10px;">
+            <h3>振動研磨</h3><p>表面均化處理</p>
+        </div>
+        <div style="width:200px; text-align:center;" data-aos="fade-right" data-aos-delay="300">
+            <img src="/static/step3.jpg" alt="含浸封孔" style="width:100%; border-radius:8px; margin-bottom:10px;">
+            <h3>含浸封孔</h3><p>提升氣密性與耐用性</p>
+        </div>
+        <div style="width:200px; text-align:center;" data-aos="fade-right" data-aos-delay="400">
+            <img src="/static/step4.jpg" alt="皮膜化成" style="width:100%; border-radius:8px; margin-bottom:10px;">
+            <h3>皮膜化成</h3><p>依需求選擇性進行</p>
+        </div>
+    </div>
+    <p data-aos="fade-up" style="text-align:center;">我們提供整合式產線，節省客戶物流時間與管理成本。</p>
+    """
+    return render_subpage("一條龍產線服務", flow_html, aos_effect="fade-down")
 
 @app.route("/vibration")
 def vibration():
