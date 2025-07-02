@@ -2,7 +2,9 @@ from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
+# -----------------------
 # 共用 Header & Footer
+# -----------------------
 HEADER_HTML = """
 <header style="background:#6d8ec7; padding:15px 30px; color:white; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999;">
   <div style="display:flex; align-items:center;">
@@ -29,7 +31,9 @@ FOOTER_HTML = """
 </footer>
 """
 
+# -----------------------
 # 首頁 HTML（含打字機動畫及響應式）
+# -----------------------
 HOME_HTML = f"""
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -86,10 +90,10 @@ HOME_HTML = f"""
       blink .75s step-end infinite;
   }}
   .typewriter.second {{
-    /* 延遲 1s 即可快速呈現第二行 */
+    /* 取消延遲，和第一行同時打字 */
     animation:
-      typing 2s steps(30,end) forwards 1s,
-      blink .75s step-end infinite 1s;
+      typing 2s steps(30,end) forwards,
+      blink .75s step-end infinite;
   }}
   main {{
     max-width: 1000px;
