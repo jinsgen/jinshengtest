@@ -6,7 +6,20 @@ app = Flask(__name__)
 # 共用 Header & Footer
 # -----------------------
 HEADER_HTML = """
-<header style="background: rgba(109, 142, 199, 0.8); padding:15px 30px; color:white; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999;">
+<header style="
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(109, 142, 199, 0.6);
+  padding: 15px 30px;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+">
   <div style="display:flex; align-items:center;">
     <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
     <div style="font-size:20px; line-height:1.2; white-space:pre-line;">溍慎有限公司<br>鈦吉有限公司</div>
@@ -38,119 +51,114 @@ HOME_HTML = f"""
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>溍慎/鈦吉有限公司</title>
-<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
-<!-- AOS 動畫 -->
-<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
-<style>
-  :root {{
-    --primary-blue: #6d8ec7;
-    --primary-blue-transparent: rgba(109, 142, 199, 0.8);
-    --accent-yellow: #FFD85A;
-  }}
-  /* 打字機動畫 */
-  @keyframes typing {{
-    from {{ width: 0; }}
-    to   {{ width: 100%; }}
-  }}
-  @keyframes blink {{
-    50% {{ border-color: transparent; }}
-  }}
-  html {{
-    scroll-padding-top: 120px;
-    scroll-behavior: smooth;
-  }}
-  body {{
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: white;
-  }}
-  .banner {{
-    background-image: url('/static/banner_new.jpg'); /* 替換成你的封面圖 */
-    background-size: cover;
-    background-position: center;
-    color: white;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;    /* 置中 */
-    padding: 0 10px;       /* 手機防止貼邊 */
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-  }}
-  .typewriter {{
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: .15em solid var(--primary-blue);
-    font-size: 36px;
-    font-weight: bold;
-    width: 0;
-    animation:
-      typing 2s steps(30,end) forwards,
-      blink .75s step-end infinite;
-  }}
-  .typewriter.second {{
-    animation:
-      typing 2s steps(30,end) forwards,
-      blink .75s step-end infinite;
-  }}
-  main {{
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 0 20px;
-  }}
-  h2 {{
-    color: var(--primary-blue);
-    border-bottom: 2px solid var(--primary-blue);
-    padding-bottom: 8px;
-  }}
-  .services {{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }}
-  .service-item {{
-    position: relative;
-    flex: 1 1 calc(25% - 20px);
-    max-width: calc(25% - 20px);
-    height: 220px;
-    padding: 20px;
-    border-radius: 6px;
-    background-size: cover;
-    background-position: center;
-    text-decoration: none;
-    overflow: hidden;
-    transition: transform .3s ease, box-shadow .3s ease;
-  }}
-  .service-item::before {{
-    content: "";
-    position: absolute; inset: 0;
-    background: rgba(0,0,0,0.45); z-index:0;
-  }}
-  .service-item h3, .service-item p {{
-    position: relative; z-index:1; margin:0; color:white;
-  }}
-  .service-item p {{ font-size:0.9rem; }}
-  .service-item:hover {{
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  }}
-  /* 手機響應式 */
-  @media (max-width: 768px) {{
-    .banner {{ height: auto; padding: 30px 10px; }}
-    .typewriter, .typewriter.second {{ font-size: 24px; }}
-    .services {{ gap: 15px; }}
-    .service-item {{ flex: 1 1 calc(50% - 15px); max-width: calc(50% - 15px); }}
-  }}
-  @media (max-width: 480px) {{
-    .typewriter, .typewriter.second {{ font-size: 20px; }}
-    .service-item {{ flex: 1 1 100%; max-width: 100%; }}
-  }}
-</style>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>溍慎/鈦吉有限公司</title>
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <!-- AOS 動畫 -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
+  <style>
+    :root {{
+      --primary-blue: #6d8ec7;
+      --accent-yellow: #FFD85A;
+    }}
+    html {{
+      scroll-padding-top: 120px;
+      scroll-behavior: smooth;
+    }}
+    body {{
+      margin: 0;
+      padding-top: 90px;              /* 預留 header 高度 */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: white;
+    }}
+    .banner {{
+      background-image: url('/static/banner_new.jpg'); /* 替換成你的封面圖 */
+      background-size: cover;
+      background-position: center;
+      color: white;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    }}
+    /* 打字機動畫 */
+    @keyframes typing {{ from {{ width: 0; }} to {{ width: 100%; }} }}
+    @keyframes blink {{ 50% {{ border-color: transparent; }} }}
+    .typewriter {{
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: .15em solid var(--primary-blue);
+      font-size: 36px;
+      font-weight: bold;
+      width: 0;
+      animation:
+        typing 2s steps(30,end) forwards,
+        blink .75s step-end infinite;
+    }}
+    .typewriter.second {{
+      animation:
+        typing 2s steps(30,end) forwards,
+        blink .75s step-end infinite;
+    }}
+    main {{
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }}
+    h2 {{
+      color: var(--primary-blue);
+      border-bottom: 2px solid var(--primary-blue);
+      padding-bottom: 8px;
+    }}
+    .services {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }}
+    .service-item {{
+      position: relative;
+      flex: 1 1 calc(25% - 20px);
+      max-width: calc(25% - 20px);
+      height: 220px;
+      padding: 20px;
+      border-radius: 6px;
+      background-size: cover;
+      background-position: center;
+      text-decoration: none;
+      overflow: hidden;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }}
+    .service-item::before {{
+      content: "";
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.45); z-index:0;
+    }}
+    .service-item h3, .service-item p {{
+      position: relative; z-index:1; margin:0; color:white;
+    }}
+    .service-item p {{ font-size:0.9rem; }}
+    .service-item:hover {{
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }}
+    /* 手機響應式 */
+    @media (max-width: 768px) {{
+      .banner {{ height: auto; padding: 30px 10px; }}
+      .typewriter, .typewriter.second {{ font-size: 24px; }}
+      .services {{ gap: 15px; }}
+      .service-item {{ flex: 1 1 calc(50% - 15px); max-width: calc(50% - 15px); }}
+    }}
+    @media (max-width: 480px) {{
+      .typewriter, .typewriter.second {{ font-size: 20px; }}
+      .service-item {{ flex: 1 1 100%; max-width: 100%; }}
+    }}
+  </style>
 </head>
 <body>
   {HEADER_HTML}
@@ -190,39 +198,43 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>{title}</title>
-<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
-<!-- AOS 動畫 -->
-<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
-<style>
-  :root {{ 
-    --primary-blue: #6d8ec7;
-    --primary-blue-transparent: rgba(109, 142, 199, 0.8);
-  }}
-  html {{ scroll-padding-top:120px; scroll-behavior:smooth; }}
-  body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:white; }}
-  header {{ 
-    background: var(--primary-blue-transparent); 
-    padding:15px 30px; 
-    color:white; 
-    display:flex; 
-    flex-wrap:wrap; 
-    justify-content:space-between; 
-    align-items:center; 
-    position:sticky; 
-    top:0; 
-    z-index:999; 
-  }}
-  header nav a {{ color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px; }}
-  header nav a:hover {{ background:rgba(255,255,255,0.2); }}
-  main {{ max-width:1000px; margin:40px auto; padding:0 20px; }}
-  .contact-info {{ background:#f2f7fb; padding:20px; border-radius:6px; line-height:1.8; }}
-  .contact-info a {{ color:var(--primary-blue); text-decoration:none; }}
-  .contact-info a:hover {{ text-decoration:underline; }}
-</style>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{title}</title>
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <!-- AOS 動畫 -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
+  <style>
+    :root {{ --primary-blue:#6d8ec7; --accent-yellow:#FFD85A; }}
+    html {{ scroll-padding-top: 120px; scroll-behavior: smooth; }}
+    body {{
+      margin: 0;
+      padding-top: 90px;              /* 同樣預留 header 高度 */
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      background:white;
+    }}
+    header {{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(109, 142, 199, 0.6);
+      padding:15px 30px;
+      color:white;
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      z-index:999;
+    }}
+    header nav a {{ color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px; }}
+    header nav a:hover {{ background:rgba(255,255,255,0.2); }}
+    main {{ max-width:1000px; margin:40px auto; padding:0 20px; }}
+    .contact-info {{ background:#f2f7fb; padding:20px; border-radius:6px; line-height:1.8; }}
+    .contact-info a {{ color:var(--primary-blue); text-decoration:none; }}
+    .contact-info a:hover {{ text-decoration:underline; }}
+  </style>
 </head>
 <body>
   {HEADER_HTML}
