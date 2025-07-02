@@ -12,9 +12,7 @@ HOME_HTML = """
     <link rel=\"icon\" href=\"/static/favicon.ico\" type=\"image/x-icon\">
     <link href=\"https://unpkg.com/aos@2.3.4/dist/aos.css\" rel=\"stylesheet\">
     <script src=\"https://unpkg.com/aos@2.3.4/dist/aos.js\"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => AOS.init());
-    </script>
+    <script>document.addEventListener('DOMContentLoaded', () => AOS.init());</script>
     <style>
         :root {
             --primary-blue: #6d8ec7;
@@ -249,35 +247,7 @@ HOME_HTML = """
 </html>
 """
 
-SUB_TEMPLATE = """
-<!DOCTYPE html>
-<html lang=\"zh-Hant\">
-<head>
-    <meta charset=\"UTF-8\">
-    <title>{{ title }}</title>
-    <link href=\"https://unpkg.com/aos@2.3.4/dist/aos.css\" rel=\"stylesheet\">
-    <script src=\"https://unpkg.com/aos@2.3.4/dist/aos.js\"></script>
-    <script>document.addEventListener('DOMContentLoaded', () => AOS.init());</script>
-</head>
-<body>
-    <header style=\"background:#6d8ec7;color:white;padding:15px 30px;display:flex;justify-content:space-between;align-items:center;\">
-        <div style=\"font-weight:bold;\">{{ title }}</div>
-        <a href=\"/\" style=\"color:white;text-decoration:none;\">← 回首頁</a>
-    </header>
-    <main style=\"max-width:800px;margin:40px auto;padding:0 20px;font-family:sans-serif;\">
-        <h2>{{ title }}</h2>
-        <p data-aos=\"fade-up\">這是「{{ title }}」頁面的內容。</p>
-    </main>
-    <footer style=\"background:#f2f7fb;padding:20px;font-family:sans-serif;line-height:1.8;\">
-        地址：<a href=\"https://maps.app.goo.gl/8dkFhGhkzxeEaBYaA\" target=\"_blank\">台南市仁德區義林路148巷16號</a><br>
-        Tel：06-2708989<br>
-        Fax：06-2707878<br>
-        Mobile：0975124624（鄭先生）<br>
-        Email：<a href=\"mailto:js42915245@gmail.com\">js42915245@gmail.com</a>
-    </footer>
-</body>
-</html>
-"""
+SUB_TEMPLATE = HOME_HTML  # 臨時共用首頁樣板顯示
 
 @app.route("/")
 def home():
@@ -285,23 +255,31 @@ def home():
 
 @app.route("/vibration")
 def vibration():
-    return render_template_string(SUB_TEMPLATE, title="振動研磨")
+    return render_template_string(HOME_HTML)
 
 @app.route("/sealing")
 def sealing():
-    return render_template_string(SUB_TEMPLATE, title="含浸封孔")
+    return render_template_string(HOME_HTML)
 
 @app.route("/coating")
 def coating():
-    return render_template_string(SUB_TEMPLATE, title="皮膜化成")
+    return render_template_string(HOME_HTML)
 
 @app.route("/robotic")
 def robotic():
-    return render_template_string(SUB_TEMPLATE, title="自動化機械手臂")
+    return render_template_string(HOME_HTML)
 
 @app.route("/wastewater")
 def wastewater():
-    return render_template_string(SUB_TEMPLATE, title="廢水處理")
+    return render_template_string(HOME_HTML)
+
+@app.route("/onedragon")
+def onedragon():
+    return render_template_string(HOME_HTML)
+
+@app.route("/about")
+def about():
+    return render_template_string(HOME_HTML)
 
 if __name__ == '__main__':
     app.run(debug=True)
