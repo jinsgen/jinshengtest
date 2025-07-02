@@ -10,17 +10,17 @@ HEADER_HTML = """
         <div style="font-size:20px; line-height:1.2; white-space:pre-line;">溍慎有限公司<br>鈦吉有限公司</div>
     </div>
     <nav style="display:flex; gap:15px;">
-        <a href="/"     style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
-        <a href="/about" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
-        <a href="/#services" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
-        <a href="/onedragon" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">一條龍產線</a>
-        <a href="/#contact" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">聯絡我們</a>
+        <a href="/"         style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
+        <a href="/about"    style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
+        <a href="#services" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
+        <a href="/onedragon"style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">一條龍產線</a>
+        <a href="#contact"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">聯絡我們</a>
     </nav>
 </header>
 """
 
 FOOTER_HTML = """
-<footer style="background:#f2f7fb; padding:20px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height:1.8;">
+<footer id="contact" style="background:#f2f7fb; padding:20px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height:1.8;">
     地址：<a href="https://maps.app.goo.gl/8dkFhGhkzxeEaBYaA" target="_blank">台南市仁德區義林路148巷16號</a><br>
     Tel：06-2708989<br>
     Fax：06-2707878<br>
@@ -95,7 +95,7 @@ HOME_HTML = f"""
             justify-content: flex-end;
             text-decoration: none;
             overflow: hidden;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }}
         .service-item::before {{
             content: "";
@@ -106,6 +106,20 @@ HOME_HTML = f"""
         }}
         .service-item:hover {{
             transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }}
+        .service-item:active {{
+            transform: translateY(-2px) scale(1.01);
+        }}
+        .service-item h3,
+        .service-item p {{
+            position: relative;
+            z-index: 1;
+            color: white;
+            margin: 0;
+        }}
+        .service-item p {{
+            font-size: 0.9rem;
         }}
     </style>
 </head>
