@@ -249,79 +249,59 @@ HOME_HTML = """
 </html>
 """
 
+SUB_TEMPLATE = """
+<!DOCTYPE html>
+<html lang=\"zh-Hant\">
+<head>
+    <meta charset=\"UTF-8\">
+    <title>{{ title }}</title>
+    <link href=\"https://unpkg.com/aos@2.3.4/dist/aos.css\" rel=\"stylesheet\">
+    <script src=\"https://unpkg.com/aos@2.3.4/dist/aos.js\"></script>
+    <script>document.addEventListener('DOMContentLoaded', () => AOS.init());</script>
+</head>
+<body>
+    <header style=\"background:#6d8ec7;color:white;padding:15px 30px;display:flex;justify-content:space-between;align-items:center;\">
+        <div style=\"font-weight:bold;\">{{ title }}</div>
+        <a href=\"/\" style=\"color:white;text-decoration:none;\">← 回首頁</a>
+    </header>
+    <main style=\"max-width:800px;margin:40px auto;padding:0 20px;font-family:sans-serif;\">
+        <h2>{{ title }}</h2>
+        <p data-aos=\"fade-up\">這是「{{ title }}」頁面的內容。</p>
+    </main>
+    <footer style=\"background:#f2f7fb;padding:20px;font-family:sans-serif;line-height:1.8;\">
+        地址：<a href=\"https://maps.app.goo.gl/8dkFhGhkzxeEaBYaA\" target=\"_blank\">台南市仁德區義林路148巷16號</a><br>
+        Tel：06-2708989<br>
+        Fax：06-2707878<br>
+        Mobile：0975124624（鄭先生）<br>
+        Email：<a href=\"mailto:js42915245@gmail.com\">js42915245@gmail.com</a>
+    </footer>
+</body>
+</html>
+"""
+
 @app.route("/")
 def home():
     return render_template_string(HOME_HTML)
 
-@app.route("/about")
-def about():
-    return render_template_string("""
-    <html><head><title>關於溍慎</title></head><body>
-    <h1>關於我們</h1>
-    <p>這裡可以詳細介紹公司歷史、經驗、設備與理念等內容。</p>
-    <p><a href='/'>← 回首頁</a></p>
-    </body></html>
-    """)
+@app.route("/vibration")
+def vibration():
+    return render_template_string(SUB_TEMPLATE, title="振動研磨")
 
-@app.route("/onedragon")
-def onedragon():
-    return render_template_string("""
-    <!DOCTYPE html>
-    <html lang='zh-Hant'>
-    <head>
-        <meta charset='UTF-8'>
-        <title>一條龍加工服務</title>
-        <link href='https://unpkg.com/aos@2.3.4/dist/aos.css' rel='stylesheet'>
-        <script src='https://unpkg.com/aos@2.3.4/dist/aos.js'></script>
-        <script>document.addEventListener('DOMContentLoaded', () => AOS.init());</script>
-        <style>
-            body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f8f9fb; }
-            header { background: #6d8ec7; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
-            header a { color: white; text-decoration: none; font-weight: bold; }
-            main { max-width: 960px; margin: 30px auto; padding: 0 20px; }
-            .step { display: flex; gap: 20px; margin-bottom: 40px; align-items: center; flex-wrap: wrap; }
-            .step img { width: 140px; height: 140px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-            .step h3 { margin: 0 0 10px; }
-        </style>
-    </head>
-    <body>
-        <header>
-            <div>一條龍加工產線</div>
-            <a href='/'>← 回首頁</a>
-        </header>
-        <main>
-            <div class='step' data-aos='fade-up'>
-                <img src='/static/step1.jpg' alt='毛邊去除'>
-                <div>
-                    <h3>1. 毛邊去除（可搭配機械手臂）</h3>
-                    <p>使用精密設備與機械手臂進行初步修整，提升加工效率。</p>
-                </div>
-            </div>
-            <div class='step' data-aos='fade-up'>
-                <img src='/static/step2.jpg' alt='振動研磨'>
-                <div>
-                    <h3>2. 振動研磨</h3>
-                    <p>均勻拋光去除毛邊與表面殘留，確保每件工件一致性。</p>
-                </div>
-            </div>
-            <div class='step' data-aos='fade-up'>
-                <img src='/static/step3.jpg' alt='含浸封孔'>
-                <div>
-                    <h3>3. 含浸封孔</h3>
-                    <p>強化氣密性並提高後續加工的可靠性。</p>
-                </div>
-            </div>
-            <div class='step' data-aos='fade-up'>
-                <img src='/static/step4.jpg' alt='皮膜化成'>
-                <div>
-                    <h3>4. 皮膜化成（選用）</h3>
-                    <p>提供耐蝕、防護與著色等功能，依產品需求選擇是否實施。</p>
-                </div>
-            </div>
-        </main>
-    </body>
-    </html>
-    """)
+@app.route("/sealing")
+def sealing():
+    return render_template_string(SUB_TEMPLATE, title="含浸封孔")
+
+@app.route("/coating")
+def coating():
+    return render_template_string(SUB_TEMPLATE, title="皮膜化成")
+
+@app.route("/robotic")
+def robotic():
+    return render_template_string(SUB_TEMPLATE, title="自動化機械手臂")
+
+@app.route("/wastewater")
+def wastewater():
+    return render_template_string(SUB_TEMPLATE, title="廢水處理")
 
 if __name__ == '__main__':
     app.run(debug=True)
