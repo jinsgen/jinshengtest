@@ -34,7 +34,7 @@ HOME_HTML = f"""
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>溍慎/鈦吉有限公司</title>
 <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
 <!-- AOS 動畫 -->
@@ -54,7 +54,6 @@ HOME_HTML = f"""
   @keyframes blink {{
     50% {{ border-color: transparent; }}
   }}
-  /* 通用排版 */
   html {{
     scroll-padding-top: 120px;
     scroll-behavior: smooth;
@@ -72,7 +71,7 @@ HOME_HTML = f"""
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center; /* 水平置中文字 */
+    text-align: center;
     padding: 0 10px;
   }}
   .typewriter {{
@@ -87,9 +86,10 @@ HOME_HTML = f"""
       blink .75s step-end infinite;
   }}
   .typewriter.second {{
+    /* 延遲 1s 即可快速呈現第二行 */
     animation:
-      typing 2s steps(30,end) forwards 2.5s,
-      blink .75s step-end infinite 2.5s;
+      typing 2s steps(30,end) forwards 1s,
+      blink .75s step-end infinite 1s;
   }}
   main {{
     max-width: 1000px;
