@@ -3,7 +3,67 @@ from flask import Flask, render_template_string
 app = Flask(__name__)
 
 # -----------------------
-# 共用 Footer（所有頁面共用）
+# 首頁半透明 Header
+# -----------------------
+HEADER_HOME = """
+<header style="
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  background: rgba(109,142,199,0.6);
+  padding: 15px 30px;
+  color: white;
+  display: flex; flex-wrap: wrap;
+  justify-content: space-between; align-items: center;
+  z-index: 999; box-sizing: border-box;
+">
+  <div style="display:flex; align-items:center;">
+    <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
+    <div style="font-size:20px; line-height:1.2; white-space:pre-line;">
+      溍慎有限公司<br>鈦吉有限公司
+    </div>
+  </div>
+  <nav style="display:flex; gap:15px; flex-wrap:wrap; margin-top:8px;">
+    <a href="/"           style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
+    <a href="/about"      style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
+    <a href="/#services"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
+    <a href="/onedragon"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">一條龍產線</a>
+    <a href="#contact"    style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">聯絡我們</a>
+  </nav>
+</header>
+"""
+
+# -----------------------
+# 子頁面實心藍 Header
+# -----------------------
+HEADER_SOLID = """
+<header style="
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  background: #6d8ec7;
+  padding: 15px 30px;
+  color: white;
+  display: flex; flex-wrap: wrap;
+  justify-content: space-between; align-items: center;
+  z-index: 999; box-sizing: border-box;
+">
+  <div style="display:flex; align-items:center;">
+    <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
+    <div style="font-size:20px; line-height:1.2; white-space:pre-line;">
+      溍慎有限公司<br>鈦吉有限公司
+    </div>
+  </div>
+  <nav style="display:flex; gap:15px; flex-wrap:wrap; margin-top:8px;">
+    <a href="/"           style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
+    <a href="/about"      style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
+    <a href="/#services"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
+    <a href="/onedragon"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">一條龍產線</a>
+    <a href="#contact"    style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">聯絡我們</a>
+  </nav>
+</header>
+"""
+
+# -----------------------
+# Footer（共用）
 # -----------------------
 FOOTER_HTML = """
 <footer id="contact" style="background:#f2f7fb; padding:20px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height:1.8;">
@@ -16,76 +76,137 @@ FOOTER_HTML = """
 """
 
 # -----------------------
-# 首頁使用：半透明 header
-# -----------------------
-HEADER_TRANSPARENT = """
-<header style="position: fixed; top: 0; left: 0; width: 100%; background: rgba(109, 142, 199, 0.6); padding:15px 30px; color:white; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; z-index:999;">
-  <div style="display:flex; align-items:center;">
-    <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
-    <div style="font-size:20px; line-height:1.2; white-space:pre-line;">溍慎有限公司<br>鈦吉有限公司</div>
-  </div>
-  <nav style="display:flex; gap:15px; flex-wrap:wrap; margin-top:8px;">
-    <a href="/"           style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
-    <a href="/about"      style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
-    <a href="/#services"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
-    <a href="/onedragon"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">一條龍產線</a>
-    <a href="/#contact"   style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">聯絡我們</a>
-  </nav>
-</header>
-"""
-
-# -----------------------
-# 其他頁面使用：實心 header
-# -----------------------
-HEADER_SOLID = HEADER_TRANSPARENT.replace("rgba(109, 142, 199, 0.6)", "#6d8ec7")
-
-# -----------------------
-# 首頁 HTML
+# 首頁 HTML（Slogan + 服務項目）
 # -----------------------
 HOME_HTML = f"""
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>溍慎/鈦吉有限公司</title>
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <!-- AOS 動畫 -->
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
+  <script>document.addEventListener('DOMContentLoaded', ()=> AOS.init());</script>
   <style>
+    :root {{
+      --primary-blue: #6d8ec7;
+      --primary-blue-transparent: rgba(109,142,199,0.6);
+      --accent-yellow: #FFD85A;
+    }}
     html {{ scroll-padding-top: 120px; scroll-behavior: smooth; }}
-    body {{ margin: 0; padding-top: 90px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }}
+    body {{
+      margin: 0;
+      padding-top: 90px; /* 預留 header 高度 */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: white;
+    }}
+    /* Banner 背景 */
     .banner {{
-      margin-top: -90px; padding-top: 90px; height: 390px;
-      background: url('/static/banner_new.jpg') center/cover no-repeat;
-      color: white; text-align: center; display: flex; flex-direction: column; justify-content: center;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+      position: relative;
+      margin-top: -90px;
+      padding-top: 90px;
+      height: 300px;
+      background-image: url('/static/banner_new.jpg');
+      background-size: cover;
+      background-position: center;
     }}
-    @keyframes typing {{ from {{ width: 0; }} to {{ width: 100%; }} }}
-    @keyframes blink {{ 50% {{ border-color: transparent; }} }}
-    .typewriter {{
-      overflow: hidden; white-space: nowrap; border-right: .15em solid #6d8ec7;
-      font-size: 36px; font-weight: bold; width: 0;
-      animation: typing 2s steps(30,end) forwards, blink .75s step-end infinite;
+    /* 服務面板共用樣式 */
+    .services {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
     }}
-    .typewriter.second {{ animation-delay: 2.2s; }}
-    main {{ max-width: 1000px; margin: 40px auto; padding: 0 20px; }}
-    .services {{ display: flex; flex-wrap: wrap; gap: 20px; }}
-    .service-item {{ flex: 1 1 calc(25% - 20px); max-width: calc(25% - 20px); background-size:cover; background-position:center; border-radius:6px; height:220px; text-decoration:none; position:relative; overflow:hidden; transition:transform .3s, box-shadow .3s; }}
-    .service-item::before {{ content: ''; position:absolute; inset:0; background:rgba(0,0,0,0.45); z-index:0; }}
-    .service-item h3, .service-item p {{ color:white; position:relative; z-index:1; margin:0; }}
-    .service-item p {{ font-size:0.9rem; }}
-    .service-item:hover {{ transform:translateY(-5px) scale(1.02); box-shadow:0 8px 20px rgba(0,0,0,0.3); }}
+    .service-item {{
+      position: relative;
+      flex: 1 1 calc(25% - 20px);
+      max-width: calc(25% - 20px);
+      height: 220px;
+      padding: 20px;
+      border-radius: 6px;
+      background-size: cover;
+      background-position: center;
+      text-decoration: none;
+      overflow: hidden;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }}
+    .service-item::before {{
+      content: "";
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 0;
+    }}
+    .service-item h3, .service-item p {{
+      position: relative; z-index: 1; margin: 0; color: white;
+    }}
+    .service-item p {{ font-size: 0.9rem; }}
+    .service-item:hover {{
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }}
+    /* Slogan 區塊專用 */
+    .slogan-services {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 40px auto;
+      max-width: 1000px;
+      padding: 0 20px;
+    }}
+    .slogan-services .service-item {{
+      flex: 1 1 calc(50% - 20px);
+      max-width: calc(50% - 20px);
+      height: auto;
+      padding: 30px;
+      background-color: var(--primary-blue-transparent);
+    }}
+    .slogan-services .service-item::before {{
+      display: none;
+    }}
+    .slogan-services .service-item h3 {{
+      font-size: 28px;
+      text-align: center;
+    }}
+    /* 手機響應式 */
+    @media (max-width: 768px) {{
+      .banner {{ height: auto; padding: 90px 10px 30px; }}
+      .slogan-services .service-item {{
+        flex: 1 1 100%;
+        max-width: 100%;
+      }}
+      .service-item {{
+        flex: 1 1 calc(50% - 15px);
+        max-width: calc(50% - 15px);
+      }}
+    }}
+    @media (max-width: 480px) {{
+      .service-item {{
+        flex: 1 1 100%;
+        max-width: 100%;
+      }}
+    }}
   </style>
 </head>
 <body>
-  {HEADER_TRANSPARENT}
-  <div class="banner">
-    <div class="typewriter" data-aos="fade-in">溍於專業，慎於品質</div>
-    <div class="typewriter second" data-aos="fade-in">鈦造未來，吉刻成型</div>
-  </div>
+  {HEADER_HOME}
+  <div class="banner"></div>
+
   <main>
+    <!-- Slogan 區塊 -->
+    <section id="slogans" data-aos="fade-up">
+      <div class="slogan-services">
+        <div class="service-item" data-aos="zoom-in">
+          <h3>溍於專業，慎於品質</h3>
+        </div>
+        <div class="service-item" data-aos="zoom-in" data-aos-delay="100">
+          <h3>鈦造未來，吉刻成型</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- 原本的服務項目區塊 -->
     <section id="services">
       <h2 data-aos="fade-up">服務項目</h2>
       <div class="services">
@@ -106,15 +227,13 @@ HOME_HTML = f"""
         </a>
       </div>
     </section>
+
     {FOOTER_HTML}
   </main>
 </body>
 </html>
 """
 
-# -----------------------
-# 通用子頁面生成函式（使用實心 header）
-# -----------------------
 def render_subpage(title, content_html, aos_effect="fade-up"):
     return render_template_string(f"""
 <!DOCTYPE html>
@@ -123,13 +242,37 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>{title}</title>
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <!-- AOS 動畫 -->
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
+  <script>document.addEventListener('DOMContentLoaded', ()=> AOS.init());</script>
   <style>
+    :root {{ --primary-blue: #6d8ec7; }}
     html {{ scroll-padding-top: 120px; scroll-behavior: smooth; }}
-    body {{ margin:0; padding-top:90px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }}
-    main {{ max-width:1000px; margin:40px auto; padding:0 20px; }}
+    body {{
+      margin: 0;
+      padding-top: 90px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: white;
+    }}
+    header {{
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      background: #6d8ec7;
+      padding: 15px 30px;
+      color: white;
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: center;
+      z-index: 999; box-sizing: border-box;
+    }}
+    header nav a {{
+      color: white; text-decoration: none; font-weight: 600;
+      padding: 8px 12px; border-radius: 4px;
+    }}
+    main {{ max-width: 1000px; margin: 40px auto; padding: 0 20px; }}
+    .contact-info {{ background:#f2f7fb; padding:20px; border-radius:6px; line-height:1.8; }}
+    .contact-info a {{ color: var(--primary-blue); text-decoration:none; }}
+    .contact-info a:hover {{ text-decoration:underline; }}
   </style>
 </head>
 <body>
@@ -143,9 +286,6 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
 </html>
 """)
 
-# -----------------------
-# Flask 路由
-# -----------------------
 @app.route("/")
 def home():
     return render_template_string(HOME_HTML)
@@ -166,25 +306,31 @@ def onedragon():
     </div>
   </a>
   <a href="/vibration" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="200">
-    <div class="step-card">
+    <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
       <img src="/static/step2.jpg" alt="振動研磨" style="width:100%; border-radius:8px; margin-bottom:10px;">
       <h3>振動研磨</h3><p>表面均化處理</p>
     </div>
   </a>
   <a href="/sealing" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="300">
-    <div class="step-card">
-      <img src="/static/step3.jpg" alt="含浸封孔" style="width:100%; border-radius:8px; margin-bottom:10px;">
+    <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
+      <img src="/static/step3.jpg" alt="含浸封孔" style="width:100%;	border-radius:8px; margin-bottom:10px;">
       <h3>含浸封孔</h3><p>提升氣密性與耐用性</p>
     </div>
   </a>
   <a href="/coating" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="400">
-    <div class="step-card">
-      <img src="/static/step4.jpg" alt="皮膜化成" style="width:100%; border-radius:8px; margin-bottom:10px;">
+    <div class="step-card" style="transition:transform .3s,	box-shadow .3s;">
+      <img src="/static/step4.jpg" alt="皮膜化成" style="width:100%;	border-radius:8px; margin-bottom:10px;">
       <h3>皮膜化成</h3><p>依需求選擇性進行</p>
     </div>
   </a>
 </div>
 <p data-aos="fade-up" style="text-align:center;">我們提供整合式產線，節省客戶物流時間與管理成本。</p>
+<script>
+  document.querySelectorAll('.step-card').forEach(el => {
+    el.addEventListener('mouseenter',()=>{ el.style.transform='translateY(-5px) scale(1.02)'; el.style.boxShadow='0 8px 20px rgba(0,0,0,0.3)'; });
+    el.addEventListener('mouseleave',()=>{ el.style.transform=''; el.style.boxShadow=''; });
+  });
+</script>
 """
     return render_subpage("一條龍產線服務", flow_html, aos_effect="fade-down")
 
@@ -210,3 +356,4 @@ def wastewater():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
