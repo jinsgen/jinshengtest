@@ -3,16 +3,18 @@ from flask import Flask, render_template_string
 app = Flask(__name__)
 
 # -----------------------
-# Headers & Footer
+# Home 半透明 Header（position:absolute，隨捲動移動）
 # -----------------------
 HEADER_HOME = """
 <header style="
-  background: rgba(109, 142, 199, 0.6);
+  position: absolute;
+  top: 0; left: 0; width: 100%;
+  background: rgba(109,142,199,0.6);
   padding: 15px 30px;
   color: white;
   display: flex; flex-wrap: wrap;
   justify-content: space-between; align-items: center;
-  position: sticky; top: 0; z-index: 999;
+  z-index: 999; box-sizing: border-box;
 ">
   <div style="display:flex; align-items:center;">
     <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
@@ -30,14 +32,19 @@ HEADER_HOME = """
 </header>
 """
 
+# -----------------------
+# 子頁面實心藍 Header（position:absolute，隨捲動移動）
+# -----------------------
 HEADER_SOLID = """
 <header style="
+  position: absolute;
+  top: 0; left: 0; width: 100%;
   background: #6d8ec7;
   padding: 15px 30px;
   color: white;
   display: flex; flex-wrap: wrap;
   justify-content: space-between; align-items: center;
-  position: sticky; top: 0; z-index: 999;
+  z-index: 999; box-sizing: border-box;
 ">
   <div style="display:flex; align-items:center;">
     <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
@@ -55,6 +62,9 @@ HEADER_SOLID = """
 </header>
 """
 
+# -----------------------
+# Footer（共用）
+# -----------------------
 FOOTER_HTML = """
 <footer id="contact" style="
   background: #f2f7fb;
@@ -88,11 +98,8 @@ HOME_HTML = f"""
   <style>
     :root {{
       --primary-blue: #6d8ec7;
-      --primary-blue-transparent: rgba(109,142,199,0.6);
-      --accent-yellow: #FFD85A;
     }}
     html {{
-      scroll-padding-top: 120px;
       scroll-behavior: smooth;
     }}
     body {{
@@ -115,7 +122,6 @@ HOME_HTML = f"""
       color: white;
       font-size: 36px;
       font-weight: bold;
-      text-align: center;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
     }}
     .banner-text-second {{
@@ -126,7 +132,6 @@ HOME_HTML = f"""
       color: white;
       font-size: 36px;
       font-weight: bold;
-      text-align: center;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
     }}
     main {{
@@ -160,12 +165,16 @@ HOME_HTML = f"""
     }}
     .service-item::before {{
       content: "";
-      position: absolute; inset: 0;
+      position: absolute;
+      inset: 0;
       background: rgba(0,0,0,0.45);
       z-index: 0;
     }}
     .service-item h3, .service-item p {{
-      position: relative; z-index: 1; margin: 0; color: white;
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      color: white;
     }}
     .service-item p {{ font-size: 0.9rem; }}
     .service-item:hover {{
@@ -183,11 +192,11 @@ HOME_HTML = f"""
   </style>
 </head>
 <body>
-  {HEADER_HOME}
   <div class="banner" data-aos="fade-in">
     <div class="banner-text" data-aos="fade-up">溍於專業，慎於品質</div>
     <div class="banner-text-second" data-aos="fade-up" data-aos-delay="200">鈦造未來，吉刻成型</div>
   </div>
+  {HEADER_HOME}
   <main>
     <section id="services">
       <h2 data-aos="fade-up">服務項目</h2>
@@ -229,19 +238,22 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
   <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
   <style>
     :root {{ --primary-blue: #6d8ec7; }}
-    html {{ scroll-padding-top: 120px; scroll-behavior: smooth; }}
+    html {{ scroll-behavior: smooth; }}
     body {{
       margin: 0;
+      padding-top: 90px; /* 預留 header 高度 */
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: white;
     }}
     header {{
+      position: absolute;
+      top: 0; left: 0; width: 100%;
       background: #6d8ec7;
       padding: 15px 30px;
       color: white;
       display: flex; flex-wrap: wrap;
       justify-content: space-between; align-items: center;
-      position: sticky; top: 0; z-index: 999;
+      z-index: 999; box-sizing: border-box;
     }}
     header nav a {{
       color: white; text-decoration: none; font-weight: 600;
@@ -250,8 +262,13 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     main {{
       max-width: 1000px; margin: 40px auto; padding: 0 20px;
     }}
+    h2 {{
+      color: var(--primary-blue);
+      border-bottom: 2px solid var(--primary-blue);
+      padding-bottom: 8px;
+    }}
     .contact-info {{
-      background: #f2f7fb; padding: 20px; border-radius: 6px; line-height: 1.8;
+      background: #f2f7fb; padding:20px; border-radius:6px; line-height:1.8;
     }}
     .contact-info a {{ color: var(--primary-blue); text-decoration: none; }}
     .contact-info a:hover {{ text-decoration: underline; }}
@@ -287,9 +304,38 @@ def onedragon():
       <h3>毛邊去除</h3><p>可搭配自動化機械手臂</p>
     </div>
   </a>
-  <!-- ... 其餘步驟保留原動畫 ... -->
+  <a href="/vibration" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="200">
+    <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
+      <img src="/static/step2.jpg" alt="振動研磨" style="width:100%; border-radius:8px; margin-bottom:10px;">
+      <h3>振動研磨</h3><p>表面均化處理</p>
+    </div>
+  </a>
+  <a href="/sealing" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="300">
+    <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
+      <img src="/static/step3.jpg" alt="含浸封孔" style="width:100%; border-radius:8px; margin-bottom:10px;">
+      <h3>含浸封孔</h3><p>提升氣密性與耐用性</p>
+    </div>
+  </a>
+  <a href="/coating" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="400">
+    <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
+      <img src="/static/step4.jpg" alt="皮膜化成" style="width:100%; border-radius:8px; margin-bottom:10px;">
+      <h3>皮膜化成</h3><p>依需求選擇性進行</p>
+    </div>
+  </a>
 </div>
 <p data-aos="fade-up" style="margin-top:20px; text-align:center;">我們提供整合式產線，節省客戶物流時間與管理成本。</p>
+<script>
+  document.querySelectorAll('.step-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      el.style.transform = 'translateY(-5px) scale(1.02)';
+      el.style.boxShadow = '0 8px 20px rgba(0,0,0,0.3)';
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = '';
+      el.style.boxShadow = '';
+    });
+  });
+</script>
 """
     return render_subpage("一條龍產線服務", flow_html)
 
