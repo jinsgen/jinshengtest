@@ -29,7 +29,7 @@ FOOTER_HTML = """
 </footer>
 """
 
-# 首頁 HTML
+# 首頁 HTML（加入 Typewriter 動畫）
 HOME_HTML = f"""
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -46,6 +46,35 @@ HOME_HTML = f"""
             --primary-blue: #6d8ec7;
             --accent-yellow: #FFD85A;
         }}
+        /* Typewriter 動畫 */
+        @keyframes typing {{
+            from {{ width: 0; }}
+            to {{ width: 100%; }}
+        }}
+        @keyframes blink {{
+            50% {{ border-color: transparent; }}
+        }}
+        .banner {{
+            background-color: var(--accent-yellow);
+            color: var(--primary-blue);
+            height: 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }}
+        .banner .typewriter {{
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: .15em solid var(--primary-blue);
+            font-size: 36px;
+            font-weight: bold;
+            max-width: 0;
+            animation: typing 2s steps(30,end) forwards, blink .75s step-end infinite;
+        }}
+        .banner .typewriter.second {{
+            animation: typing 2s steps(30,end) forwards 2.5s, blink .75s step-end infinite 2.5s;
+        }}
         html {{
             scroll-padding-top: 120px;
             scroll-behavior: smooth;
@@ -54,16 +83,6 @@ HOME_HTML = f"""
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: white;
-        }}
-        .banner {{
-            background-color: var(--accent-yellow);
-            color: var(--primary-blue);
-            height: 240px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            font-weight: bold;
         }}
         main {{
             max-width: 1000px;
@@ -125,7 +144,10 @@ HOME_HTML = f"""
 </head>
 <body>
     {HEADER_HTML}
-    <div class="banner" data-aos="fade-in">溍於專業，慎於品質</div>
+    <div class="banner">
+        <div class="typewriter" data-aos="fade-in">溍於專業，慎於品質</div>
+        <div class="typewriter second" data-aos="fade-in">鈦造未來，吉刻成型</div>
+    </div>
     <main>
         <section id="services">
             <h2 data-aos="fade-up">服務項目</h2>
@@ -229,16 +251,16 @@ def onedragon():
 </div>
 <p data-aos="fade-up" style="text-align:center;">我們提供整合式產線，節省客戶物流時間與管理成本。</p>
 <script>
-    document.querySelectorAll('main a > div').forEach(el => {
-        el.addEventListener('mouseenter', () => {
+    document.querySelectorAll('main a > div').forEach(el => {{
+        el.addEventListener('mouseenter', () => {{
             el.style.transform = 'translateY(-5px) scale(1.02)';
             el.style.boxShadow = '0 8px 20px rgba(0,0,0,0.3)';
-        });
-        el.addEventListener('mouseleave', () => {
+        }});
+        el.addEventListener('mouseleave', () => {{
             el.style.transform = '';
             el.style.boxShadow = '';
-        });
-    });
+        }});
+    }});
 </script>
 """
     return render_subpage("一條龍產線服務", flow_html, aos_effect="fade-down")
