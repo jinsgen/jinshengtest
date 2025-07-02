@@ -6,7 +6,7 @@ app = Flask(__name__)
 # 共用 Header & Footer
 # -----------------------
 HEADER_HTML = """
-<header style="background:#6d8ec7; padding:15px 30px; color:white; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999;">
+<header style="background: rgba(109, 142, 199, 0.8); padding:15px 30px; color:white; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999;">
   <div style="display:flex; align-items:center;">
     <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
     <div style="font-size:20px; line-height:1.2; white-space:pre-line;">溍慎有限公司<br>鈦吉有限公司</div>
@@ -48,6 +48,7 @@ HOME_HTML = f"""
 <style>
   :root {{
     --primary-blue: #6d8ec7;
+    --primary-blue-transparent: rgba(109, 142, 199, 0.8);
     --accent-yellow: #FFD85A;
   }}
   /* 打字機動畫 */
@@ -197,10 +198,24 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
 <style>
-  :root {{ --primary-blue:#6d8ec7; }}
+  :root {{ 
+    --primary-blue: #6d8ec7;
+    --primary-blue-transparent: rgba(109, 142, 199, 0.8);
+  }}
   html {{ scroll-padding-top:120px; scroll-behavior:smooth; }}
   body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:white; }}
-  header {{ background:var(--primary-blue); padding:15px 30px; color:white; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999; }}
+  header {{ 
+    background: var(--primary-blue-transparent); 
+    padding:15px 30px; 
+    color:white; 
+    display:flex; 
+    flex-wrap:wrap; 
+    justify-content:space-between; 
+    align-items:center; 
+    position:sticky; 
+    top:0; 
+    z-index:999; 
+  }}
   header nav a {{ color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px; }}
   header nav a:hover {{ background:rgba(255,255,255,0.2); }}
   main {{ max-width:1000px; margin:40px auto; padding:0 20px; }}
