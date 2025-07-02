@@ -4,15 +4,14 @@ app = Flask(__name__)
 
 HOME_HTML = """
 <!DOCTYPE html>
-<html lang=\"zh-Hant\">
+<html lang="zh-Hant">
 <head>
-    <meta charset=\"UTF-8\" />
-    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>溍慎/鈦吉有限公司</title>
-    <link rel=\"icon\" href=\"/static/favicon.ico\" type=\"image/x-icon\">
-    <!-- AOS 動畫庫 -->
-    <link href=\"https://unpkg.com/aos@2.3.4/dist/aos.css\" rel=\"stylesheet\">
-    <script src=\"https://unpkg.com/aos@2.3.4/dist/aos.js\"></script>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => AOS.init());
     </script>
@@ -88,265 +87,94 @@ HOME_HTML = """
             color: var(--primary-blue);
             border-bottom: 2px solid var(--primary-blue);
         }
-        .services {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .service-item {
-            position: relative;
-            flex: 1 1 calc(25% - 20px);
-            max-width: calc(25% - 20px);
-            height: 220px;
-            padding: 20px;
-            border-radius: 6px;
-            color: white;
-            background-size: cover;
-            background-position: center;
+        .process-flow {
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-            text-decoration: none;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            gap: 30px;
+            margin: 60px 0;
         }
-        .service-item:hover {
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        .process-step {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            border-left: 4px solid var(--primary-blue);
+            padding-left: 20px;
         }
-        .service-item::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.45);
-            z-index: 0;
+        .process-step img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .service-item * {
-            position: relative;
-            z-index: 1;
+        .process-step h3 {
+            margin: 0;
+            font-size: 20px;
         }
-        .contact-info {
-            background-color: #f2f7fb;
-            padding: 20px;
-            border-radius: 6px;
-            line-height: 1.8;
-        }
-        .contact-info a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        .contact-info a:hover {
-            text-decoration: underline;
-        }
-        #mobile-footer-nav {
-            display: none;
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background-color: var(--primary-blue);
-            padding: 8px 0;
-            justify-content: space-around;
-        }
-        #mobile-footer-nav a {
-            color: white;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        #topBtn {
-            display: none;
-            position: fixed;
-            bottom: 60px;
-            right: 20px;
-            background-color: var(--primary-blue);
-            color: white;
-            padding: 10px 14px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-        }
-        @media (max-width: 992px) {
-            .service-item {
-                flex: 1 1 45%;
-                max-width: 45%;
-            }
-        }
-        @media (max-width: 600px) {
-            .service-item {
-                flex: 1 1 100%;
-                max-width: 100%;
-            }
-            #mobile-footer-nav {
-                display: flex;
-            }
-            #topBtn {
-                display: block;
-            }
+        .process-step p {
+            margin: 5px 0 0 0;
+            color: #444;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class=\"brand\">
-            <img src=\"/static/logo_transparent.png\" alt=\"LOGO\">
-            <div class=\"title\">溍慎有限公司<br>鈦吉有限公司</div>
+        <div class="brand">
+            <img src="/static/logo_transparent.png" alt="LOGO">
+            <div class="title">溍慎有限公司<br>鈦吉有限公司</div>
         </div>
         <nav>
-            <a href=\"/\">首頁</a>
-            <a href=\"#about\">關於溍慎</a>
-            <a href=\"#services\">服務項目</a>
-            <a href=\"#contact\">聯絡我們</a>
+            <a href="/">首頁</a>
+            <a href="#process">加工流程</a>
+            <a href="#contact">聯絡我們</a>
         </nav>
     </header>
-    <div class=\"banner\" data-aos=\"fade-in\">專業服務，信賴首選</div>
+    <div class="banner">一條龍加工產線服務</div>
     <main>
-        <section id=\"about\" data-aos=\"fade-up\">
-            <h2>關於溍慎</h2>
-            <p>本公司專營鋁合金與鋅合金產品之表面處理，服務內容涵蓋振動研磨、含浸封孔、金屬皮膜化成處理等。</p>
-        </section>
-        <section id=\"services\">
-            <h2 data-aos=\"fade-up\">服務項目</h2>
-            <div class=\"services\">
-                <a href=\"/vibration\" class=\"service-item\" style=\"background-image: url('/static/vibration.jpg');\" data-aos=\"zoom-in\">
-                    <h3>振動研磨</h3>
-                    <p>去除毛邊、拋光與表面均化。</p>
-                </a>
-                <a href=\"/sealing\" class=\"service-item\" style=\"background-image: url('/static/sealing.jpg');\" data-aos=\"zoom-in\">
-                    <h3>含浸封孔</h3>
-                    <p>提高氣密性與耐用性。</p>
-                </a>
-                <a href=\"/coating\" class=\"service-item\" style=\"background-image: url('/static/coating.jpg');\" data-aos=\"zoom-in\">
-                    <h3>皮膜化成</h3>
-                    <p>耐蝕塗裝處理，自動化產線。</p>
-                </a>
-                <a href=\"/robotic\" class=\"service-item\" style=\"background-image: url('/static/robotic.jpg');\" data-aos=\"zoom-in\">
-                    <h3>自動化機械手臂</h3>
-                    <p>搭配工具快速作業。</p>
-                </a>
-                <a href=\"/wastewater\" class=\"service-item\" style=\"background-image: url('/static/wastewater.jpg');\" data-aos=\"zoom-in\">
-                    <h3>廢水處理</h3>
-                    <p>淨化廢水、達標排放，降低污染。</p>
-                </a>
+        <section id="process">
+            <h2>加工流程</h2>
+            <div class="process-flow">
+                <div class="process-step" data-aos="fade-right">
+                    <img src="/static/step1.jpg" alt="去除毛邊">
+                    <div>
+                        <h3>毛邊去除（可搭配機械手臂）</h3>
+                        <p>使用機械手臂進行精密去除毛邊作業，確保品質一致。</p>
+                    </div>
+                </div>
+                <div class="process-step" data-aos="fade-left">
+                    <img src="/static/step2.jpg" alt="振動研磨">
+                    <div>
+                        <h3>振動研磨</h3>
+                        <p>進行細緻拋光與表面均化，去除殘留不規則。</p>
+                    </div>
+                </div>
+                <div class="process-step" data-aos="fade-right">
+                    <img src="/static/step3.jpg" alt="含浸封孔">
+                    <div>
+                        <h3>含浸封孔</h3>
+                        <p>有效封閉孔洞，提升氣密性與耐用性。</p>
+                    </div>
+                </div>
+                <div class="process-step" data-aos="fade-left">
+                    <img src="/static/step4.jpg" alt="皮膜化成">
+                    <div>
+                        <h3>皮膜化成（依需求）</h3>
+                        <p>提供防蝕塗裝與表面強化，視需求選擇實施。</p>
+                    </div>
+                </div>
             </div>
         </section>
-        <section id=\"contact\" data-aos=\"fade-up\">
+        <section id="contact" data-aos="fade-up">
             <h2>聯絡資訊</h2>
-            <div class=\"contact-info\">
-                地址：<a href=\"https://maps.app.goo.gl/8dkFhGhkzxeEaBYaA\" target=\"_blank\">台南市仁德區義林路148巷16號</a><br>
+            <div class="contact-info">
+                地址：<a href="https://maps.app.goo.gl/8dkFhGhkzxeEaBYaA" target="_blank">台南市仁德區義林路148巷16號</a><br>
                 Tel：06-2708989<br>
                 Fax：06-2707878<br>
                 Mobile：0975124624（鄭先生）<br>
-                Email：<a href=\"mailto:js42915245@gmail.com\">js42915245@gmail.com</a>
+                Email：<a href="mailto:js42915245@gmail.com">js42915245@gmail.com</a>
             </div>
         </section>
-    </main>
-    <nav id=\"mobile-footer-nav\">
-        <a href=\"/\">首頁</a>
-        <a href=\"#about\">關於</a>
-        <a href=\"#services\">服務</a>
-        <a href=\"#contact\">聯絡</a>
-    </nav>
-    <button id=\"topBtn\" onclick=\"window.scrollTo({top: 0, behavior: 'smooth'})\">▲</button>
-</body>
-</html>
-"""
-
-SUB_TEMPLATE = """
-<!DOCTYPE html>
-<html lang=\"zh-Hant\">
-<head>
-    <meta charset=\"UTF-8\">
-    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
-    <title>{{ title }}</title>
-    <link rel=\"icon\" href=\"/static/favicon.ico\" type=\"image/x-icon\">
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #6d8ec7;
-            padding: 15px 30px;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .brand {
-            display: flex;
-            align-items: center;
-        }
-        .brand img {
-            height: 60px;
-            margin-right: 14px;
-        }
-        .title {
-            font-size: 20px;
-            line-height: 1.2;
-            white-space: pre-line;
-        }
-        nav {
-            display: flex;
-            gap: 15px;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 12px;
-            border-radius: 4px;
-        }
-        nav a:hover {
-            background-color: rgba(255,255,255,0.2);
-        }
-        main {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        h1 {
-            color: #6d8ec7;
-        }
-        .contact-info {
-            background-color: #f2f7fb;
-            padding: 20px;
-            border-radius: 6px;
-            line-height: 1.8;
-            margin-top: 40px;
-        }
-        .contact-info a {
-            color: #6d8ec7;
-            text-decoration: none;
-        }
-        .contact-info a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class=\"brand\">
-            <img src=\"/static/logo_transparent.png\" alt=\"LOGO\">
-            <div class=\"title\">溍慎有限公司<br>鈦吉有限公司</div>
-        </div>
-        <nav>
-            <a href=\"/\">首頁</a>
-            <a href=\"/#about\">關於溍慎</a>
-            <a href=\"/#services\">服務項目</a>
-            <a href=\"/#contact\">聯絡我們</a>
-        </nav>
-    </header>
-    <main>
-        <h1>{{ title }}</h1>
-        <p>這是「{{ title }}」頁面的內容。</p>
-        <div class=\"contact-info\">
-            地址：<a href=\"https://maps.app.goo.gl/8dkFhGhkzxeEaBYaA\" target=\"_blank\">台南市仁德區義林路148巷16號</a><br>
-            Tel：06-2708989<br>
-            Fax：06-2707878<br>
-            Mobile：0975124624（鄭先生）<br>
-            Email：<a href=\"mailto:js42915245@gmail.com\">js42915245@gmail.com</a>
-        </div>
     </main>
 </body>
 </html>
@@ -355,34 +183,6 @@ SUB_TEMPLATE = """
 @app.route("/")
 def home():
     return render_template_string(HOME_HTML)
-
-@app.route("/vibration")
-def vibration():
-    return render_template_string(SUB_TEMPLATE, title="振動研磨")
-
-@app.route("/sealing")
-def sealing():
-    return render_template_string(SUB_TEMPLATE, title="含浸封孔")
-
-@app.route("/coating")
-def coating():
-    return render_template_string(SUB_TEMPLATE, title="皮膜化成")
-
-@app.route("/robotic")
-def robotic():
-    return render_template_string(SUB_TEMPLATE, title="自動化機械手臂")
-
-@app.route("/wastewater")
-def wastewater():
-    return render_template_string(SUB_TEMPLATE, title="廢水處理")
-
-@app.route("/certification")
-def certification():
-    return render_template_string(SUB_TEMPLATE, title="關於證照")
-
-@app.route('/favicon.ico')
-def favicon():
-    return app.send_static_file('favicon.ico')
 
 if __name__ == "__main__":
     app.run(debug=True)
