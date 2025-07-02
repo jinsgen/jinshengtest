@@ -16,7 +16,7 @@ HEADER_HTML = """
     <a href="/about"      style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
     <a href="/#services"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
     <a href="/onedragon"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">一條龍產線</a>
-    <a href="#contact"    style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">聯絡我們</a>
+    <a href="/#contact"   style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">聯絡我們</a>
   </nav>
 </header>
 """
@@ -67,8 +67,8 @@ HOME_HTML = f"""
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: white;
   }}
- .banner {
-    background-image: url('/static/banner_new.jpg'); /* 換成你的圖片 */
+  .banner {{
+    background-image: url('/static/banner_new.jpg'); /* 替換成你的封面圖 */
     background-size: cover;
     background-position: center;
     color: white;
@@ -77,11 +77,10 @@ HOME_HTML = f"""
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;      /* 🔸讓字水平置中 */
-    padding: 0 10px;         /* 🔸防止手機貼邊 */
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.6); /* 讓字體清楚 */
-}
-
+    text-align: center;    /* 置中 */
+    padding: 0 10px;       /* 手機防止貼邊 */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  }}
   .typewriter {{
     overflow: hidden;
     white-space: nowrap;
@@ -94,7 +93,6 @@ HOME_HTML = f"""
       blink .75s step-end infinite;
   }}
   .typewriter.second {{
-    /* 與第一行同時打字 */
     animation:
       typing 2s steps(30,end) forwards,
       blink .75s step-end infinite;
@@ -254,7 +252,7 @@ def onedragon():
     </div>
   </a>
   <a href="/coating" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="400">
-    <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
+    <div class="step-card" style="transition:transform .3s,	box-shadow .3s;">
       <img src="/static/step4.jpg" alt="皮膜化成" style="width:100%; border-radius:8px; margin-bottom:10px;">
       <h3>皮膜化成</h3><p>依需求選擇性進行</p>
     </div>
