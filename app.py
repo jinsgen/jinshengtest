@@ -14,7 +14,7 @@ HEADER_HTML = """
   <nav style="display:flex; gap:15px; flex-wrap:wrap; margin-top:8px;">
     <a href="/"           style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
     <a href="/about"      style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
-    <a href="#services"   style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
+    <a href="/#services"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
     <a href="/onedragon"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">一條龍產線</a>
     <a href="#contact"    style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">聯絡我們</a>
   </nav>
@@ -90,7 +90,7 @@ HOME_HTML = f"""
       blink .75s step-end infinite;
   }}
   .typewriter.second {{
-    /* 取消延遲，和第一行同時打字 */
+    /* 與第一行同時打字 */
     animation:
       typing 2s steps(30,end) forwards,
       blink .75s step-end infinite;
@@ -231,25 +231,25 @@ def onedragon():
     flow_html = """
 <h2 data-aos="fade-down" style="text-align:center;">一條龍加工流程</h2>
 <div style="display:flex; flex-wrap:wrap; gap:30px; justify-content:center; max-width:1000px; margin:20px auto;">
-  <a href="#services" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="100">
+  <a href="/robotic" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="100">
     <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
       <img src="/static/step1.jpg" alt="毛邊去除" style="width:100%; border-radius:8px; margin-bottom:10px;">
       <h3>毛邊去除</h3><p>可搭配自動化機械手臂</p>
     </div>
   </a>
-  <a href="#services" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="200">
+  <a href="/vibration" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="200">
     <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
       <img src="/static/step2.jpg" alt="振動研磨" style="width:100%; border-radius:8px; margin-bottom:10px;">
       <h3>振動研磨</h3><p>表面均化處理</p>
     </div>
   </a>
-  <a href="#services" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="300">
+  <a href="/sealing" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="300">
     <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
       <img src="/static/step3.jpg" alt="含浸封孔" style="width:100%; border-radius:8px; margin-bottom:10px;">
       <h3>含浸封孔</h3><p>提升氣密性與耐用性</p>
     </div>
   </a>
-  <a href="#services" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="400">
+  <a href="/coating" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="400">
     <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
       <img src="/static/step4.jpg" alt="皮膜化成" style="width:100%; border-radius:8px; margin-bottom:10px;">
       <h3>皮膜化成</h3><p>依需求選擇性進行</p>
