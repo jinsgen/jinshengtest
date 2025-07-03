@@ -83,7 +83,7 @@ HOME_HTML = f"""
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
   <style>
-    :root {{ --primary-blue: #6d8ec7; --accent-yellow: #FFD85A; }}
+    :root {{ --primary-blue: #6d8ec7; }}
     html {{ scroll-behavior: smooth; }}
     body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }}
     header nav a.nav-link {{
@@ -98,23 +98,44 @@ HOME_HTML = f"""
       background: rgba(255,255,255,0.4);
       transform: translateY(2px);
     }}
-    @keyframes typing {{ from {{ width:0 }} to {{ width:100% }} }}
-    @keyframes blink {{ 50% {{ border-color: transparent }} }}
     .banner {{
-      background-image:url('/static/banner_new.jpg');
-      background-size:cover; background-position:center;
-      height:300px; position:relative;
+      width: 100vw;
+      height: 350px;
+      background-image: url('/static/banner_new.jpg');
+      background-size: cover;
+      background-position: center;
+      margin-top: 0;
+      position: relative;
+      display: flex;
+      align-items: center;
     }}
-    .typewriter {{
-      overflow:hidden; white-space:nowrap;
-      border-right:.15em solid var(--primary-blue);
-      font-size:36px; font-weight:bold; color:white;
-      width:0; position:absolute; left:50%; transform:translateX(-50%);
-      text-shadow:2px 2px 4px rgba(0,0,0,0.6);
-      animation: typing 2s steps(30,end) forwards, blink .75s step-end infinite;
+    .slogan-group {{
+      position: absolute;
+      right: 10vw;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
     }}
-    .typewriter.first {{ top:35%; }}
-    .typewriter.second {{ top:50%; animation-delay:2.5s; }}
+    .slogan-line {{
+      font-size: 36px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+      margin: 0 0 12px 0;
+      letter-spacing: 2px;
+    }}
+    @media(max-width:768px){{
+      .banner{{height:220px;}}
+      .slogan-line{{font-size:24px;}}
+      .slogan-group{{right:4vw;}}
+    }}
+    @media(max-width:480px){{
+      .banner{{height:140px;}}
+      .slogan-line{{font-size:17px;}}
+      .slogan-group{{right:2vw;}}
+    }}
     main {{ max-width:1000px; margin:40px auto; padding:0 20px; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
     .services {{ display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }}
@@ -133,15 +154,15 @@ HOME_HTML = f"""
       transform:translateY(-5px) scale(1.02);
       box-shadow:0 8px 20px rgba(0,0,0,0.3);
     }}
-    @media(max-width:768px){{ .typewriter {{ font-size:28px; }} .service-item{{flex:1 1 calc(50%-15px);max-width:calc(50%-15px)}} }}
-    @media(max-width:480px){{ .typewriter {{ font-size:24px; }} .service-item{{flex:1 1 100%;max-width:100%}} }}
   </style>
 </head>
 <body>
   {HEADER_HOME}
   <div class="banner" data-aos="fade-in">
-    <div class="typewriter first">溍於專業，慎於品質</div>
-    <div class="typewriter second">鈦造未來，吉刻成型</div>
+    <div class="slogan-group" data-aos="fade-right">
+      <div class="slogan-line">溍於專業，慎於品質</div>
+      <div class="slogan-line">鈦造未來，吉刻成型</div>
+    </div>
   </div>
   <main>
     <section id="services">
