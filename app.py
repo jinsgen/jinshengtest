@@ -25,7 +25,6 @@ HEADER_HOME = """
   </div>
 </header>
 """
-
 HEADER_SOLID = HEADER_HOME.replace("main-header", "main-header solid", 1)
 
 FOOTER_HTML = """
@@ -63,7 +62,6 @@ HOME_HTML = f"""
     :root {{ --primary-blue: #6d8ec7; --accent-yellow: #FFD85A; }}
     html {{ scroll-behavior: smooth; }}
     body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background: #fff; }}
-
     .main-header {{
       width: 100vw;
       background: rgba(109, 142, 199, 0.62);
@@ -449,20 +447,35 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       background: rgba(255,255,255,0.32); transform: translateY(2px);
     }}
     main{{ max-width:1100px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
-    /* 核心價值圖 */
+
+    /* 以下為關於我們專屬樣式 */
+    .aboutus-mainblock {{
+      display: flex; align-items: flex-start; gap: 48px;
+      margin: 48px auto 48px auto; max-width: 1100px; flex-wrap: wrap;
+    }}
+    .aboutus-imageblock {{
+      flex: 0 0 340px; max-width:340px; width:100%; display: flex; align-items:center; justify-content:center;
+    }}
+    .aboutus-imageblock img {{
+      width: 100%; max-width:340px; border-radius: 16px; box-shadow:0 4px 16px rgba(60,80,120,0.11);
+    }}
+    .aboutus-textblock {{
+      flex: 1 1 380px; min-width:240px;
+    }}
+    .aboutus-textblock h2 {{
+      color:#2a5ba0; margin-top:0; font-size:2.25em; letter-spacing:2px; margin-bottom:18px;
+    }}
+    .aboutus-intro {{
+      font-size:1.15em; line-height:1.8; color:#314760;
+    }}
     .core-value-section {{
-      display: flex; flex-direction: column; align-items: center;
-      padding: 40px 0 0 0;
+      display: flex; flex-direction: column; align-items: center; margin: 0 auto 28px auto;
     }}
     .core-diagram-wrap {{
-      width: 380px; height: 380px;
-      position: relative;
-      margin-bottom: 36px;
-      min-width:300px;
+      width: 380px; height: 380px; position: relative; margin-bottom: 36px; min-width:280px;
     }}
     .core-center {{
-      position: absolute;
-      left: 50%; top: 50%;
+      position: absolute; left: 50%; top: 50%;
       transform: translate(-50%,-50%);
       width: 120px; height: 120px; border-radius: 50%;
       background: #e51919;
@@ -470,15 +483,14 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       color: #fff; font-size: 2.0rem; font-weight: bold;
       text-align: center; line-height: 1.25;
       box-shadow: 0 4px 24px rgba(230,0,0,.09);
-      letter-spacing: 1px;
-      z-index:2;
+      letter-spacing: 1px; z-index:2;
     }}
     .core-point {{
       position: absolute;
       width: 100px; height: 100px; border-radius: 50%;
       background: #96d0f3;
       display: flex; align-items: center; justify-content: center;
-      color: #fff; font-size: 1.15rem; font-weight: 500;
+      color: #fff; font-size: 1.08rem; font-weight: 500;
       text-align: center; line-height: 1.28;
       box-shadow: 0 2px 12px rgba(0,80,150,0.06);
       z-index:2;
@@ -491,118 +503,30 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       position:absolute; left:0; top:0; width:100%; height:100%; z-index:1;
       pointer-events:none;
     }}
-    @media(max-width:480px){{
-      .core-diagram-wrap{{width:99vw;height:85vw;min-width:unset;}}
-      .core-center{{width:18vw;height:18vw;font-size:4.9vw;}}
-      .core-point{{width:13vw;height:13vw;font-size:2.8vw;}}
-      .core-point1{{top:3vw;}}
-      .core-point3{{bottom:3vw;}}
+    .aboutus-philosophy {{
+      max-width:650px; margin:0 auto 60px auto; font-size:1.11em; background:#f8fafd;
+      border-radius:10px; padding:30px 32px; box-shadow:0 2px 10px rgba(60,90,120,0.05);
+    }}
+    .aboutus-philosophy ul{{padding-left:1.2em;}}
+    .aboutus-philosophy li{{margin-bottom:13px;}}
+    @media (max-width: 900px) {{
+      .aboutus-mainblock{{flex-direction:column; gap:22px;}}
+      .aboutus-imageblock{{margin:0 auto;max-width:95vw;}}
+      .aboutus-textblock{{min-width:unset;}}
+      .core-diagram-wrap{{width:80vw;height:80vw;min-width:unset;}}
+    }}
+    @media (max-width:480px) {{
+      .aboutus-intro{{font-size:1em;}}
+      .aboutus-imageblock img{{border-radius:7px;}}
+      .core-diagram-wrap{{width:97vw;height:84vw;}}
+      .core-center{{width:19vw;height:19vw;font-size:4.9vw;}}
+      .core-point{{width:14vw;height:14vw;font-size:2.7vw;}}
+      .core-point1{{top:4vw;}}
+      .core-point3{{bottom:4vw;}}
       .core-point2{{right:2vw;}}
       .core-point4{{left:2vw;}}
+      .aboutus-philosophy{{padding:20px 6vw; font-size:0.98em;}}
     }}
-    .core-value-text {{
-      width:100%; max-width:520px; margin: 18px auto 0 auto; background: #fff;
-      border-radius:12px; box-shadow:0 2px 16px rgba(60,90,120,0.06); padding:30px 24px;
-    }}
-    .core-value-text h3{{color:#2475b2;margin-top:0;}}
-    .core-value-text ul{{padding-left:1.3em;margin-bottom:0;}}
-    .core-value-text li{{margin-bottom:10px;}}
-    .core-value-text strong{{color:#d22929;}}
-    /* 加工流程流程(略，下略，與首頁一致) */
-    .dragon-flow {{
-      display: flex;
-      flex-direction: row;
-      align-items: flex-end;
-      justify-content: flex-start;
-      gap: 0;
-      overflow-x: auto;
-      padding-bottom: 34px;
-      margin-bottom: 16px;
-      scrollbar-width: thin;
-      scrollbar-color: #b1bed7 #f2f7fb;
-      -webkit-overflow-scrolling: touch;
-      cursor: grab;
-      user-select: none;
-      position: relative;
-    }}
-    .step-card {{
-      width: 220px;
-      min-width: 220px;
-      max-width: 220px;
-      height: 250px;
-      margin: 0 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 14px rgba(60, 70, 90, 0.12);
-      overflow: hidden;
-      background: #f7fafb;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: transform .3s, box-shadow .3s;
-      position: relative;
-    }}
-    .step-card:hover {{
-      transform: translateY(-7px) scale(1.04);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-    }}
-    .step-card img {{
-      width: 100%;
-      height: 130px;
-      object-fit: cover;
-      border-radius: 12px 12px 0 0;
-      display: block;
-    }}
-    .step-card h3, .step-card p {{
-      margin: 10px 0 3px 0;
-      color: #365481;
-      text-align: center;
-      z-index: 1;
-    }}
-    .step-card p {{ font-size: 1rem; margin-bottom: 10px; }}
-    .dragon-arrow {{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 0 8px 18px 8px;
-      user-select: none;
-      min-width: 38px;
-      font-weight: 800;
-      opacity: 0.98;
-    }}
-    .dragon-arrow .arrow-num {{
-      font-size: 1.18em;
-      color: #fff;
-      background: #6d8ec7;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 2px;
-      box-shadow: 0 2px 6px rgba(40,60,90,.10);
-      font-family: inherit;
-    }}
-    .dragon-arrow .arrow-icon {{
-      font-size: 2.1em;
-      color: #6d8ec7;
-      line-height: 1;
-      margin-bottom:0;
-      display:block;
-    }}
-    .dragon-desc-section {{
-      background: #f7fafb;
-      border-radius: 10px;
-      margin: 40px auto 0 auto;
-      padding: 38px 32px 38px 32px;
-      font-size: 1.12em;
-      color: #284052;
-      box-shadow: 0 2px 8px rgba(110,140,180,0.06);
-      max-width: 980px;
-      line-height: 1.8;
-    }}
-    .contact-info{{ background:#f2f7fb; padding:20px; border-radius:6px; line-height:1.8; margin-top:40px; }}
-    .contact-info a{{ color:var(--primary-blue); text-decoration:none; }}
-    .contact-info a:hover{{ text-decoration:underline; }}
   </style>
 </head>
 <body>
@@ -613,45 +537,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     {FOOTER_HTML}
   </main>
   <script>
-  // 加工流程支援橫移
-  const dragonFlow = document.querySelector('.dragon-flow');
-  if(dragonFlow){{
-    dragonFlow.addEventListener('wheel', function(e){{
-      if (e.deltaY === 0) return;
-      e.preventDefault();
-      dragonFlow.scrollLeft += e.deltaY;
-    }}, {{ passive: false }});
-    let isDown = false, startX, scrollLeft;
-    dragonFlow.addEventListener('mousedown', function(e){{
-      isDown = true;
-      dragonFlow.classList.add('dragging');
-      startX = e.pageX - dragonFlow.offsetLeft;
-      scrollLeft = dragonFlow.scrollLeft;
-    }});
-    dragonFlow.addEventListener('mouseleave', ()=>{{isDown=false;dragonFlow.classList.remove('dragging');}});
-    dragonFlow.addEventListener('mouseup', ()=>{{isDown=false;dragonFlow.classList.remove('dragging');}});
-    dragonFlow.addEventListener('mousemove', function(e){{
-      if(!isDown)return;
-      e.preventDefault();
-      const x = e.pageX - dragonFlow.offsetLeft;
-      const walk = (x - startX)*1.1;
-      dragonFlow.scrollLeft = scrollLeft - walk;
-    }});
-    // 手機拖動
-    let isTouch = false, touchStartX, touchScrollLeft;
-    dragonFlow.addEventListener('touchstart', function(e){{
-      isTouch = true;
-      touchStartX = e.touches[0].pageX;
-      touchScrollLeft = dragonFlow.scrollLeft;
-    }});
-    dragonFlow.addEventListener('touchmove', function(e){{
-      if(!isTouch)return;
-      const x = e.touches[0].pageX;
-      const walk = (x - touchStartX)*1.1;
-      dragonFlow.scrollLeft = touchScrollLeft - walk;
-    }});
-    dragonFlow.addEventListener('touchend', function(){{ isTouch = false;}});
-  }}
+  // 加工流程支援橫移（如有process頁，無關於本頁）
   </script>
 </body>
 </html>
@@ -704,86 +590,6 @@ def about():
     <li><strong>永續</strong>：合法設立並取得合格工廠登記證及廢水排放許可，廠區配備完善的廢水、廢土處理設施，致力於降低對環境衝擊。定期勞資會議，確保勞資雙方權益，落實企業社會責任。</li>
   </ul>
 </section>
-<style>
-.aboutus-mainblock {{
-  display: flex; align-items: flex-start; gap: 48px;
-  margin: 48px auto 48px auto; max-width: 1100px; flex-wrap: wrap;
-}}
-.aboutus-imageblock {{
-  flex: 0 0 340px; max-width:340px; width:100%; display: flex; align-items:center; justify-content:center;
-}}
-.aboutus-imageblock img {{
-  width: 100%; max-width:340px; border-radius: 16px; box-shadow:0 4px 16px rgba(60,80,120,0.11);
-}}
-.aboutus-textblock {{
-  flex: 1 1 380px; min-width:240px;
-}}
-.aboutus-textblock h2 {{
-  color:#2a5ba0; margin-top:0; font-size:2.25em; letter-spacing:2px; margin-bottom:18px;
-}}
-.aboutus-intro {{
-  font-size:1.15em; line-height:1.8; color:#314760;
-}}
-.core-value-section {{
-  display: flex; flex-direction: column; align-items: center; margin: 0 auto 28px auto;
-}}
-.core-diagram-wrap {{
-  width: 380px; height: 380px; position: relative; margin-bottom: 36px; min-width:280px;
-}}
-.core-center {{
-  position: absolute; left: 50%; top: 50%;
-  transform: translate(-50%,-50%);
-  width: 120px; height: 120px; border-radius: 50%;
-  background: #e51919;
-  display: flex; align-items: center; justify-content: center;
-  color: #fff; font-size: 2.0rem; font-weight: bold;
-  text-align: center; line-height: 1.25;
-  box-shadow: 0 4px 24px rgba(230,0,0,.09);
-  letter-spacing: 1px; z-index:2;
-}}
-.core-point {{
-  position: absolute;
-  width: 100px; height: 100px; border-radius: 50%;
-  background: #96d0f3;
-  display: flex; align-items: center; justify-content: center;
-  color: #fff; font-size: 1.08rem; font-weight: 500;
-  text-align: center; line-height: 1.28;
-  box-shadow: 0 2px 12px rgba(0,80,150,0.06);
-  z-index:2;
-}}
-.core-point1 {{ left:50%; top:18px; transform:translate(-50%,0); }}
-.core-point2 {{ right:16px; top:50%; transform:translate(0,-50%); }}
-.core-point3 {{ left:50%; bottom:18px; transform:translate(-50%,0); }}
-.core-point4 {{ left:16px; top:50%; transform:translate(0,-50%); }}
-.core-curve {{
-  position:absolute; left:0; top:0; width:100%; height:100%; z-index:1;
-  pointer-events:none;
-}}
-.aboutus-philosophy {{
-  max-width:650px; margin:0 auto 60px auto; font-size:1.11em; background:#f8fafd;
-  border-radius:10px; padding:30px 32px; box-shadow:0 2px 10px rgba(60,90,120,0.05);
-}}
-.aboutus-philosophy ul{{padding-left:1.2em;}}
-.aboutus-philosophy li{{margin-bottom:13px;}}
-@media (max-width: 900px) {{
-  .aboutus-mainblock{{flex-direction:column; gap:22px;}}
-  .aboutus-imageblock{{margin:0 auto;max-width:95vw;}}
-  .aboutus-textblock{{min-width:unset;}}
-  .core-diagram-wrap{{width:80vw;height:80vw;min-width:unset;}}
-}}
-@media (max-width:480px) {{
-  .aboutus-intro{{font-size:1em;}}
-  .aboutus-imageblock img{{border-radius:7px;}}
-  .core-diagram-wrap{{width:97vw;height:84vw;}}
-  .core-center{{width:19vw;height:19vw;font-size:4.9vw;}}
-  .core-point{{width:14vw;height:14vw;font-size:2.7vw;}}
-  .core-point1{{top:4vw;}}
-  .core-point3{{bottom:4vw;}}
-  .core-point2{{right:2vw;}}
-  .core-point4{{left:2vw;}}
-  .aboutus-philosophy{{padding:20px 6vw; font-size:0.98em;}}
-}}
-</style>
 """
     return render_subpage("關於溍慎", core_diagram_html, aos_effect="fade-up")
 
@@ -841,7 +647,7 @@ def process():
     <b>➀ 初步處理</b>：鑄造完成的工件會產生毛邊，若毛邊過厚、振動研磨無法直接處理，則會先進行前處理（如：機械手臂修整、氣動銼刀修邊），再進入振動研磨程序。<br><br>
     <b>➁ 振動研磨</b>：毛邊去除後，表面會留有加工痕跡，因此透過振動研磨來統一表面質感、修飾瑕疵。部分廠商會於此階段先將工件取回再加工後，重新交由我們執行下一步。<br><br>
     <b>➂ 含浸封孔與皮膜化成</b>：汽車零件常見沙孔問題，若零件需具備氣密性，會進行含浸封孔處理以補強孔隙。考量部分工件需經海運，也會配合進行皮膜化成處理，以提升抗鹽霧腐蝕能力。<br><br>
-    <b>➃ 廢水處理</b>：因加工各項程序需使用化學藥劑（如含浸液、振動液、皮膜液），本公司設有自主管理的廢水處理系統，將所有排出液體集中處理、過濾與排放，符合環保與法規要求。
+    <b>➃ 廢水處理</b>：因加工各項程序需排放廢水，本公司設有自主管理的廢水處理系統，將所有排出液體集中處理、過濾與排放，符合環保與法規要求。
   </p>
 </div>
 """
