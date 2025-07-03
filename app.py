@@ -99,8 +99,6 @@ HOME_HTML = f"""
       background: rgba(255,255,255,0.4);
       transform: translateY(2px);
     }}
-
-    /* Banner 必須絕對覆蓋頂部，且在 header 下方顯示 */
     .banner-bg {{
       position: absolute;
       top: 0; left: 0;
@@ -119,46 +117,35 @@ HOME_HTML = f"""
       align-items: center;
       justify-content: flex-end;
     }}
-    .slogan-block {{
-      margin-right: 9vw;
+    .slogan-group {{
+      margin-right: 10vw;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      background: rgba(255,255,255,0.22);
-      backdrop-filter: blur(7px);
-      border-radius: 18px 36px 24px 40px/26px 28px 20px 34px;
-      box-shadow: 0 4px 32px 0 rgba(120,145,170,0.13);
-      padding: 28px 40px 24px 32px;
-      min-width: 320px;
-      border: 1.5px solid rgba(140,150,190,0.12);
-      /* 溫柔漸變色邊線 */
     }}
     .slogan-line {{
       font-size: 34px;
       font-weight: 700;
-      color: #365481;
+      color: #fff;
       letter-spacing: 1.5px;
       margin: 0 0 10px 0;
-      text-shadow: 0 1px 8px rgba(255,255,255,0.30),0 2px 12px rgba(109,142,199,0.12);
       line-height: 1.3;
-      filter: drop-shadow(0 2px 5px rgba(100,110,130,0.10));
+      text-shadow: 0 3px 8px rgba(40,60,90,0.32), 0 2px 8px rgba(0,0,0,0.23);
+      background: none;
+      border: none;
+      padding: 0;
     }}
     .slogan-line:last-child{{margin-bottom:0;}}
     @media(max-width:900px){{
       .banner-bg,.banner-content{{height:200px;}}
-      .slogan-block{{padding:16px 24px 14px 16px; min-width:170px;}}
+      .slogan-group{{margin-right:4vw;}}
       .slogan-line{{font-size:19px;}}
-      .banner-content{{min-height:120px;}}
-      .slogan-block{{margin-right:3vw;}}
     }}
     @media(max-width:480px){{
       .banner-bg,.banner-content{{height:110px;}}
-      .slogan-block{{padding:7px 10px 8px 10px; min-width:80px;}}
+      .slogan-group{{margin-right:2vw;}}
       .slogan-line{{font-size:13px;}}
-      .banner-content{{min-height:40px;}}
-      .slogan-block{{margin-right:2vw;}}
     }}
-
     main {{ max-width:1000px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
     .services {{ display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }}
@@ -183,7 +170,7 @@ HOME_HTML = f"""
   {HEADER_HOME}
   <div class="banner-bg"></div>
   <div class="banner-content" data-aos="fade-in">
-    <div class="slogan-block" data-aos="fade-right" data-aos-delay="200">
+    <div class="slogan-group" data-aos="fade-right" data-aos-delay="200">
       <div class="slogan-line">溍於專業，慎於品質</div>
       <div class="slogan-line">鈦造未來，吉刻成型</div>
     </div>
@@ -235,8 +222,67 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     header nav a.nav-link:active{{ background:rgba(255,255,255,0.4); transform:translateY(2px); }}
     header{{ background:#6d8ec7; padding:15px 30px; color:white; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10; }}
     main{{ max-width:1000px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
-    .step-card{{ transition:transform .3s,box-shadow .3s; }}
-    .step-card:hover{{ transform:translateY(-5px) scale(1.02); box-shadow:0 8px 20px rgba(0,0,0,0.3); }}
+    .step-card{{
+      width: 200px;
+      margin: 0 14px;
+      border-radius: 10px;
+      box-shadow: 0 2px 14px rgba(60, 70, 90, 0.11);
+      overflow: hidden;
+      background: #f7fafb;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform .3s, box-shadow .3s;
+      position: relative;
+    }}
+    .step-card:hover {{
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+    }}
+    .step-card img {{
+      width: 100%;
+      display: block;
+      border-radius: 10px 10px 0 0;
+      object-fit: cover;
+    }}
+    .step-card h3, .step-card p {{
+      margin: 8px 0 2px 0;
+      color: #365481;
+      text-align: center;
+      z-index: 1;
+    }}
+    .step-card p {{ font-size: 0.93rem; margin-bottom: 10px; }}
+    .dragon-arrow {{
+      font-size: 38px;
+      color: #6d8ec7;
+      margin: 0 6px;
+      user-select: none;
+      min-width: 38px;
+      text-align: center;
+      font-weight: 800;
+      transition: color 0.2s;
+      opacity: 0.92;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }}
+    .dragon-flow {{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }}
+    @media (max-width: 950px) {{
+      .step-card {{ width: 140px; margin: 0 6px; }}
+      .dragon-arrow {{ font-size:24px; min-width:22px; }}
+    }}
+    @media (max-width: 650px) {{
+      .dragon-flow {{ flex-direction: column; gap:0; align-items: stretch; }}
+      .step-card {{ width: 90%; min-width: 150px; max-width: 350px; margin:12px auto; }}
+      .dragon-arrow {{ transform: rotate(90deg); margin:0 auto; }}
+    }}
     h2{{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
     .contact-info{{ background:#f2f7fb; padding:20px; border-radius:6px; line-height:1.8; margin-top:40px; }}
     .contact-info a{{ color:var(--primary-blue); text-decoration:none; }}
@@ -265,31 +311,35 @@ def about():
 @app.route("/onedragon")
 def onedragon():
     flow_html = """
-<h2 data-aos="fade-down" style="text-align:center;">一條龍加工流程</h2>
-<div style="display:flex; flex-wrap:wrap; gap:30px; justify-content:center; margin-top:20px;">
-  <a href="/robotic" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="100">
-    <div class="step-card">
-      <img src="/static/step1.jpg" alt="毛邊去除" style="width:100%; border-radius:8px; margin-bottom:10px;">
-      <h3>毛邊去除</h3><p>可搭配自動化機械手臂</p>
-    </div>
+<div class="dragon-flow">
+  <a href="/robotic" class="step-card" data-aos="zoom-in">
+    <img src="/static/robotic.jpg" alt="自動化機械手臂">
+    <h3>自動化機械手臂</h3>
+    <p>可搭配工具快速作業</p>
   </a>
-  <a href="/vibration" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="200">
-    <div class="step-card">
-      <img src="/static/step2.jpg" alt="振動研磨" style="width:100%; border-radius:8px; margin-bottom:10px;">
-      <h3>振動研磨</h3><p>表面均化處理</p>
-    </div>
+  <div class="dragon-arrow" data-aos="fade-right">&#8594;</div>
+  <a href="/vibration" class="step-card" data-aos="zoom-in">
+    <img src="/static/vibration.jpg" alt="振動研磨">
+    <h3>振動研磨</h3>
+    <p>表面均化處理</p>
   </a>
-  <a href="/sealing" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="300">
-    <div class="step-card">
-      <img src="/static/step3.jpg" alt="含浸封孔" style="width:100%; border-radius:8px; margin-bottom:10px;">
-      <h3>含浸封孔</h3><p>提升氣密性與耐用性</p>
-    </div>
+  <div class="dragon-arrow" data-aos="fade-right">&#8594;</div>
+  <a href="/sealing" class="step-card" data-aos="zoom-in">
+    <img src="/static/sealing.jpg" alt="含浸封孔">
+    <h3>含浸封孔</h3>
+    <p>提升氣密性與耐用性</p>
   </a>
-  <a href="/coating" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="400">
-    <div class="step-card">
-      <img src="/static/step4.jpg" alt="皮膜化成" style="width:100%; border-radius:8px; margin-bottom:10px;">
-      <h3>皮膜化成</h3><p>依需求選擇性進行</p>
-    </div>
+  <div class="dragon-arrow" data-aos="fade-right">&#8594;</div>
+  <a href="/coating" class="step-card" data-aos="zoom-in">
+    <img src="/static/coating.jpg" alt="皮膜化成">
+    <h3>皮膜化成</h3>
+    <p>依需求選擇性進行</p>
+  </a>
+  <div class="dragon-arrow" data-aos="fade-right">&#8594;</div>
+  <a href="/wastewater" class="step-card" data-aos="zoom-in">
+    <img src="/static/wastewater.jpg" alt="廢水處理">
+    <h3>廢水處理</h3>
+    <p>淨化廢水、達標排放</p>
   </a>
 </div>
 <p data-aos="fade-up" style="margin-top:20px; text-align:center;">我們提供整合式產線，節省客戶物流時間與管理成本。</p>
