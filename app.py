@@ -222,8 +222,25 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     header nav a.nav-link:active{{ background:rgba(255,255,255,0.4); transform:translateY(2px); }}
     header{{ background:#6d8ec7; padding:15px 30px; color:white; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10; }}
     main{{ max-width:1000px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
-    .step-card{{
+    .dragon-flow {{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0;
+      overflow-x: auto;
+      padding-bottom: 20px;
+      margin-bottom: 16px;
+      scrollbar-width: thin;
+      scrollbar-color: #b1bed7 #f2f7fb;
+      -webkit-overflow-scrolling: touch;
+    }}
+    .step-card {{
       width: 200px;
+      min-width: 200px;
+      max-width: 200px;
+      height: 250px;
+      box-sizing: border-box;
       margin: 0 14px;
       border-radius: 10px;
       box-shadow: 0 2px 14px rgba(60, 70, 90, 0.11);
@@ -242,17 +259,18 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     }}
     .step-card img {{
       width: 100%;
-      display: block;
-      border-radius: 10px 10px 0 0;
+      height: 130px;
       object-fit: cover;
+      border-radius: 10px 10px 0 0;
+      display: block;
     }}
     .step-card h3, .step-card p {{
-      margin: 8px 0 2px 0;
+      margin: 10px 0 3px 0;
       color: #365481;
       text-align: center;
       z-index: 1;
     }}
-    .step-card p {{ font-size: 0.93rem; margin-bottom: 10px; }}
+    .step-card p {{ font-size: 0.95rem; margin-bottom: 10px; }}
     .dragon-arrow {{
       font-size: 38px;
       color: #6d8ec7;
@@ -267,21 +285,16 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       align-items: center;
       justify-content: center;
     }}
-    .dragon-flow {{
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
+    @media (max-width: 1150px) {{
+      .step-card {{ width: 165px; min-width:165px; max-width:165px; height: 200px; }}
+      .step-card img {{ height: 90px; }}
     }}
-    @media (max-width: 950px) {{
-      .step-card {{ width: 140px; margin: 0 6px; }}
-      .dragon-arrow {{ font-size:24px; min-width:22px; }}
-    }}
-    @media (max-width: 650px) {{
-      .dragon-flow {{ flex-direction: column; gap:0; align-items: stretch; }}
-      .step-card {{ width: 90%; min-width: 150px; max-width: 350px; margin:12px auto; }}
-      .dragon-arrow {{ transform: rotate(90deg); margin:0 auto; }}
+    @media (max-width: 700px) {{
+      main {{padding:0 3vw;}}
+      .dragon-flow {{padding-bottom:10px;}}
+      .step-card {{ width: 120px; min-width:120px; max-width:120px; height: 145px; }}
+      .step-card img {{ height: 55px; }}
+      .dragon-arrow {{ font-size: 22px; min-width: 18px; }}
     }}
     h2{{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
     .contact-info{{ background:#f2f7fb; padding:20px; border-radius:6px; line-height:1.8; margin-top:40px; }}
