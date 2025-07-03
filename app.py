@@ -117,7 +117,6 @@ HOME_HTML = f"""
       background: rgba(255,255,255,0.32); transform: translateY(2px);
     }}
 
-    /* Banner 與 Slogan */
     .banner-bg {{
       position: absolute; top: 0; left: 0;
       width: 100vw; height: 350px;
@@ -165,7 +164,7 @@ HOME_HTML = f"""
     main {{ max-width:1100px; margin:400px auto 0 auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
 
-    /* 服務項目區塊 - 5格(3+2)第二排兩格置中 */
+    /* 服務項目5格(大格, 第二排兩格置中, 左右空白一樣) */
     .services {{
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -178,11 +177,11 @@ HOME_HTML = f"""
       min-height: 560px;
       position: relative;
     }}
-    /* 第一排三格（1,2,3） */
+    /* 第一排三格（2,3,4） */
     .services > :nth-child(1) {{ grid-column:2/3; grid-row:1; }}
     .services > :nth-child(2) {{ grid-column:3/4; grid-row:1; }}
     .services > :nth-child(3) {{ grid-column:4/5; grid-row:1; }}
-    /* 第二排兩格（4,5），置中分佈 */
+    /* 第二排兩格（3,4），置中分佈 */
     .services > :nth-child(4) {{ grid-column:3/4; grid-row:2; }}
     .services > :nth-child(5) {{ grid-column:4/5; grid-row:2; }}
 
@@ -231,7 +230,6 @@ HOME_HTML = f"""
       box-shadow:0 8px 26px rgba(0,0,0,0.21);
     }}
 
-    /* 響應式(手機)調整 */
     @media(max-width:1200px){{
       .slogan-line{{font-size:32px;}}
       .service-item h3{{font-size:1.19rem;}}
@@ -450,7 +448,11 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       font-family: inherit;
     }}
     .dragon-arrow .arrow-icon {{
-      display:none;
+      font-size: 2.1em;
+      color: #6d8ec7;
+      line-height: 1;
+      margin-bottom:0;
+      display: block;
     }}
     @media (max-width: 1250px) {{
       .step-card{{width:150px;min-width:150px;max-width:150px;height:140px;}}
@@ -482,6 +484,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       .step-card {{ width: 105px; min-width:105px; max-width:105px; height: 78px; }}
       .step-card img {{ height: 30px; }}
       .dragon-arrow .arrow-num{{width:13px;height:13px;font-size:.7em;}}
+      .dragon-arrow .arrow-icon{{font-size:1em;}}
     }}
     h2{{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
     .dragon-desc-section {{
@@ -578,6 +581,7 @@ def onedragon():
   </a>
   <div class="dragon-arrow" data-aos="fade-right">
     <div class="arrow-num">➀</div>
+    <div class="arrow-icon">&#8594;</div>
   </div>
   <a href="/vibration" class="step-card" data-aos="zoom-in">
     <img src="/static/vibration.jpg" alt="振動研磨">
@@ -586,6 +590,7 @@ def onedragon():
   </a>
   <div class="dragon-arrow" data-aos="fade-right">
     <div class="arrow-num">➁</div>
+    <div class="arrow-icon">&#8594;</div>
   </div>
   <a href="/sealing" class="step-card" data-aos="zoom-in">
     <img src="/static/sealing.jpg" alt="含浸封孔">
@@ -594,6 +599,7 @@ def onedragon():
   </a>
   <div class="dragon-arrow" data-aos="fade-right">
     <div class="arrow-num">➂</div>
+    <div class="arrow-icon">&#8594;</div>
   </div>
   <a href="/coating" class="step-card" data-aos="zoom-in">
     <img src="/static/coating.jpg" alt="皮膜化成">
@@ -602,6 +608,7 @@ def onedragon():
   </a>
   <div class="dragon-arrow" data-aos="fade-right">
     <div class="arrow-num">➃</div>
+    <div class="arrow-icon">&#8594;</div>
   </div>
   <a href="/wastewater" class="step-card" data-aos="zoom-in">
     <img src="/static/wastewater.jpg" alt="廢水處理">
