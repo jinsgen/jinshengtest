@@ -127,7 +127,6 @@ HOME_HTML = f"""
     .nav-link:active {{
       background: rgba(255,255,255,0.32); transform: translateY(2px);
     }}
-
     /* Hamburger (手機menu) */
     .nav-toggle-label {{
       display: none;
@@ -157,7 +156,6 @@ HOME_HTML = f"""
     #nav-toggle:checked + .nav-toggle-label span:nth-child(3) {{
       transform: translateY(-8px) rotate(-45deg);
     }}
-
     @media(max-width:820px){{
       .header-content{{
         padding: 0 2vw;
@@ -201,7 +199,6 @@ HOME_HTML = f"""
       .brand{{font-size:8px;}}
       .nav-link{{font-size:0.91em;}}
     }}
-
     /* Banner 與 Slogan */
     .banner-bg {{
       position: absolute; top: 0; left: 0;
@@ -246,7 +243,6 @@ HOME_HTML = f"""
       white-space: nowrap;
     }}
     .slogan-line:last-child{{margin-bottom:0;}}
-
     main {{ max-width:1200px; margin:400px auto 0 auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
 
@@ -312,7 +308,6 @@ HOME_HTML = f"""
       transform:translateY(-9px) scale(1.06);
       box-shadow:0 12px 38px rgba(0,0,0,0.21);
     }}
-
     @media (max-width:1150px) {{
       .services {{
         gap:32px 12px;
@@ -400,7 +395,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Noto+Sans+TC:wght@700&display=swap');
     :root {{ --primary-blue: #6d8ec7; }}
     html {{ scroll-behavior: smooth; }}
-    body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }}
+    body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:#f9fbfc; }}
     .main-header {{
       width: 100vw;
       background: #6d8ec7;
@@ -454,6 +449,66 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       background: rgba(255,255,255,0.32); transform: translateY(2px);
     }}
     main{{ max-width:1100px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
+    /* 核心價值圖 */
+    .core-value-section {{
+      display: flex; flex-direction: column; align-items: center;
+      padding: 40px 0 0 0;
+    }}
+    .core-diagram-wrap {{
+      width: 380px; height: 380px;
+      position: relative;
+      margin-bottom: 36px;
+      min-width:300px;
+    }}
+    .core-center {{
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%,-50%);
+      width: 120px; height: 120px; border-radius: 50%;
+      background: #e51919;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 2.0rem; font-weight: bold;
+      text-align: center; line-height: 1.25;
+      box-shadow: 0 4px 24px rgba(230,0,0,.09);
+      letter-spacing: 1px;
+      z-index:2;
+    }}
+    .core-point {{
+      position: absolute;
+      width: 100px; height: 100px; border-radius: 50%;
+      background: #96d0f3;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1.15rem; font-weight: 500;
+      text-align: center; line-height: 1.28;
+      box-shadow: 0 2px 12px rgba(0,80,150,0.06);
+      z-index:2;
+    }}
+    .core-point1 {{ left:50%; top:18px; transform:translate(-50%,0); }}
+    .core-point2 {{ right:16px; top:50%; transform:translate(0,-50%); }}
+    .core-point3 {{ left:50%; bottom:18px; transform:translate(-50%,0); }}
+    .core-point4 {{ left:16px; top:50%; transform:translate(0,-50%); }}
+    .core-curve {{
+      position:absolute; left:0; top:0; width:100%; height:100%; z-index:1;
+      pointer-events:none;
+    }}
+    @media(max-width:480px){{
+      .core-diagram-wrap{{width:99vw;height:85vw;min-width:unset;}}
+      .core-center{{width:18vw;height:18vw;font-size:4.9vw;}}
+      .core-point{{width:13vw;height:13vw;font-size:2.8vw;}}
+      .core-point1{{top:3vw;}}
+      .core-point3{{bottom:3vw;}}
+      .core-point2{{right:2vw;}}
+      .core-point4{{left:2vw;}}
+    }}
+    .core-value-text {{
+      width:100%; max-width:520px; margin: 18px auto 0 auto; background: #fff;
+      border-radius:12px; box-shadow:0 2px 16px rgba(60,90,120,0.06); padding:30px 24px;
+    }}
+    .core-value-text h3{{color:#2475b2;margin-top:0;}}
+    .core-value-text ul{{padding-left:1.3em;margin-bottom:0;}}
+    .core-value-text li{{margin-bottom:10px;}}
+    .core-value-text strong{{color:#d22929;}}
+    /* 加工流程流程(略，下略，與首頁一致) */
     .dragon-flow {{
       display: flex;
       flex-direction: row;
@@ -534,39 +589,6 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       margin-bottom:0;
       display:block;
     }}
-    @media (max-width: 1250px) {{
-      .step-card{{width:150px;min-width:150px;max-width:150px;height:140px;}}
-      .step-card img{{height:60px;}}
-      .dragon-arrow .arrow-num{{width:23px;height:23px;font-size:.86em;}}
-    }}
-    @media(max-width:1100px){{
-      main {{padding:0 2vw;}}
-      .header-content{{height:44px;}}
-      .logo{{height:30px; width:30px;}}
-      .brand{{font-size:12px;}}
-    }}
-    @media(max-width:800px){{
-      .header-content{{
-        flex-direction: column;
-        align-items: flex-start;
-        height:auto;
-        padding: 6px 4px;
-        gap: 4px;
-      }}
-      .logo-area{{gap:6px;}}
-      nav{{gap:5px;font-size:12px;}}
-      .logo{{height:22px; width:22px;}}
-      .brand{{font-size:9.6px;}}
-    }}
-    @media (max-width: 700px) {{
-      main {{padding:0 3vw;}}
-      .dragon-flow {{padding-bottom:10px;}}
-      .step-card {{ width: 105px; min-width:105px; max-width:105px; height: 78px; }}
-      .step-card img {{ height: 30px; }}
-      .dragon-arrow .arrow-num{{width:13px;height:13px;font-size:.7em;}}
-      .dragon-arrow .arrow-icon{{font-size:1em;}}
-    }}
-    h2{{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
     .dragon-desc-section {{
       background: #f7fafb;
       border-radius: 10px;
@@ -641,7 +663,36 @@ def home():
 
 @app.route("/about")
 def about():
-    return render_subpage("關於溍慎", "<p>本頁內容待補充。</p>")
+    core_diagram_html = """
+<div class="core-value-section">
+  <div class="core-diagram-wrap">
+    <!-- SVG連線圓弧 -->
+    <svg class="core-curve" viewBox="0 0 380 380">
+      <circle cx="190" cy="190" r="150" fill="none" stroke="#bfd4e6" stroke-width="14"/>
+    </svg>
+    <!-- 四大重點 -->
+    <div class="core-center">核心<br>價值</div>
+    <div class="core-point core-point1">具競爭力的技術</div>
+    <div class="core-point core-point2">ISO9001<br>證證</div>
+    <div class="core-point core-point3">環境責任</div>
+    <div class="core-point core-point4">信守承諾</div>
+  </div>
+  <div class="core-value-text">
+    <p style="font-size:1.1em; margin-bottom:10px;">
+      成立日期：溍慎有限公司 — 2018年5月30日（民國107年）<br>
+      &emsp;&emsp;&emsp;&emsp;鈦吉有限公司 — 2017年7月12日（民國106年）
+    </p>
+    <p>廣泛應用於汽機車零組件、五金加工品等零件之後製加工，提升產品表面品質與耐用性。</p>
+    <ul>
+      <li><strong>創新</strong>：我們持續導入具市場競爭力的技術與自動化設備，包括機械手臂整修工程、兩套含浸自動化生產線、多軸器與龍門式自動化清洗化成產線，提升產能與穩定度。</li>
+      <li><strong>誠信</strong>：以誠待人、信守承諾，加工品皆保留限度樣供品質比對；報價單明確載明各項作業工段，透明化管理流程，建立與客戶間的長期信任。</li>
+      <li><strong>服務</strong>：我們重視每一道作業流程，嚴格遵守ISO 9001品質管理規範，確保提供穩定、可靠的表面處理服務，並持續優化生產與檢驗流程。</li>
+      <li><strong>永續</strong>：公司依法設立並取得合格工廠登記證及廢水排放許可證，廠區具備完善廢水與廢土處理設施，致力於降低對環境的衝擊。並定期召開勞資會議，促進員工與公司間的雙向溝通，確保勞資雙方權益，實踐企業社會責任。</li>
+    </ul>
+  </div>
+</div>
+"""
+    return render_subpage("關於溍慎", core_diagram_html, aos_effect="fade-up")
 
 @app.route("/process")
 def process():
@@ -692,12 +743,12 @@ def process():
 <div class="dragon-desc-section" data-aos="fade-up" style="margin-bottom:20px;">
   <h3 style="color:#4166a9; font-size:1.25em; margin:0 0 18px 0;">加工流程補充說明</h3>
   <p>
-    本公司依據 <b>ISO 9001:2015 品質管理系統</b> 作業，從客戶送來的貨件開始，即進行嚴格的<span style="color:#4166a9;"><b>進料檢驗</b></span>。若發現異常情形，如生鏽、碰損或其他瑕疵，會第一時間主動通知廠商，並依廠商決定是否退回或繼續加工。<br><br>
+    我們公司依據 <b>ISO 9001:2015 品質管理系統</b> 作業，從客戶送來的貨件開始，即進行嚴格的<span style="color:#4166a9;"><b>進料檢驗</b></span>。若發現異常情形，如生鏽、碰損或其他瑕疵，會第一時間主動通知廠商，並依廠商決定是否退回或繼續加工。<br><br>
     每一品項皆建立對應的 <b>SOP 標準作業流程</b>，並搭配照片與紀錄，要求所有員工依照流程標準執行，確保加工一致性與品質穩定性。<br><br>
     <b>➀ 初步處理</b>：鑄造完成的工件會產生毛邊，若毛邊過厚、振動研磨無法直接處理，則會先進行前處理（如：機械手臂修整、氣動銼刀修邊），再進入振動研磨程序。<br><br>
     <b>➁ 振動研磨</b>：毛邊去除後，表面會留有加工痕跡，因此透過振動研磨來統一表面質感、修飾瑕疵。部分廠商會於此階段先將工件取回再加工後，重新交由我們執行下一步。<br><br>
     <b>➂ 含浸封孔與皮膜化成</b>：汽車零件常見沙孔問題，若零件需具備氣密性，會進行含浸封孔處理以補強孔隙。考量部分工件需經海運，也會配合進行皮膜化成處理，以提升抗鹽霧腐蝕能力。<br><br>
-    <b>➃ 廢水處理</b>：因加工各項程序會需要排放廢水，本公司設有自主管理的廢水處理系統，將所有排出液體集中處理、過濾與排放，符合環保與法規要求。
+    <b>➃ 廢水處理</b>：因加工各項程序需使用化學藥劑（如含浸液、振動液、皮膜液），本公司設有自主管理的廢水處理系統，將所有排出液體集中處理、過濾與排放，符合環保與法規要求。
   </p>
 </div>
 """
