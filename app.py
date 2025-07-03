@@ -9,7 +9,8 @@ HEADER_HOME = """
   color: white;
   display: flex; flex-wrap: wrap;
   justify-content: space-between; align-items: center;
-  position: sticky; top: 0; z-index: 999;
+  position: sticky; top: 0; z-index: 10;
+  backdrop-filter: blur(4px);
 ">
   <div style="display:flex; align-items:center;">
     <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
@@ -34,7 +35,7 @@ HEADER_SOLID = """
   color: white;
   display: flex; flex-wrap: wrap;
   justify-content: space-between; align-items: center;
-  position: sticky; top: 0; z-index: 999;
+  position: sticky; top: 0; z-index: 10;
 ">
   <div style="display:flex; align-items:center;">
     <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
@@ -83,7 +84,7 @@ HOME_HTML = f"""
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
   <style>
-    :root {{ --primary-blue: #6d8ec7; }}
+    :root {{ --primary-blue: #6d8ec7; --accent-yellow: #FFD85A; }}
     html {{ scroll-behavior: smooth; }}
     body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }}
     header nav a.nav-link {{
@@ -98,45 +99,67 @@ HOME_HTML = f"""
       background: rgba(255,255,255,0.4);
       transform: translateY(2px);
     }}
-    .banner {{
+
+    /* Banner 必須絕對覆蓋頂部，且在 header 下方顯示 */
+    .banner-bg {{
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw; height: 350px;
+      background: url('/static/banner_new.jpg') center center/cover no-repeat;
+      z-index: 0;
+      min-height: 200px;
+      pointer-events: none;
+    }}
+    .banner-content {{
+      position: relative;
       width: 100vw;
       height: 350px;
-      background-image: url('/static/banner_new.jpg');
-      background-size: cover;
-      background-position: center;
-      margin-top: 0;
-      position: relative;
+      z-index: 1;
       display: flex;
       align-items: center;
+      justify-content: flex-end;
     }}
-    .slogan-group {{
-      position: absolute;
-      right: 10vw;
-      top: 50%;
-      transform: translateY(-50%);
+    .slogan-block {{
+      margin-right: 9vw;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
+      background: rgba(255,255,255,0.22);
+      backdrop-filter: blur(7px);
+      border-radius: 18px 36px 24px 40px/26px 28px 20px 34px;
+      box-shadow: 0 4px 32px 0 rgba(120,145,170,0.13);
+      padding: 28px 40px 24px 32px;
+      min-width: 320px;
+      border: 1.5px solid rgba(140,150,190,0.12);
+      /* 溫柔漸變色邊線 */
     }}
     .slogan-line {{
-      font-size: 36px;
-      font-weight: bold;
-      color: white;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-      margin: 0 0 12px 0;
-      letter-spacing: 2px;
+      font-size: 34px;
+      font-weight: 700;
+      color: #365481;
+      letter-spacing: 1.5px;
+      margin: 0 0 10px 0;
+      text-shadow: 0 1px 8px rgba(255,255,255,0.30),0 2px 12px rgba(109,142,199,0.12);
+      line-height: 1.3;
+      filter: drop-shadow(0 2px 5px rgba(100,110,130,0.10));
     }}
-    @media(max-width:768px){{
-      .banner{{height:220px;}}
-      .slogan-line{{font-size:24px;}}
-      .slogan-group{{right:4vw;}}
+    .slogan-line:last-child{{margin-bottom:0;}}
+    @media(max-width:900px){{
+      .banner-bg,.banner-content{{height:200px;}}
+      .slogan-block{{padding:16px 24px 14px 16px; min-width:170px;}}
+      .slogan-line{{font-size:19px;}}
+      .banner-content{{min-height:120px;}}
+      .slogan-block{{margin-right:3vw;}}
     }}
     @media(max-width:480px){{
-      .banner{{height:140px;}}
-      .slogan-line{{font-size:17px;}}
-      .slogan-group{{right:2vw;}}
+      .banner-bg,.banner-content{{height:110px;}}
+      .slogan-block{{padding:7px 10px 8px 10px; min-width:80px;}}
+      .slogan-line{{font-size:13px;}}
+      .banner-content{{min-height:40px;}}
+      .slogan-block{{margin-right:2vw;}}
     }}
-    main {{ max-width:1000px; margin:40px auto; padding:0 20px; }}
+
+    main {{ max-width:1000px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
     .services {{ display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }}
     .service-item {{
@@ -158,8 +181,9 @@ HOME_HTML = f"""
 </head>
 <body>
   {HEADER_HOME}
-  <div class="banner" data-aos="fade-in">
-    <div class="slogan-group" data-aos="fade-right">
+  <div class="banner-bg"></div>
+  <div class="banner-content" data-aos="fade-in">
+    <div class="slogan-block" data-aos="fade-right" data-aos-delay="200">
       <div class="slogan-line">溍於專業，慎於品質</div>
       <div class="slogan-line">鈦造未來，吉刻成型</div>
     </div>
@@ -209,8 +233,8 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     header nav a.nav-link{{ transition:background .2s,transform .1s; color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px; margin-left:8px; }}
     header nav a.nav-link:hover{{ background:rgba(255,255,255,0.2); }}
     header nav a.nav-link:active{{ background:rgba(255,255,255,0.4); transform:translateY(2px); }}
-    header{{ background:#6d8ec7; padding:15px 30px; color:white; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999; }}
-    main{{ max-width:1000px; margin:40px auto; padding:0 20px; }}
+    header{{ background:#6d8ec7; padding:15px 30px; color:white; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10; }}
+    main{{ max-width:1000px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
     .step-card{{ transition:transform .3s,box-shadow .3s; }}
     .step-card:hover{{ transform:translateY(-5px) scale(1.02); box-shadow:0 8px 20px rgba(0,0,0,0.3); }}
     h2{{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
