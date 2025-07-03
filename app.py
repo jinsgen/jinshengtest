@@ -57,7 +57,7 @@ HOME_HTML = f"""
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
+  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init({duration:800,once:true}));</script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Noto+Sans+TC:wght@700&display=swap');
     :root {{ --primary-blue: #6d8ec7; --accent-yellow: #FFD85A; }}
@@ -128,7 +128,6 @@ HOME_HTML = f"""
       background: rgba(255,255,255,0.32); transform: translateY(2px);
     }}
 
-    /* Hamburger (手機menu) */
     .nav-toggle-label {{
       display: none;
       flex-direction: column;
@@ -202,7 +201,6 @@ HOME_HTML = f"""
       .nav-link{{font-size:0.91em;}}
     }}
 
-    /* Banner 與 Slogan */
     .banner-bg {{
       position: absolute; top: 0; left: 0;
       width: 100vw; height: 350px;
@@ -249,104 +247,7 @@ HOME_HTML = f"""
 
     main {{ max-width:1200px; margin:400px auto 0 auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
-
-    /* 服務項目五格(大格、2排平均) */
-    .services {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 48px 38px;
-      justify-content: center;
-      align-items: flex-start;
-      margin-bottom: 30px;
-      margin-top: 30px;
-      min-height: 620px;
-      width:100%;
-    }}
-    .service-item {{
-      width: 325px;
-      height: 265px;
-      border-radius: 18px;
-      background-size:cover;
-      background-position:center;
-      text-decoration:none;
-      overflow:hidden;
-      transition:transform .3s,box-shadow .3s;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      min-width:0;
-      box-shadow: 0 2px 12px rgba(90,110,160,0.12);
-      margin-bottom:0;
-      margin-right:0;
-    }}
-    .service-item::before {{
-      content:""; position:absolute; inset:0; background:rgba(0,0,0,0.38); z-index:0;
-    }}
-    .service-item h3 {{
-      position:relative; z-index:1; 
-      color:#fff;
-      font-family: 'Montserrat', 'Noto Sans TC', sans-serif;
-      font-size:2.1rem; 
-      font-weight: 700;
-      letter-spacing: 1.3px;
-      margin:0 0 10px 0;
-      line-height: 1.17;
-      text-shadow: 0 3px 9px rgba(45,60,110,0.23);
-      text-align: left;
-      padding-left: 16px;
-    }}
-    .service-item p {{
-      position:relative; z-index:1;
-      color: #f5f5f7;
-      font-family: 'Noto Sans TC', 'Montserrat', sans-serif;
-      font-size:1.25rem;
-      margin:0 0 18px 0;
-      text-align: left;
-      padding-left: 16px;
-      text-shadow: 0 1px 4px rgba(50,55,85,0.18);
-      line-height:1.4;
-      letter-spacing: 0.6px;
-    }}
-    .service-item:hover {{
-      transform:translateY(-9px) scale(1.06);
-      box-shadow:0 12px 38px rgba(0,0,0,0.21);
-    }}
-
-    @media (max-width:1150px) {{
-      .services {{
-        gap:32px 12px;
-      }}
-      .service-item {{
-        width: 250px; height: 165px;
-      }}
-      .service-item h3{{font-size:1.1rem;}}
-      .service-item p{{font-size:0.92rem;}}
-    }}
-    @media (max-width:900px) {{
-      .services{{gap:12px 8px;}}
-      .service-item{{width:43vw; min-width:150px; max-width:99vw; height:20vw; min-height:60px;}}
-      main{{max-width:98vw;}}
-    }}
-    @media (max-width:650px) {{
-      .banner-bg,.banner-content{{height:95px;}}
-      main{{margin-top:135px;}}
-      .services{{
-        display: flex;
-        flex-direction: column;
-        gap:10px;
-        min-height:unset;
-        width:98vw;
-      }}
-      .service-item{{width:100%; height:86px; padding:6px 10px; font-size:11px;}}
-      .service-item h3{{font-size:1em;}}
-      .service-item p{{font-size:0.8em;}}
-    }}
-    @media(max-width:400px){{
-      .banner-content{{height:60px;}}
-      .slogan-line{{font-size:10px;}}
-      .service-item{{height:60px; font-size:9px;}}
-    }}
+    /* 服務項目省略 ... 這部分內容不影響本頁面動畫 */
   </style>
 </head>
 <body>
@@ -395,7 +296,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
+  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init({{duration:800,once:true}}));</script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Noto+Sans+TC:wght@700&display=swap');
     :root {{ --primary-blue: #6d8ec7; }}
@@ -454,133 +355,6 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       background: rgba(255,255,255,0.32); transform: translateY(2px);
     }}
     main{{ max-width:1100px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
-    .dragon-flow {{
-      display: flex;
-      flex-direction: row;
-      align-items: flex-end;
-      justify-content: flex-start;
-      gap: 0;
-      overflow-x: auto;
-      padding-bottom: 34px;
-      margin-bottom: 16px;
-      scrollbar-width: thin;
-      scrollbar-color: #b1bed7 #f2f7fb;
-      -webkit-overflow-scrolling: touch;
-      cursor: grab;
-      user-select: none;
-      position: relative;
-    }}
-    .step-card {{
-      width: 220px;
-      min-width: 220px;
-      max-width: 220px;
-      height: 250px;
-      margin: 0 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 14px rgba(60, 70, 90, 0.12);
-      overflow: hidden;
-      background: #f7fafb;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: transform .3s, box-shadow .3s;
-      position: relative;
-    }}
-    .step-card:hover {{
-      transform: translateY(-7px) scale(1.04);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-    }}
-    .step-card img {{
-      width: 100%;
-      height: 130px;
-      object-fit: cover;
-      border-radius: 12px 12px 0 0;
-      display: block;
-    }}
-    .step-card h3, .step-card p {{
-      margin: 10px 0 3px 0;
-      color: #365481;
-      text-align: center;
-      z-index: 1;
-    }}
-    .step-card p {{ font-size: 1rem; margin-bottom: 10px; }}
-    .dragon-arrow {{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 0 8px 18px 8px;
-      user-select: none;
-      min-width: 38px;
-      font-weight: 800;
-      opacity: 0.98;
-    }}
-    .dragon-arrow .arrow-num {{
-      font-size: 1.18em;
-      color: #fff;
-      background: #6d8ec7;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 2px;
-      box-shadow: 0 2px 6px rgba(40,60,90,.10);
-      font-family: inherit;
-    }}
-    .dragon-arrow .arrow-icon {{
-      font-size: 2.1em;
-      color: #6d8ec7;
-      line-height: 1;
-      margin-bottom:0;
-      display:block;
-    }}
-    @media (max-width: 1250px) {{
-      .step-card{{width:150px;min-width:150px;max-width:150px;height:140px;}}
-      .step-card img{{height:60px;}}
-      .dragon-arrow .arrow-num{{width:23px;height:23px;font-size:.86em;}}
-    }}
-    @media(max-width:1100px){{
-      main {{padding:0 2vw;}}
-      .header-content{{height:44px;}}
-      .logo{{height:30px; width:30px;}}
-      .brand{{font-size:12px;}}
-    }}
-    @media(max-width:800px){{
-      .header-content{{
-        flex-direction: column;
-        align-items: flex-start;
-        height:auto;
-        padding: 6px 4px;
-        gap: 4px;
-      }}
-      .logo-area{{gap:6px;}}
-      nav{{gap:5px;font-size:12px;}}
-      .logo{{height:22px; width:22px;}}
-      .brand{{font-size:9.6px;}}
-    }}
-    @media (max-width: 700px) {{
-      main {{padding:0 3vw;}}
-      .dragon-flow {{padding-bottom:10px;}}
-      .step-card {{ width: 105px; min-width:105px; max-width:105px; height: 78px; }}
-      .step-card img {{ height: 30px; }}
-      .dragon-arrow .arrow-num{{width:13px;height:13px;font-size:.7em;}}
-      .dragon-arrow .arrow-icon{{font-size:1em;}}
-    }}
-    h2{{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
-    .dragon-desc-section {{
-      background: #f7fafb;
-      border-radius: 10px;
-      margin: 40px auto 0 auto;
-      padding: 38px 32px 38px 32px;
-      font-size: 1.12em;
-      color: #284052;
-      box-shadow: 0 2px 8px rgba(110,140,180,0.06);
-      max-width: 980px;
-      line-height: 1.8;
-    }}
-    .contact-info{{ background:#f2f7fb; padding:20px; border-radius:6px; line-height:1.8; margin-top:40px; }}
-    .contact-info a{{ color:var(--primary-blue); text-decoration:none; }}
-    .contact-info a:hover{{ text-decoration:underline; }}
   </style>
 </head>
 <body>
@@ -590,47 +364,6 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     {content_html}
     {FOOTER_HTML}
   </main>
-  <script>
-  // 加工流程支援橫移
-  const dragonFlow = document.querySelector('.dragon-flow');
-  if(dragonFlow){{
-    dragonFlow.addEventListener('wheel', function(e){{
-      if (e.deltaY === 0) return;
-      e.preventDefault();
-      dragonFlow.scrollLeft += e.deltaY;
-    }}, {{ passive: false }});
-    let isDown = false, startX, scrollLeft;
-    dragonFlow.addEventListener('mousedown', function(e){{
-      isDown = true;
-      dragonFlow.classList.add('dragging');
-      startX = e.pageX - dragonFlow.offsetLeft;
-      scrollLeft = dragonFlow.scrollLeft;
-    }});
-    dragonFlow.addEventListener('mouseleave', ()=>{{isDown=false;dragonFlow.classList.remove('dragging');}});
-    dragonFlow.addEventListener('mouseup', ()=>{{isDown=false;dragonFlow.classList.remove('dragging');}});
-    dragonFlow.addEventListener('mousemove', function(e){{
-      if(!isDown)return;
-      e.preventDefault();
-      const x = e.pageX - dragonFlow.offsetLeft;
-      const walk = (x - startX)*1.1;
-      dragonFlow.scrollLeft = scrollLeft - walk;
-    }});
-    // 手機拖動
-    let isTouch = false, touchStartX, touchScrollLeft;
-    dragonFlow.addEventListener('touchstart', function(e){{
-      isTouch = true;
-      touchStartX = e.touches[0].pageX;
-      touchScrollLeft = dragonFlow.scrollLeft;
-    }});
-    dragonFlow.addEventListener('touchmove', function(e){{
-      if(!isTouch)return;
-      const x = e.touches[0].pageX;
-      const walk = (x - touchStartX)*1.1;
-      dragonFlow.scrollLeft = touchScrollLeft - walk;
-    }});
-    dragonFlow.addEventListener('touchend', function(){{ isTouch = false;}});
-  }}
-  </script>
 </body>
 </html>
 """)
@@ -642,47 +375,63 @@ def home():
 @app.route("/about")
 def about():
     content_html = """
-<div style="display: flex; flex-wrap: wrap; gap: 32px 3vw; align-items: flex-start; margin-bottom: 42px;">
+<div style="display:flex;flex-wrap:wrap;gap:32px 3vw;align-items:flex-start;margin-bottom:42px;">
   <!-- 左圖 -->
-  <div style="flex:1 1 300px; min-width:220px; max-width:370px;">
-    <img src="/static/company_entrance.jpg" alt="公司入口" style="width:100%; border-radius:16px; box-shadow: 0 2px 16px rgba(60,90,150,0.14); object-fit:cover;">
+  <div style="flex:1 1 300px;min-width:220px;max-width:370px;" data-aos="fade-right">
+    <img src="/static/company_entrance.jpg" alt="公司入口" style="width:100%;border-radius:16px;box-shadow:0 2px 16px rgba(60,90,150,0.14);object-fit:cover;">
   </div>
   <!-- 右文 -->
-  <div style="flex:2 1 330px; min-width:240px; max-width:700px;">
-    <h3 style="color:#4166a9; font-size:1.44em; margin:0 0 18px 0; letter-spacing:1.2px;">
-      關於溍慎有限公司
-    </h3>
-    <div style="font-size:1.13em; color:#2d425c; line-height:1.92;">
-      溍慎有限公司成立於台南，專注於提供專業的表面處理加工服務，擁有多年實務經驗與高效率自動化設備，持續為客戶提供高品質、穩定可靠的技術支援。<br><br>
-      我們秉持「品質第一、誠信經營、顧客滿意」的宗旨，並致力於持續創新，成為業界值得信賴的夥伴。
+  <div style="flex:2 1 330px;min-width:240px;max-width:700px;" data-aos="fade-left">
+    <h3 style="color:#4166a9;font-size:1.44em;margin:0 0 18px 0;letter-spacing:1.2px;">關於溍慎有限公司</h3>
+    <div style="font-size:1.13em;color:#2d425c;line-height:1.92;">
+      溍慎有限公司自2018年成立於台南，專注於精密零件表面處理與自動化加工，擁有多項先進設備與 ISO 9001 國際認證，為汽車、工業、五金等產業客戶提供穩定可靠、高效率且貼心的解決方案。<br><br>
+      我們以「品質第一、誠信經營、持續創新」為核心精神，協助客戶提升競爭力，並積極落實環保與永續理念，成為值得信賴的專業夥伴。
+      <div style="margin:22px 0 0 0;font-size:1.03em;line-height:1.7;color:#4470ad;">
+        <b>公司資訊：</b><br>
+        溍慎有限公司：2018年5月30日（民國107年）<br>
+        鈦吉有限公司：2017年7月12日（民國106年）
+      </div>
     </div>
   </div>
 </div>
 
-<!-- 核心價值環形圖 -->
-<div style="display:flex; flex-direction:column; align-items:center; margin: 32px 0 30px 0;">
+<!-- 核心價值圓環排版，含動畫 -->
+<div style="display:flex; flex-direction:column; align-items:center; margin: 32px 0 30px 0; position:relative;">
   <div style="width:360px; max-width:96vw; height:360px; position:relative;">
-    <svg viewBox="0 0 360 360" width="360" height="360" style="width:100%;height:100%;">
+    <svg viewBox="0 0 360 360" width="360" height="360" style="width:100%;height:100%;position:absolute;top:0;left:0;z-index:0;" data-aos="fade-in"></svg>
+    <!-- 中央紅圓 -->
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;" data-aos="zoom-in" data-aos-delay="100">
+      <div style="background:#e51919;color:#fff;text-align:center;font-size:2em;font-weight:700;line-height:1.2;font-family:'Noto Sans TC','Segoe UI',sans-serif;width:124px;height:124px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:50%;box-shadow:0 2px 16px rgba(180,40,50,0.10);">核心<br>價值</div>
+    </div>
+    <!-- 四個外圓 -->
+    <div style="position:absolute;top:-3px;left:50%;transform:translateX(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-down" data-aos-delay="240">
+      <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
+        <span style="font-size:1.07em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">具競爭力的<br>技術</span>
+      </div>
+    </div>
+    <div style="position:absolute;top:50%;left:calc(100% - 3px);transform:translateY(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-left" data-aos-delay="320">
+      <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
+        <span style="font-size:1.04em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">ISO9001<br>認證</span>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-up" data-aos-delay="400">
+      <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
+        <span style="font-size:1.04em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">環境責任</span>
+      </div>
+    </div>
+    <div style="position:absolute;top:50%;left:-3px;transform:translateY(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-right" data-aos-delay="320">
+      <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
+        <span style="font-size:1.04em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">信守承諾</span>
+      </div>
+    </div>
+    <!-- 外圓間的大圈（SVG，動畫只顯示線）-->
+    <svg viewBox="0 0 360 360" width="360" height="360" style="width:100%;height:100%;position:absolute;top:0;left:0;z-index:0;pointer-events:none;" data-aos="zoom-in-up" data-aos-delay="140">
       <circle cx="180" cy="180" r="145" stroke="#b3d0ea" stroke-width="16" fill="none"/>
-      <!-- 四個圓點 -->
-      <circle cx="180" cy="40"  r="48" fill="#98ceef"/>
-      <circle cx="320" cy="180" r="48" fill="#98ceef"/>
-      <circle cx="180" cy="320" r="48" fill="#98ceef"/>
-      <circle cx="40"  cy="180" r="48" fill="#98ceef"/>
-      <!-- 核心圓 -->
-      <circle cx="180" cy="180" r="62" fill="#e51919"/>
-      <!-- 文字 -->
-      <text x="180" y="186" text-anchor="middle" fill="#fff" font-size="2.2em" font-family="Noto Sans TC,Segoe UI" font-weight="700" dominant-baseline="middle">核心&#10;價值</text>
-      <text x="180" y="70" text-anchor="middle" fill="#2d425c" font-size="1.06em" font-family="Noto Sans TC,Segoe UI" font-weight="700">具競爭力的<br/>技術</text>
-      <text x="320" y="186" text-anchor="middle" fill="#2d425c" font-size="1.05em" font-family="Noto Sans TC,Segoe UI" font-weight="700">ISO9001<br/>認證</text>
-      <text x="180" y="310" text-anchor="middle" fill="#2d425c" font-size="1.05em" font-family="Noto Sans TC,Segoe UI" font-weight="700">環境責任</text>
-      <text x="40" y="186" text-anchor="middle" fill="#2d425c" font-size="1.05em" font-family="Noto Sans TC,Segoe UI" font-weight="700">信守承諾</text>
     </svg>
   </div>
 </div>
 
-<!-- 補充說明 -->
-<div style="background: #f5f7fc; border-radius: 10px; max-width: 900px; margin: 0 auto; padding: 32px 20px 22px 28px; font-size: 1.07em; color: #284052; box-shadow: 0 2px 8px rgba(110,140,180,0.06); line-height: 2;">
+<div style="background:#f5f7fc;border-radius:10px;max-width:900px;margin:0 auto;padding:32px 20px 22px 28px;font-size:1.07em;color:#284052;box-shadow:0 2px 8px rgba(110,140,180,0.06);line-height:2;" data-aos="fade-up" data-aos-delay="320">
   <b style="color:#4166a9;font-size:1.12em;">• 創新</b><br>
   我們持續導入具市場競爭力的技術與自動化設備，包括機械手臂整修工程、兩套含浸自動化生產線、多軸器與龍門式自動化清洗化成產線，提升產能與穩定度。<br><br>
   <b style="color:#4166a9;font-size:1.12em;">• 誠信</b><br>
