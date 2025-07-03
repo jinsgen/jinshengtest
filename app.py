@@ -2,9 +2,6 @@ from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
-# -----------------------
-# 共用 Header & Footer
-# -----------------------
 HEADER_HOME = """
 <header style="
   background: rgba(109, 142, 199, 0.6);
@@ -12,6 +9,7 @@ HEADER_HOME = """
   color: white;
   display: flex; flex-wrap: wrap;
   justify-content: space-between; align-items: center;
+  position: sticky; top: 0; z-index: 999;
 ">
   <div style="display:flex; align-items:center;">
     <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
@@ -36,6 +34,7 @@ HEADER_SOLID = """
   color: white;
   display: flex; flex-wrap: wrap;
   justify-content: space-between; align-items: center;
+  position: sticky; top: 0; z-index: 999;
 ">
   <div style="display:flex; align-items:center;">
     <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
@@ -59,8 +58,9 @@ FOOTER_HTML = """
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.8;
+  margin-top: 40px;
 ">
-  <h2 style="color: #6d8ec7; border-bottom: 2px solid #6d8ec7; padding-bottom: 8px; margin-top: 0;">
+  <h2 style="color: #6d8ec7; border-bottom: 2px solid #6d8ec7; padding-bottom:8px; margin-top:0;">
     聯絡資訊
   </h2>
   地址：<a href="https://maps.app.goo.gl/8dkFhGhkzxeEaBYaA" target="_blank">台南市仁德區義林路148巷16號</a><br>
@@ -71,9 +71,6 @@ FOOTER_HTML = """
 </footer>
 """
 
-# -----------------------
-# 首頁 HTML（含打字機動畫 & 服務項目）
-# -----------------------
 HOME_HTML = f"""
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -81,102 +78,70 @@ HOME_HTML = f"""
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>溍慎/鈦吉有限公司</title>
-  <link rel="icon" href="/static/favicon.ico">
-  <!-- AOS 動畫 -->
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
   <style>
-    :root {{ --primary-blue: #6d8ec7; }}
+    :root {{ --primary-blue: #6d8ec7; --accent-yellow: #FFD85A; }}
     html {{ scroll-behavior: smooth; }}
-    body {{
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: white;
-    }}
-    /* nav link 特效 */
-    .nav-link {{
-      color: white; text-decoration: none; font-weight: 600;
-      padding: 8px 12px; border-radius: 4px; margin: 0 4px;
+    body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }}
+    header nav a.nav-link {{
+      color:white; text-decoration:none; font-weight:600;
+      padding:8px 12px; border-radius:4px; margin-left:8px;
       transition: background .2s, transform .1s;
     }}
-    .nav-link:hover {{
+    header nav a.nav-link:hover {{
       background: rgba(255,255,255,0.2);
     }}
-    .nav-link:active {{
+    header nav a.nav-link:active {{
       background: rgba(255,255,255,0.4);
       transform: translateY(2px);
     }}
-    /* 打字機動畫 */
-    @keyframes typing {{ from {{ width: 0 }} to {{ width: 100% }} }}
+    @keyframes typing {{ from {{ width:0 }} to {{ width:100% }} }}
     @keyframes blink {{ 50% {{ border-color: transparent }} }}
     .banner {{
-      background-image: url('/static/banner_new.jpg');
-      background-size: cover;
-      background-position: center;
-      height: 300px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+      background-image:url('/static/banner_new.jpg');
+      background-size:cover; background-position:center;
+      height:300px; position:relative;
     }}
     .typewriter {{
-      overflow: hidden; white-space: nowrap;
-      border-right: .15em solid var(--primary-blue);
-      font-size: 36px; font-weight: bold; color: white;
-      width: 0;
+      overflow:hidden; white-space:nowrap;
+      border-right:.15em solid var(--primary-blue);
+      font-size:36px; font-weight:bold; color:white;
+      width:0; position:absolute; left:50%; transform:translateX(-50%);
+      text-shadow:2px 2px 4px rgba(0,0,0,0.6);
       animation: typing 2s steps(30,end) forwards, blink .75s step-end infinite;
     }}
-    .typewriter.second {{
-      animation: typing 2s steps(30,end) forwards, blink .75s step-end infinite;
-    }}
-    main {{
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }}
-    h2 {{
-      color: var(--primary-blue);
-      border-bottom: 2px solid var(--primary-blue);
-      padding-bottom: 8px;
-    }}
-    .services {{
-      display: flex; flex-wrap: wrap;
-      gap: 20px; justify-content: center;
-    }}
+    .typewriter.first {{ top:35%; }}
+    .typewriter.second {{ top:50%; animation-delay:2.5s; }}
+    main {{ max-width:1000px; margin:40px auto; padding:0 20px; }}
+    h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
+    .services {{ display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }}
     .service-item {{
-      position: relative;
-      flex: 1 1 calc(25% - 20px);
-      max-width: calc(25% - 20px);
-      height: 220px; padding: 20px; border-radius: 6px;
-      background-size: cover; background-position: center;
-      text-decoration: none; overflow: hidden;
-      transition: transform .3s ease, box-shadow .3s ease;
+      position:relative; flex:1 1 calc(25% - 20px); max-width:calc(25% - 20px);
+      height:220px; padding:20px; border-radius:6px;
+      background-size:cover; background-position:center; text-decoration:none;
+      overflow:hidden; transition:transform .3s ease,box-shadow .3s ease;
     }}
     .service-item::before {{
-      content: ""; position: absolute; inset: 0;
-      background: rgba(0,0,0,0.45); z-index: 0;
+      content:""; position:absolute; inset:0; background:rgba(0,0,0,0.45); z-index:0;
     }}
-    .service-item h3, .service-item p {{
-      position: relative; z-index: 1; margin: 0; color: white;
-    }}
-    .service-item p {{ font-size: 0.9rem; }}
+    .service-item h3, .service-item p {{ position:relative; z-index:1; margin:0; color:white; }}
+    .service-item p {{ font-size:.9rem; }}
     .service-item:hover {{
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      transform:translateY(-5px) scale(1.02);
+      box-shadow:0 8px 20px rgba(0,0,0,0.3);
     }}
-    @media (max-width: 768px) {{
-      .typewriter {{ font-size: 28px; }}
-      .service-item {{ flex: 1 1 calc(50% - 15px); max-width: calc(50% - 15px); }}
-    }}
-    @media (max-width: 480px) {{
-      .typewriter {{ font-size: 24px; }}
-      .service-item {{ flex: 1 1 100%; max-width: 100%; }}
-    }}
+    @media(max-width:768px){{ .typewriter {{ font-size:28px; }} .service-item{{flex:1 1 calc(50%-15px);max-width:calc(50%-15px)}} }}
+    @media(max-width:480px){{ .typewriter {{ font-size:24px; }} .service-item{{flex:1 1 100%;max-width:100%}} }}
   </style>
 </head>
 <body>
   {HEADER_HOME}
   <div class="banner" data-aos="fade-in">
-    <div class="typewriter" data-aos="fade-in">溍於專業，慎於品質</div>
-    <div class="typewriter second" data-aos="fade-in">鈦造未來，吉刻成型</div>
+    <div class="typewriter first">溍於專業，慎於品質</div>
+    <div class="typewriter second">鈦造未來，吉刻成型</div>
   </div>
   <main>
     <section id="services">
@@ -201,7 +166,6 @@ HOME_HTML = f"""
     </section>
     {FOOTER_HTML}
   </main>
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 </body>
 </html>
 """
@@ -213,57 +177,25 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>{title}</title>
-  <link rel="icon" href="/static/favicon.ico">
-  <!-- AOS 動畫 -->
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
   <style>
     :root {{ --primary-blue: #6d8ec7; }}
     html {{ scroll-behavior: smooth; }}
-    body {{
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: white;
-    }}
-    .nav-link {{
-      color: white; text-decoration: none; font-weight: 600;
-      padding: 8px 12px; border-radius: 4px; margin: 0 4px;
-      transition: background .2s, transform .1s;
-    }}
-    .nav-link:hover {{ background: rgba(255,255,255,0.2); }}
-    .nav-link:active {{
-      background: rgba(255,255,255,0.4);
-      transform: translateY(2px);
-    }}
-    header {{
-      background: #6d8ec7;
-      padding: 15px 30px;
-      color: white;
-      display: flex; flex-wrap: wrap;
-      justify-content: space-between; align-items: center;
-    }}
-    main {{
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }}
-    h2 {{
-      color: var(--primary-blue);
-      border-bottom: 2px solid var(--primary-blue);
-      padding-bottom: 8px;
-    }}
-    .step-card {{
-      transition: transform .3s, box-shadow .3s;
-    }}
-    .step-card:hover {{
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    }}
-    .contact-info {{
-      background: #f2f7fb; padding:20px; border-radius:6px; line-height:1.8;
-    }}
-    .contact-info a {{ color: var(--primary-blue); text-decoration: none; }}
-    .contact-info a:hover {{ text-decoration: underline; }}
+    body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }}
+    header nav a.nav-link{{ transition:background .2s,transform .1s; color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px; margin-left:8px; }}
+    header nav a.nav-link:hover{{ background:rgba(255,255,255,0.2); }}
+    header nav a.nav-link:active{{ background:rgba(255,255,255,0.4); transform:translateY(2px); }}
+    header{{ background:#6d8ec7; padding:15px 30px; color:white; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999; }}
+    main{{ max-width:1000px; margin:40px auto; padding:0 20px; }}
+    .step-card{{ transition:transform .3s,box-shadow .3s; }}
+    .step-card:hover{{ transform:translateY(-5px) scale(1.02); box-shadow:0 8px 20px rgba(0,0,0,0.3); }}
+    h2{{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
+    .contact-info{{ background:#f2f7fb; padding:20px; border-radius:6px; line-height:1.8; margin-top:40px; }}
+    .contact-info a{{ color:var(--primary-blue); text-decoration:none; }}
+    .contact-info a:hover{{ text-decoration:underline; }}
   </style>
 </head>
 <body>
@@ -273,7 +205,6 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     {content_html}
     {FOOTER_HTML}
   </main>
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 </body>
 </html>
 """)
