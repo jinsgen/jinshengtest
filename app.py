@@ -53,6 +53,7 @@ HOME_HTML = f"""
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Noto+Sans+TC:wght@700&display=swap');
     :root {{ --primary-blue: #6d8ec7; --accent-yellow: #FFD85A; }}
     html {{ scroll-behavior: smooth; }}
     body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background: #fff; }}
@@ -146,26 +147,28 @@ HOME_HTML = f"""
       pointer-events: none;
     }}
     .slogan-line {{
-      font-size: 32px;
+      font-size: 54px;
+      font-family: 'Montserrat', 'Noto Sans TC', sans-serif;
       font-weight: 700;
       color: #fff;
       letter-spacing: 1.2px;
-      margin: 0 0 10px 0;
-      line-height: 1.22;
-      text-shadow: 0 3px 8px rgba(40,60,90,0.28), 0 2px 8px rgba(0,0,0,0.18);
+      margin: 0 0 16px 0;
+      line-height: 1.15;
+      text-shadow: 0 3px 12px rgba(40,60,90,0.32), 0 2px 8px rgba(0,0,0,0.18);
       background: none;
       border: none;
       padding: 0;
+      white-space: nowrap;
     }}
     .slogan-line:last-child{{margin-bottom:0;}}
 
     main {{ max-width:1100px; margin:400px auto 0 auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
 
-    /* 服務項目區塊 - 5格(3+2)中間置中 */
+    /* 服務項目區塊 - 5格(3+2)第二排兩格置中 */
     .services {{
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       grid-template-rows: repeat(2, 1fr);
       gap: 36px 30px;
       justify-content: center;
@@ -175,39 +178,65 @@ HOME_HTML = f"""
       min-height: 560px;
       position: relative;
     }}
-    .services > :nth-child(4) {{ grid-column:2/3; }}
-    .services > :nth-child(5) {{ grid-column:3/4; }}
+    /* 第一排三格（1,2,3） */
+    .services > :nth-child(1) {{ grid-column:2/3; grid-row:1; }}
+    .services > :nth-child(2) {{ grid-column:3/4; grid-row:1; }}
+    .services > :nth-child(3) {{ grid-column:4/5; grid-row:1; }}
+    /* 第二排兩格（4,5），置中分佈 */
+    .services > :nth-child(4) {{ grid-column:3/4; grid-row:2; }}
+    .services > :nth-child(5) {{ grid-column:4/5; grid-row:2; }}
+
     .service-item {{
       position:relative;
-      height:250px; border-radius:12px;
+      height:250px; border-radius:16px;
       background-size:cover; background-position:center; text-decoration:none;
-      overflow:hidden; transition:transform .3s ease,box-shadow .3s ease;
+      overflow:hidden; transition:transform .3s,box-shadow .3s;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       min-width:0;
+      box-shadow: 0 2px 8px rgba(90,110,160,0.12);
     }}
     .service-item::before {{
-      content:""; position:absolute; inset:0; background:rgba(0,0,0,0.43); z-index:0;
+      content:""; position:absolute; inset:0; background:rgba(0,0,0,0.40); z-index:0;
     }}
-    .service-item h3, .service-item p {{ position:relative; z-index:1; margin:0; color:white; }}
-    .service-item h3 {{ font-size:1.24rem; margin-bottom:4px; }}
-    .service-item p {{ font-size:1rem; }}
+    .service-item h3 {{
+      position:relative; z-index:1; 
+      color:#fff;
+      font-family: 'Montserrat', 'Noto Sans TC', sans-serif;
+      font-size:2rem; 
+      font-weight: 700;
+      letter-spacing: 1.3px;
+      margin:0 0 7px 0;
+      line-height: 1.15;
+      text-shadow: 0 3px 9px rgba(45,60,110,0.23);
+      text-align: left;
+      padding-left: 14px;
+    }}
+    .service-item p {{
+      position:relative; z-index:1;
+      color: #f5f5f7;
+      font-family: 'Noto Sans TC', 'Montserrat', sans-serif;
+      font-size:1.2rem;
+      margin:0 0 13px 0;
+      text-align: left;
+      padding-left: 14px;
+      text-shadow: 0 1px 4px rgba(50,55,85,0.18);
+      line-height:1.3;
+      letter-spacing: 0.6px;
+    }}
     .service-item:hover {{
-      transform:translateY(-7px) scale(1.035);
-      box-shadow:0 8px 22px rgba(0,0,0,0.23);
+      transform:translateY(-7px) scale(1.045);
+      box-shadow:0 8px 26px rgba(0,0,0,0.21);
     }}
 
     /* 響應式(手機)調整 */
-    @media(max-width:1100px){{
-      main {{padding:0 2vw;}}
-      .service-item{{height:160px; font-size:15px;}}
+    @media(max-width:1200px){{
+      .slogan-line{{font-size:32px;}}
+      .service-item h3{{font-size:1.19rem;}}
+      .service-item p{{font-size:.9rem;}}
       .services{{gap:15px 8px; min-height:300px;}}
-      .header-content{{height:44px;}}
-      .logo{{height:30px; width:30px;}}
-      .brand{{font-size:12px;}}
-      .slogan-line{{font-size:15px;}}
     }}
     @media(max-width:800px){{
       .header-content{{
@@ -290,6 +319,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Noto+Sans+TC:wght@700&display=swap');
     :root {{ --primary-blue: #6d8ec7; }}
     html {{ scroll-behavior: smooth; }}
     body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }}
@@ -401,12 +431,11 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin: 0 8px;
+      margin: 0 8px 18px 8px;
       user-select: none;
       min-width: 38px;
       font-weight: 800;
       opacity: 0.98;
-      margin-bottom:22px;
     }}
     .dragon-arrow .arrow-num {{
       font-size: 1.18em;
@@ -421,10 +450,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       font-family: inherit;
     }}
     .dragon-arrow .arrow-icon {{
-      font-size: 2.1em;
-      color: #6d8ec7;
-      line-height: 1;
-      margin-bottom:0;
+      display:none;
     }}
     @media (max-width: 1250px) {{
       .step-card{{width:150px;min-width:150px;max-width:150px;height:140px;}}
@@ -432,6 +458,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       .dragon-arrow .arrow-num{{width:23px;height:23px;font-size:.86em;}}
     }}
     @media(max-width:1100px){{
+      main {{padding:0 2vw;}}
       .header-content{{height:44px;}}
       .logo{{height:30px; width:30px;}}
       .brand{{font-size:12px;}}
@@ -449,7 +476,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       .logo{{height:22px; width:22px;}}
       .brand{{font-size:9.6px;}}
     }}
-    @media(max-width:700px){{
+    @media (max-width: 700px) {{
       main {{padding:0 3vw;}}
       .dragon-flow {{padding-bottom:10px;}}
       .step-card {{ width: 105px; min-width:105px; max-width:105px; height: 78px; }}
@@ -551,7 +578,6 @@ def onedragon():
   </a>
   <div class="dragon-arrow" data-aos="fade-right">
     <div class="arrow-num">➀</div>
-    <div class="arrow-icon">&#8594;</div>
   </div>
   <a href="/vibration" class="step-card" data-aos="zoom-in">
     <img src="/static/vibration.jpg" alt="振動研磨">
@@ -560,7 +586,6 @@ def onedragon():
   </a>
   <div class="dragon-arrow" data-aos="fade-right">
     <div class="arrow-num">➁</div>
-    <div class="arrow-icon">&#8594;</div>
   </div>
   <a href="/sealing" class="step-card" data-aos="zoom-in">
     <img src="/static/sealing.jpg" alt="含浸封孔">
@@ -569,7 +594,6 @@ def onedragon():
   </a>
   <div class="dragon-arrow" data-aos="fade-right">
     <div class="arrow-num">➂</div>
-    <div class="arrow-icon">&#8594;</div>
   </div>
   <a href="/coating" class="step-card" data-aos="zoom-in">
     <img src="/static/coating.jpg" alt="皮膜化成">
@@ -578,7 +602,6 @@ def onedragon():
   </a>
   <div class="dragon-arrow" data-aos="fade-right">
     <div class="arrow-num">➃</div>
-    <div class="arrow-icon">&#8594;</div>
   </div>
   <a href="/wastewater" class="step-card" data-aos="zoom-in">
     <img src="/static/wastewater.jpg" alt="廢水處理">
