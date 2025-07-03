@@ -3,18 +3,15 @@ from flask import Flask, render_template_string
 app = Flask(__name__)
 
 # -----------------------
-# Home 半透明 Header（position:absolute，隨捲動移動）
+# Home 半透明 Header（隨捲動移動）
 # -----------------------
 HEADER_HOME = """
 <header style="
-  position: absolute;
-  top: 0; left: 0; width: 100%;
-  background: rgba(109,142,199,0.6);
+  background: rgba(109, 142, 199, 0.6);
   padding: 15px 30px;
   color: white;
   display: flex; flex-wrap: wrap;
   justify-content: space-between; align-items: center;
-  z-index: 999; box-sizing: border-box;
 ">
   <div style="display:flex; align-items:center;">
     <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
@@ -33,18 +30,15 @@ HEADER_HOME = """
 """
 
 # -----------------------
-# 子頁面實心藍 Header（position:absolute，隨捲動移動）
+# 其他子頁 實心藍 Header（隨捲動移動）
 # -----------------------
 HEADER_SOLID = """
 <header style="
-  position: absolute;
-  top: 0; left: 0; width: 100%;
   background: #6d8ec7;
   padding: 15px 30px;
   color: white;
   display: flex; flex-wrap: wrap;
   justify-content: space-between; align-items: center;
-  z-index: 999; box-sizing: border-box;
 ">
   <div style="display:flex; align-items:center;">
     <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
@@ -63,7 +57,7 @@ HEADER_SOLID = """
 """
 
 # -----------------------
-# Footer（共用）
+# Footer（共用，含標題「聯絡資訊」）
 # -----------------------
 FOOTER_HTML = """
 <footer id="contact" style="
@@ -72,6 +66,9 @@ FOOTER_HTML = """
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.8;
 ">
+  <h2 style="color: #6d8ec7; border-bottom: 2px solid #6d8ec7; padding-bottom: 8px; margin-top: 0;">
+    聯絡資訊
+  </h2>
   地址：<a href="https://maps.app.goo.gl/8dkFhGhkzxeEaBYaA" target="_blank">台南市仁德區義林路148巷16號</a><br>
   Tel：06-2708989<br>
   Fax：06-2707878<br>
@@ -81,14 +78,13 @@ FOOTER_HTML = """
 """
 
 # -----------------------
-# 首頁 HTML
+# 首頁 HTML（Banner + Slogan + 服務項目）
 # -----------------------
 HOME_HTML = f"""
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>溍慎/鈦吉有限公司</title>
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
   <!-- AOS 動畫 -->
@@ -96,48 +92,36 @@ HOME_HTML = f"""
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
   <style>
-    :root {{
-      --primary-blue: #6d8ec7;
-    }}
-    html {{
-      scroll-behavior: smooth;
-    }}
+    :root {{ --primary-blue: #6d8ec7; }}
+    html {{ scroll-behavior: smooth; }}
     body {{
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: white;
     }}
     .banner {{
-      position: relative;
       background-image: url('/static/banner_new.jpg');
       background-size: cover;
       background-position: center;
       height: 300px;
     }}
     .banner-text {{
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      margin: 0;
+      padding: 100px 20px 0;
       color: white;
       font-size: 36px;
       font-weight: bold;
+      text-align: center;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
     }}
-    .banner-text-second {{
-      position: absolute;
-      top: 55%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-      font-size: 36px;
-      font-weight: bold;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    .banner-text + .banner-text {{
+      padding-top: 0;
+      opacity: 0.9;
     }}
     main {{
       max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
+      margin: 0 auto;
+      padding: 20px;
     }}
     h2 {{
       color: var(--primary-blue);
@@ -165,16 +149,11 @@ HOME_HTML = f"""
     }}
     .service-item::before {{
       content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 0;
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 0;
     }}
     .service-item h3, .service-item p {{
-      position: relative;
-      z-index: 1;
-      margin: 0;
-      color: white;
+      position: relative; z-index: 1; margin: 0; color: white;
     }}
     .service-item p {{ font-size: 0.9rem; }}
     .service-item:hover {{
@@ -182,19 +161,19 @@ HOME_HTML = f"""
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }}
     @media (max-width: 768px) {{
-      .banner-text, .banner-text-second {{ font-size: 28px; }}
+      .banner-text {{ font-size: 28px; }}
       .service-item {{ flex: 1 1 calc(50% - 15px); max-width: calc(50% - 15px); }}
     }}
     @media (max-width: 480px) {{
-      .banner-text, .banner-text-second {{ font-size: 24px; }}
+      .banner-text {{ font-size: 24px; }}
       .service-item {{ flex: 1 1 100%; max-width: 100%; }}
     }}
   </style>
 </head>
 <body>
   <div class="banner" data-aos="fade-in">
-    <div class="banner-text" data-aos="fade-up">溍於專業，慎於品質</div>
-    <div class="banner-text-second" data-aos="fade-up" data-aos-delay="200">鈦造未來，吉刻成型</div>
+    <p class="banner-text" data-aos="fade-up">溍於專業，慎於品質</p>
+    <p class="banner-text" data-aos="fade-up" data-aos-delay="200">鈦造未來，吉刻成型</p>
   </div>
   {HEADER_HOME}
   <main>
@@ -241,19 +220,15 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     html {{ scroll-behavior: smooth; }}
     body {{
       margin: 0;
-      padding-top: 90px; /* 預留 header 高度 */
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: white;
     }}
     header {{
-      position: absolute;
-      top: 0; left: 0; width: 100%;
       background: #6d8ec7;
       padding: 15px 30px;
       color: white;
       display: flex; flex-wrap: wrap;
       justify-content: space-between; align-items: center;
-      z-index: 999; box-sizing: border-box;
     }}
     header nav a {{
       color: white; text-decoration: none; font-weight: 600;
@@ -324,18 +299,6 @@ def onedragon():
   </a>
 </div>
 <p data-aos="fade-up" style="margin-top:20px; text-align:center;">我們提供整合式產線，節省客戶物流時間與管理成本。</p>
-<script>
-  document.querySelectorAll('.step-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      el.style.transform = 'translateY(-5px) scale(1.02)';
-      el.style.boxShadow = '0 8px 20px rgba(0,0,0,0.3)';
-    });
-    el.addEventListener('mouseleave', () => {
-      el.style.transform = '';
-      el.style.boxShadow = '';
-    });
-  });
-</script>
 """
     return render_subpage("一條龍產線服務", flow_html)
 
