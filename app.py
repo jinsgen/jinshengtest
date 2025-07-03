@@ -9,11 +9,17 @@ HEADER_HOME = """
       <img src="/static/logo_transparent.png" alt="LOGO" class="logo">
       <div class="brand">溍慎有限公司<br>鈦吉有限公司</div>
     </div>
+    <input type="checkbox" id="nav-toggle" hidden>
+    <label for="nav-toggle" class="nav-toggle-label">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
     <nav>
       <a href="/"           class="nav-link">首頁</a>
       <a href="/about"      class="nav-link">關於溍慎</a>
       <a href="/#services"  class="nav-link">服務項目</a>
-      <a href="/onedragon"  class="nav-link">一條龍產線</a>
+      <a href="/process"    class="nav-link">加工流程</a>
       <a href="#contact"    class="nav-link">聯絡我們</a>
     </nav>
   </div>
@@ -67,6 +73,7 @@ HOME_HTML = f"""
       backdrop-filter: blur(4px);
       min-width: 320px;
       font-size: 16px;
+      transition: background 0.25s;
     }}
     .main-header.solid {{
       background: #6d8ec7;
@@ -80,6 +87,7 @@ HOME_HTML = f"""
       justify-content: space-between;
       height: 56px;
       padding: 0 16px;
+      position:relative;
     }}
     .logo-area {{
       display: flex;
@@ -89,6 +97,7 @@ HOME_HTML = f"""
     }}
     .logo {{
       height: 42px; width: 42px; min-width:38px; object-fit: contain; display: block;
+      transition: all 0.2s;
     }}
     .brand {{
       font-size: 1.11rem; line-height: 1.19;
@@ -96,6 +105,7 @@ HOME_HTML = f"""
       white-space: pre-line;
       text-shadow: 0 2px 6px rgba(30,55,110,0.11);
       margin-top: 1px;
+      transition: all 0.2s;
     }}
     nav {{
       display: flex;
@@ -103,6 +113,7 @@ HOME_HTML = f"""
       align-items: center;
       flex-wrap: wrap;
       font-size: 1em;
+      transition: all 0.2s;
     }}
     .nav-link {{
       color:white; text-decoration:none; font-weight:600;
@@ -117,6 +128,81 @@ HOME_HTML = f"""
       background: rgba(255,255,255,0.32); transform: translateY(2px);
     }}
 
+    /* Hamburger (手機menu) */
+    .nav-toggle-label {{
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      height: 36px;
+      width: 36px;
+      cursor: pointer;
+      margin-left: 8px;
+      z-index:12;
+    }}
+    .nav-toggle-label span {{
+      display: block;
+      height: 4px;
+      width: 28px;
+      background: #fff;
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: all .28s cubic-bezier(.4,2,.6,1);
+    }}
+    #nav-toggle:checked + .nav-toggle-label span:nth-child(1) {{
+      transform: translateY(8px) rotate(45deg);
+    }}
+    #nav-toggle:checked + .nav-toggle-label span:nth-child(2) {{
+      opacity: 0;
+    }}
+    #nav-toggle:checked + .nav-toggle-label span:nth-child(3) {{
+      transform: translateY(-8px) rotate(-45deg);
+    }}
+
+    @media(max-width:820px){{
+      .header-content{{
+        padding: 0 2vw;
+        height:44px;
+      }}
+      .brand{{font-size:10.2px;}}
+      .logo{{height:26px;width:26px;}}
+      nav{{
+        position: fixed;
+        top:56px; right:0; left:0;
+        background:rgba(109, 142, 199, 0.95);
+        flex-direction: column;
+        align-items: flex-end;
+        gap:0;
+        box-shadow: 0 4px 12px rgba(80,80,120,0.13);
+        padding: 0;
+        display: none;
+        z-index:99;
+        width:100vw;
+      }}
+      #nav-toggle:checked ~ nav {{
+        display: flex;
+      }}
+      .nav-link{{
+        padding:14px 22px 14px 18px;
+        font-size:1.06em;
+        width:100vw;
+        text-align:right;
+        border-radius:0;
+        border-bottom:1px solid rgba(255,255,255,0.07);
+      }}
+      .nav-toggle-label {{
+        display: flex;
+      }}
+    }}
+    @media(max-width:500px){{
+      .header-content{{
+        height:34px;
+      }}
+      .logo{{height:18px;width:18px;}}
+      .brand{{font-size:8px;}}
+      .nav-link{{font-size:0.91em;}}
+    }}
+
+    /* Banner 與 Slogan */
     .banner-bg {{
       position: absolute; top: 0; left: 0;
       width: 100vw; height: 350px;
@@ -505,7 +591,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     {FOOTER_HTML}
   </main>
   <script>
-  // 僅一條龍產線流程支援橫移
+  // 加工流程支援橫移
   const dragonFlow = document.querySelector('.dragon-flow');
   if(dragonFlow){{
     dragonFlow.addEventListener('wheel', function(e){{
@@ -557,8 +643,8 @@ def home():
 def about():
     return render_subpage("關於溍慎", "<p>本頁內容待補充。</p>")
 
-@app.route("/onedragon")
-def onedragon():
+@app.route("/process")
+def process():
     flow_html = """
 <div class="dragon-flow">
   <a href="/robotic" class="step-card" data-aos="zoom-in">
@@ -603,18 +689,19 @@ def onedragon():
     <p>淨化廢水、達標排放</p>
   </a>
 </div>
+<div class="dragon-desc-section" data-aos="fade-up" style="margin-bottom:20px;">
+  <h3 style="color:#4166a9; font-size:1.25em; margin:0 0 18px 0;">加工流程補充說明</h3>
+  <p>
+    我們公司依據 <b>ISO 9001:2015 品質管理系統</b> 作業，從客戶送來的貨件開始，即進行嚴格的<span style="color:#4166a9;"><b>進料檢驗</b></span>。若發現異常情形，如生鏽、碰損或其他瑕疵，會第一時間主動通知廠商，並依廠商決定是否退回或繼續加工。<br><br>
+    每一品項皆建立對應的 <b>SOP 標準作業流程</b>，並搭配照片與紀錄，要求所有員工依照流程標準執行，確保加工一致性與品質穩定性。<br><br>
+    <b>➀ 初步處理</b>：鑄造完成的工件會產生毛邊，若毛邊過厚、振動研磨無法直接處理，則會先進行前處理（如：機械手臂修整、氣動銼刀修邊），再進入振動研磨程序。<br><br>
+    <b>➁ 振動研磨</b>：毛邊去除後，表面會留有加工痕跡，因此透過振動研磨來統一表面質感、修飾瑕疵。部分廠商會於此階段先將工件取回再加工後，重新交由我們執行下一步。<br><br>
+    <b>➂ 含浸封孔與皮膜化成</b>：汽車零件常見沙孔問題，若零件需具備氣密性，會進行含浸封孔處理以補強孔隙。考量部分工件需經海運，也會配合進行皮膜化成處理，以提升抗鹽霧腐蝕能力。<br><br>
+    <b>➃ 廢水處理</b>：因加工各項程序需使用化學藥劑（如含浸液、振動液、皮膜液），本公司設有自主管理的廢水處理系統，將所有排出液體集中處理、過濾與排放，符合環保與法規要求。
+  </p>
+</div>
 """
-    # 流程補充說明保留（如需刪除再提醒）
-    desc_html = """
-    <div class="dragon-desc-section" data-aos="fade-up" style="margin-bottom:20px;">
-      <h3 style="color:#4166a9; font-size:1.25em; margin:0 0 18px 0;">流程補充說明</h3>
-      <p>
-        （在這裡補充完整的產線步驟介紹、優勢、注意事項等說明內容，無長度限制。<br>
-        你可以自由輸入多段落文字，呈現於此大區塊。）
-      </p>
-    </div>
-    """
-    return render_subpage("一條龍產線服務", flow_html + desc_html)
+    return render_subpage("加工流程", flow_html, aos_effect="fade-down")
 
 @app.route("/vibration")
 def vibration():
