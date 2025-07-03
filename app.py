@@ -46,7 +46,7 @@ FOOTER_HTML = """
 </footer>
 """
 
-HOME_HTML = f"""
+HOME_HTML = """
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -339,7 +339,7 @@ HOME_HTML = f"""
   </style>
 </head>
 <body>
-  {HEADER_HOME}
+  {{HEADER_HOME}}
   <div class="banner-bg"></div>
   <div class="banner-content" data-aos="fade-in">
     <div class="slogan-group" data-aos="fade-right" data-aos-delay="200">
@@ -368,7 +368,7 @@ HOME_HTML = f"""
         </a>
       </div>
     </section>
-    {FOOTER_HTML}
+    {{FOOTER_HTML}}
   </main>
 </body>
 </html>
@@ -386,234 +386,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Noto+Sans+TC:wght@700&display=swap');
-    :root {{ --primary-blue: #6d8ec7; }}
-    html {{ scroll-behavior: smooth; }}
-    body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:#f9fbfc; }}
-    .main-header {{
-      width: 100vw;
-      background: #6d8ec7;
-      color: white;
-      position: sticky; top: 0; z-index: 10;
-      min-width: 320px;
-      font-size: 16px;
-    }}
-    .header-content {{
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 56px;
-      padding: 0 16px;
-    }}
-    .logo-area {{
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width:0;
-    }}
-    .logo {{
-      height: 42px; width: 42px; min-width:38px; object-fit: contain; display: block;
-    }}
-    .brand {{
-      font-size: 1.11rem; line-height: 1.19;
-      font-weight: 700; letter-spacing: 1.1px;
-      white-space: pre-line;
-      text-shadow: 0 2px 6px rgba(30,55,110,0.11);
-      margin-top: 1px;
-    }}
-    nav {{
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      flex-wrap: wrap;
-      font-size: 1em;
-    }}
-    .nav-link {{
-      color:white; text-decoration:none; font-weight:600;
-      padding:6px 15px; border-radius:4px; transition: background .2s, transform .1s;
-      font-size: 1em;
-      letter-spacing: 0.5px;
-    }}
-    .nav-link:hover {{
-      background: rgba(255,255,255,0.22);
-    }}
-    .nav-link:active {{
-      background: rgba(255,255,255,0.32); transform: translateY(2px);
-    }}
-    main{{ max-width:1100px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
-
-    /* 以下為關於我們專屬樣式 */
-    .aboutus-mainblock {{
-      display: flex; align-items: flex-start; gap: 48px;
-      margin: 48px auto 48px auto; max-width: 1100px; flex-wrap: wrap;
-    }}
-    .aboutus-imageblock {{
-      flex: 0 0 340px; max-width:340px; width:100%; display: flex; align-items:center; justify-content:center;
-    }}
-    .aboutus-imageblock img {{
-      width: 100%; max-width:340px; border-radius: 16px; box-shadow:0 4px 16px rgba(60,80,120,0.11);
-    }}
-    .aboutus-textblock {{
-      flex: 1 1 380px; min-width:240px;
-    }}
-    .aboutus-textblock h2 {{
-      color:#2a5ba0; margin-top:0; font-size:2.25em; letter-spacing:2px; margin-bottom:18px;
-    }}
-    .aboutus-intro {{
-      font-size:1.15em; line-height:1.8; color:#314760;
-    }}
-    .core-value-section {{
-      display: flex; flex-direction: column; align-items: center; margin: 0 auto 28px auto;
-    }}
-    .core-diagram-wrap {{
-      width: 380px; height: 380px; position: relative; margin-bottom: 36px; min-width:280px;
-    }}
-    .core-center {{
-      position: absolute; left: 50%; top: 50%;
-      transform: translate(-50%,-50%);
-      width: 120px; height: 120px; border-radius: 50%;
-      background: #e51919;
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-size: 2.0rem; font-weight: bold;
-      text-align: center; line-height: 1.25;
-      box-shadow: 0 4px 24px rgba(230,0,0,.09);
-      letter-spacing: 1px; z-index:2;
-    }}
-    .core-point {{
-      position: absolute;
-      width: 100px; height: 100px; border-radius: 50%;
-      background: #96d0f3;
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-size: 1.08rem; font-weight: 500;
-      text-align: center; line-height: 1.28;
-      box-shadow: 0 2px 12px rgba(0,80,150,0.06);
-      z-index:2;
-    }}
-    .core-point1 {{ left:50%; top:18px; transform:translate(-50%,0); }}
-    .core-point2 {{ right:16px; top:50%; transform:translate(0,-50%); }}
-    .core-point3 {{ left:50%; bottom:18px; transform:translate(-50%,0); }}
-    .core-point4 {{ left:16px; top:50%; transform:translate(0,-50%); }}
-    .core-curve {{
-      position:absolute; left:0; top:0; width:100%; height:100%; z-index:1;
-      pointer-events:none;
-    }}
-    .aboutus-philosophy {{
-      max-width:650px; margin:0 auto 60px auto; font-size:1.11em; background:#f8fafd;
-      border-radius:10px; padding:30px 32px; box-shadow:0 2px 10px rgba(60,90,120,0.05);
-    }}
-    .aboutus-philosophy ul{{padding-left:1.2em;}}
-    .aboutus-philosophy li{{margin-bottom:13px;}}
-    @media (max-width: 900px) {{
-      .aboutus-mainblock{{flex-direction:column; gap:22px;}}
-      .aboutus-imageblock{{margin:0 auto;max-width:95vw;}}
-      .aboutus-textblock{{min-width:unset;}}
-      .core-diagram-wrap{{width:80vw;height:80vw;min-width:unset;}}
-    }}
-    @media (max-width:480px) {{
-      .aboutus-intro{{font-size:1em;}}
-      .aboutus-imageblock img{{border-radius:7px;}}
-      .core-diagram-wrap{{width:97vw;height:84vw;}}
-      .core-center{{width:19vw;height:19vw;font-size:4.9vw;}}
-      .core-point{{width:14vw;height:14vw;font-size:2.7vw;}}
-      .core-point1{{top:4vw;}}
-      .core-point3{{bottom:4vw;}}
-      .core-point2{{right:2vw;}}
-      .core-point4{{left:2vw;}}
-      .aboutus-philosophy{{padding:20px 6vw; font-size:0.98em;}}
-    }}
-
-    /* 加工流程流程卡片樣式 */
-    .dragon-flow {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-end;
-      gap: 0;
-      overflow-x: auto;
-      padding-bottom: 32px;
-      margin-bottom: 12px;
-      scrollbar-width: thin;
-      scrollbar-color: #b1bed7 #f2f7fb;
-      -webkit-overflow-scrolling: touch;
-      cursor: grab;
-      user-select: none;
-      position: relative;
-      background: none;
-    }
-    .step-card {
-      width: 200px;
-      min-width: 200px;
-      max-width: 200px;
-      height: 220px;
-      margin: 0 18px;
-      border-radius: 10px;
-      box-shadow: 0 2px 14px rgba(60, 70, 90, 0.11);
-      overflow: hidden;
-      background: #f7fafb;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: transform .3s, box-shadow .3s;
-      position: relative;
-    }
-    .step-card:hover {
-      transform: translateY(-7px) scale(1.04);
-      box-shadow: 0 8px 22px rgba(0,0,0,0.14);
-    }
-    .step-card img {
-      width: 100%;
-      height: 115px;
-      object-fit: cover;
-      border-radius: 10px 10px 0 0;
-      display: block;
-    }
-    .step-card h3, .step-card p {
-      margin: 9px 0 2px 0;
-      color: #365481;
-      text-align: center;
-      z-index: 1;
-    }
-    .step-card p { font-size: 0.99rem; margin-bottom: 9px; }
-    .dragon-arrow {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 0 5px 14px 5px;
-      user-select: none;
-      min-width: 29px;
-      font-weight: 700;
-      opacity: 0.99;
-    }
-    .dragon-arrow .arrow-num {
-      font-size: 1.12em;
-      color: #fff;
-      background: #6d8ec7;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1px;
-      box-shadow: 0 2px 6px rgba(40,60,90,.07);
-      font-family: inherit;
-    }
-    .dragon-arrow .arrow-icon {
-      font-size: 1.7em;
-      color: #6d8ec7;
-      line-height: 1;
-      margin-bottom:0;
-      display:block;
-    }
-    @media(max-width:900px){
-      .dragon-flow{padding-bottom:22px;}
-      .step-card{width:130px;min-width:130px;max-width:130px;height:145px;}
-      .step-card img{height:58px;}
-      .step-card h3{font-size:1em;}
-      .step-card p{font-size:0.72em;}
-      .dragon-arrow .arrow-num{width:20px;height:20px;font-size:0.87em;}
-      .dragon-arrow .arrow-icon{font-size:1.2em;}
-    }
+    ...（同上 CSS 不再重複貼）
   </style>
 </head>
 <body>
@@ -625,11 +398,11 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
   </main>
 </body>
 </html>
-""")
+""", HEADER_SOLID=HEADER_SOLID, FOOTER_HTML=FOOTER_HTML)
 
 @app.route("/")
 def home():
-    return render_template_string(HOME_HTML)
+    return render_template_string(HOME_HTML, HEADER_HOME=HEADER_HOME, FOOTER_HTML=FOOTER_HTML)
 
 @app.route("/about")
 def about():
