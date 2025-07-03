@@ -3,7 +3,7 @@ from flask import Flask, render_template_string
 app = Flask(__name__)
 
 # -----------------------
-# Home 半透明 Header（隨頁面捲動）
+# 共用 Header & Footer
 # -----------------------
 HEADER_HOME = """
 <header style="
@@ -20,18 +20,15 @@ HEADER_HOME = """
     </div>
   </div>
   <nav>
-    <a href="/"           class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
-    <a href="/about"      class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
-    <a href="/#services"  class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
-    <a href="/onedragon"  class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">一條龍產線</a>
-    <a href="#contact"    class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">聯絡我們</a>
+    <a href="/"           class="nav-link">首頁</a>
+    <a href="/about"      class="nav-link">關於溍慎</a>
+    <a href="/#services"  class="nav-link">服務項目</a>
+    <a href="/onedragon"  class="nav-link">一條龍產線</a>
+    <a href="#contact"    class="nav-link">聯絡我們</a>
   </nav>
 </header>
 """
 
-# -----------------------
-# 子頁面實心藍 Header（隨頁面捲動）
-# -----------------------
 HEADER_SOLID = """
 <header style="
   background: #6d8ec7;
@@ -47,18 +44,15 @@ HEADER_SOLID = """
     </div>
   </div>
   <nav>
-    <a href="/"           class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
-    <a href="/about"      class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
-    <a href="/#services"  class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
-    <a href="/onedragon"  class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">一條龍產線</a>
-    <a href="#contact"    class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">聯絡我們</a>
+    <a href="/"           class="nav-link">首頁</a>
+    <a href="/about"      class="nav-link">關於溍慎</a>
+    <a href="/#services"  class="nav-link">服務項目</a>
+    <a href="/onedragon"  class="nav-link">一條龍產線</a>
+    <a href="#contact"    class="nav-link">聯絡我們</a>
   </nav>
 </header>
 """
 
-# -----------------------
-# Footer（共用，含「聯絡資訊」標題）
-# -----------------------
 FOOTER_HTML = """
 <footer id="contact" style="
   background: #f2f7fb;
@@ -78,19 +72,19 @@ FOOTER_HTML = """
 """
 
 # -----------------------
-# 首頁 HTML（Banner + Slogan + 服務項目）
+# 首頁 HTML（含打字機動畫 & 服務項目）
 # -----------------------
 HOME_HTML = f"""
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>溍慎/鈦吉有限公司</title>
-  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/static/favicon.ico">
   <!-- AOS 動畫 -->
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
   <style>
     :root {{ --primary-blue: #6d8ec7; }}
     html {{ scroll-behavior: smooth; }}
@@ -99,36 +93,44 @@ HOME_HTML = f"""
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: white;
     }}
-    header nav a.nav-link:hover {{
+    /* nav link 特效 */
+    .nav-link {{
+      color: white; text-decoration: none; font-weight: 600;
+      padding: 8px 12px; border-radius: 4px; margin: 0 4px;
+      transition: background .2s, transform .1s;
+    }}
+    .nav-link:hover {{
       background: rgba(255,255,255,0.2);
     }}
-    header nav a.nav-link:active {{
+    .nav-link:active {{
       background: rgba(255,255,255,0.4);
       transform: translateY(2px);
     }}
+    /* 打字機動畫 */
+    @keyframes typing {{ from {{ width: 0 }} to {{ width: 100% }} }}
+    @keyframes blink {{ 50% {{ border-color: transparent }} }}
     .banner {{
       background-image: url('/static/banner_new.jpg');
       background-size: cover;
       background-position: center;
       height: 300px;
-      position: relative;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
     }}
-    .banner-text {{
-      margin: 0;
-      padding: 100px 20px 0;
-      color: white;
-      font-size: 36px;
-      font-weight: bold;
-      text-align: center;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    .typewriter {{
+      overflow: hidden; white-space: nowrap;
+      border-right: .15em solid var(--primary-blue);
+      font-size: 36px; font-weight: bold; color: white;
+      width: 0;
+      animation: typing 2s steps(30,end) forwards, blink .75s step-end infinite;
     }}
-    .banner-text + .banner-text {{
-      opacity: 0.9;
+    .typewriter.second {{
+      animation: typing 2s steps(30,end) forwards, blink .75s step-end infinite;
     }}
     main {{
       max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px;
+      margin: 40px auto;
+      padding: 0 20px;
     }}
     h2 {{
       color: var(--primary-blue);
@@ -136,27 +138,20 @@ HOME_HTML = f"""
       padding-bottom: 8px;
     }}
     .services {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
+      display: flex; flex-wrap: wrap;
+      gap: 20px; justify-content: center;
     }}
     .service-item {{
       position: relative;
       flex: 1 1 calc(25% - 20px);
       max-width: calc(25% - 20px);
-      height: 220px;
-      padding: 20px;
-      border-radius: 6px;
-      background-size: cover;
-      background-position: center;
-      text-decoration: none;
-      overflow: hidden;
+      height: 220px; padding: 20px; border-radius: 6px;
+      background-size: cover; background-position: center;
+      text-decoration: none; overflow: hidden;
       transition: transform .3s ease, box-shadow .3s ease;
     }}
     .service-item::before {{
-      content: "";
-      position: absolute; inset: 0;
+      content: ""; position: absolute; inset: 0;
       background: rgba(0,0,0,0.45); z-index: 0;
     }}
     .service-item h3, .service-item p {{
@@ -168,21 +163,21 @@ HOME_HTML = f"""
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }}
     @media (max-width: 768px) {{
-      .banner-text {{ font-size: 28px; }}
+      .typewriter {{ font-size: 28px; }}
       .service-item {{ flex: 1 1 calc(50% - 15px); max-width: calc(50% - 15px); }}
     }}
     @media (max-width: 480px) {{
-      .banner-text {{ font-size: 24px; }}
+      .typewriter {{ font-size: 24px; }}
       .service-item {{ flex: 1 1 100%; max-width: 100%; }}
     }}
   </style>
 </head>
 <body>
-  <div class="banner" data-aos="fade-in">
-    <p class="banner-text" data-aos="fade-up">溍於專業，慎於品質</p>
-    <p class="banner-text" data-aos="fade-up" data-aos-delay="200">鈦造未來，吉刻成型</p>
-  </div>
   {HEADER_HOME}
+  <div class="banner" data-aos="fade-in">
+    <div class="typewriter" data-aos="fade-in">溍於專業，慎於品質</div>
+    <div class="typewriter second" data-aos="fade-in">鈦造未來，吉刻成型</div>
+  </div>
   <main>
     <section id="services">
       <h2 data-aos="fade-up">服務項目</h2>
@@ -206,6 +201,7 @@ HOME_HTML = f"""
     </section>
     {FOOTER_HTML}
   </main>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 </body>
 </html>
 """
@@ -217,23 +213,25 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>{title}</title>
-  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/static/favicon.ico">
   <!-- AOS 動畫 -->
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init());</script>
   <style>
     :root {{ --primary-blue: #6d8ec7; }}
     html {{ scroll-behavior: smooth; }}
     body {{
-      margin: 0; padding-top: 20px;
+      margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: white;
     }}
-    header nav a.nav-link:hover {{
-      background: rgba(255,255,255,0.2);
+    .nav-link {{
+      color: white; text-decoration: none; font-weight: 600;
+      padding: 8px 12px; border-radius: 4px; margin: 0 4px;
+      transition: background .2s, transform .1s;
     }}
-    header nav a.nav-link:active {{
+    .nav-link:hover {{ background: rgba(255,255,255,0.2); }}
+    .nav-link:active {{
       background: rgba(255,255,255,0.4);
       transform: translateY(2px);
     }}
@@ -245,7 +243,14 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       justify-content: space-between; align-items: center;
     }}
     main {{
-      max-width: 1000px; margin: 40px auto; padding: 0 20px;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }}
+    h2 {{
+      color: var(--primary-blue);
+      border-bottom: 2px solid var(--primary-blue);
+      padding-bottom: 8px;
     }}
     .step-card {{
       transition: transform .3s, box-shadow .3s;
@@ -253,11 +258,6 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     .step-card:hover {{
       transform: translateY(-5px) scale(1.02);
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    }}
-    h2 {{
-      color: var(--primary-blue);
-      border-bottom: 2px solid var(--primary-blue);
-      padding-bottom: 8px;
     }}
     .contact-info {{
       background: #f2f7fb; padding:20px; border-radius:6px; line-height:1.8;
@@ -273,6 +273,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     {content_html}
     {FOOTER_HTML}
   </main>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 </body>
 </html>
 """)
