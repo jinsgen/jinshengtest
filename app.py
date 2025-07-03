@@ -641,7 +641,60 @@ def home():
 
 @app.route("/about")
 def about():
-    return render_subpage("關於溍慎", "<p>本頁內容待補充。</p>")
+    content_html = """
+<div style="display: flex; flex-wrap: wrap; gap: 32px 3vw; align-items: flex-start; margin-bottom: 42px;">
+  <!-- 左圖 -->
+  <div style="flex:1 1 300px; min-width:220px; max-width:370px;">
+    <img src="/static/company_entrance.jpg" alt="公司入口" style="width:100%; border-radius:16px; box-shadow: 0 2px 16px rgba(60,90,150,0.14); object-fit:cover;">
+  </div>
+  <!-- 右文 -->
+  <div style="flex:2 1 330px; min-width:240px; max-width:700px;">
+    <h3 style="color:#4166a9; font-size:1.44em; margin:0 0 18px 0; letter-spacing:1.2px;">
+      關於溍慎有限公司
+    </h3>
+    <div style="font-size:1.13em; color:#2d425c; line-height:1.92;">
+      溍慎有限公司成立於台南，專注於提供專業的表面處理加工服務，擁有多年實務經驗與高效率自動化設備，持續為客戶提供高品質、穩定可靠的技術支援。<br><br>
+      我們秉持「品質第一、誠信經營、顧客滿意」的宗旨，並致力於持續創新，成為業界值得信賴的夥伴。
+    </div>
+  </div>
+</div>
+
+<!-- 核心價值環形圖 -->
+<div style="display:flex; flex-direction:column; align-items:center; margin: 32px 0 30px 0;">
+  <div style="width:360px; max-width:96vw; height:360px; position:relative;">
+    <svg viewBox="0 0 360 360" width="360" height="360" style="width:100%;height:100%;">
+      <circle cx="180" cy="180" r="145" stroke="#b3d0ea" stroke-width="16" fill="none"/>
+      <!-- 四個圓點 -->
+      <circle cx="180" cy="40"  r="48" fill="#98ceef"/>
+      <circle cx="320" cy="180" r="48" fill="#98ceef"/>
+      <circle cx="180" cy="320" r="48" fill="#98ceef"/>
+      <circle cx="40"  cy="180" r="48" fill="#98ceef"/>
+      <!-- 核心圓 -->
+      <circle cx="180" cy="180" r="62" fill="#e51919"/>
+      <!-- 文字 -->
+      <text x="180" y="186" text-anchor="middle" fill="#fff" font-size="2.2em" font-family="Noto Sans TC,Segoe UI" font-weight="700" dominant-baseline="middle">核心&#10;價值</text>
+      <text x="180" y="70" text-anchor="middle" fill="#2d425c" font-size="1.06em" font-family="Noto Sans TC,Segoe UI" font-weight="700">具競爭力的<br/>技術</text>
+      <text x="320" y="186" text-anchor="middle" fill="#2d425c" font-size="1.05em" font-family="Noto Sans TC,Segoe UI" font-weight="700">ISO9001<br/>認證</text>
+      <text x="180" y="310" text-anchor="middle" fill="#2d425c" font-size="1.05em" font-family="Noto Sans TC,Segoe UI" font-weight="700">環境責任</text>
+      <text x="40" y="186" text-anchor="middle" fill="#2d425c" font-size="1.05em" font-family="Noto Sans TC,Segoe UI" font-weight="700">信守承諾</text>
+    </svg>
+  </div>
+</div>
+
+<!-- 補充說明 -->
+<div style="background: #f5f7fc; border-radius: 10px; max-width: 900px; margin: 0 auto; padding: 32px 20px 22px 28px; font-size: 1.07em; color: #284052; box-shadow: 0 2px 8px rgba(110,140,180,0.06); line-height: 2;">
+  <b style="color:#4166a9;font-size:1.12em;">• 創新</b><br>
+  我們持續導入具市場競爭力的技術與自動化設備，包括機械手臂整修工程、兩套含浸自動化生產線、多軸器與龍門式自動化清洗化成產線，提升產能與穩定度。<br><br>
+  <b style="color:#4166a9;font-size:1.12em;">• 誠信</b><br>
+  以誠待人、信守承諾，加工品皆保留限度樣供品質比對；報價單明確載明各項作業工段，透明化管理流程，建立與客戶間的長期信任。<br><br>
+  <b style="color:#4166a9;font-size:1.12em;">• 服務</b><br>
+  我們重視每一道作業流程，嚴格遵守ISO 9001品質管理規範，確保提供穩定、可靠的表面處理服務，並持續優化生產與檢驗流程。<br><br>
+  <b style="color:#4166a9;font-size:1.12em;">• 永續</b><br>
+  公司依法設立並取得合格工廠登記證及廢水排放許可證，廠區具備完善廢水與廢土處理設施，致力於降低對環境的衝擊。
+  並定期召開勞資會議，促進員工與公司間的雙向溝通，確保勞資雙方權益，實踐企業社會責任。
+</div>
+"""
+    return render_subpage("關於溍慎", content_html)
 
 @app.route("/process")
 def process():
