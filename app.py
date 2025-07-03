@@ -125,7 +125,6 @@ HOME_HTML = f"""
     .nav-link:active {{
       background: rgba(255,255,255,0.32); transform: translateY(2px);
     }}
-    /* Hamburger (手機menu) */
     .nav-toggle-label {{
       display: none;
       flex-direction: column;
@@ -197,7 +196,6 @@ HOME_HTML = f"""
       .brand{{font-size:8px;}}
       .nav-link{{font-size:0.91em;}}
     }}
-    /* Banner 與 Slogan */
     .banner-bg {{
       position: absolute; top: 0; left: 0;
       width: 100vw; height: 350px;
@@ -243,8 +241,6 @@ HOME_HTML = f"""
     .slogan-line:last-child{{margin-bottom:0;}}
     main {{ max-width:1200px; margin:400px auto 0 auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
-
-    /* 服務項目五格(大格、2排平均) */
     .services {{
       display: flex;
       flex-wrap: wrap;
@@ -527,6 +523,97 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       .core-point4{{left:2vw;}}
       .aboutus-philosophy{{padding:20px 6vw; font-size:0.98em;}}
     }}
+
+    /* 加工流程流程卡片樣式 */
+    .dragon-flow {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      gap: 0;
+      overflow-x: auto;
+      padding-bottom: 32px;
+      margin-bottom: 12px;
+      scrollbar-width: thin;
+      scrollbar-color: #b1bed7 #f2f7fb;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
+      user-select: none;
+      position: relative;
+      background: none;
+    }
+    .step-card {
+      width: 200px;
+      min-width: 200px;
+      max-width: 200px;
+      height: 220px;
+      margin: 0 18px;
+      border-radius: 10px;
+      box-shadow: 0 2px 14px rgba(60, 70, 90, 0.11);
+      overflow: hidden;
+      background: #f7fafb;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform .3s, box-shadow .3s;
+      position: relative;
+    }
+    .step-card:hover {
+      transform: translateY(-7px) scale(1.04);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.14);
+    }
+    .step-card img {
+      width: 100%;
+      height: 115px;
+      object-fit: cover;
+      border-radius: 10px 10px 0 0;
+      display: block;
+    }
+    .step-card h3, .step-card p {
+      margin: 9px 0 2px 0;
+      color: #365481;
+      text-align: center;
+      z-index: 1;
+    }
+    .step-card p { font-size: 0.99rem; margin-bottom: 9px; }
+    .dragon-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 5px 14px 5px;
+      user-select: none;
+      min-width: 29px;
+      font-weight: 700;
+      opacity: 0.99;
+    }
+    .dragon-arrow .arrow-num {
+      font-size: 1.12em;
+      color: #fff;
+      background: #6d8ec7;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1px;
+      box-shadow: 0 2px 6px rgba(40,60,90,.07);
+      font-family: inherit;
+    }
+    .dragon-arrow .arrow-icon {
+      font-size: 1.7em;
+      color: #6d8ec7;
+      line-height: 1;
+      margin-bottom:0;
+      display:block;
+    }
+    @media(max-width:900px){
+      .dragon-flow{padding-bottom:22px;}
+      .step-card{width:130px;min-width:130px;max-width:130px;height:145px;}
+      .step-card img{height:58px;}
+      .step-card h3{font-size:1em;}
+      .step-card p{font-size:0.72em;}
+      .dragon-arrow .arrow-num{width:20px;height:20px;font-size:0.87em;}
+      .dragon-arrow .arrow-icon{font-size:1.2em;}
+    }
   </style>
 </head>
 <body>
@@ -536,9 +623,6 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     {content_html}
     {FOOTER_HTML}
   </main>
-  <script>
-  // 加工流程支援橫移（如有process頁，無關於本頁）
-  </script>
 </body>
 </html>
 """)
@@ -640,14 +724,14 @@ def process():
   </a>
 </div>
 <div class="dragon-desc-section" data-aos="fade-up" style="margin-bottom:20px;">
-  <h3 style="color:#4166a9; font-size:1.25em; margin:0 0 18px 0;">加工流程補充說明</h3>
+  <h3 style="color:#4166a9; font-size:1.12em; margin:0 0 15px 0;">加工流程補充說明</h3>
   <p>
     我們公司依據 <b>ISO 9001:2015 品質管理系統</b> 作業，從客戶送來的貨件開始，即進行嚴格的<span style="color:#4166a9;"><b>進料檢驗</b></span>。若發現異常情形，如生鏽、碰損或其他瑕疵，會第一時間主動通知廠商，並依廠商決定是否退回或繼續加工。<br><br>
     每一品項皆建立對應的 <b>SOP 標準作業流程</b>，並搭配照片與紀錄，要求所有員工依照流程標準執行，確保加工一致性與品質穩定性。<br><br>
     <b>➀ 初步處理</b>：鑄造完成的工件會產生毛邊，若毛邊過厚、振動研磨無法直接處理，則會先進行前處理（如：機械手臂修整、氣動銼刀修邊），再進入振動研磨程序。<br><br>
     <b>➁ 振動研磨</b>：毛邊去除後，表面會留有加工痕跡，因此透過振動研磨來統一表面質感、修飾瑕疵。部分廠商會於此階段先將工件取回再加工後，重新交由我們執行下一步。<br><br>
     <b>➂ 含浸封孔與皮膜化成</b>：汽車零件常見沙孔問題，若零件需具備氣密性，會進行含浸封孔處理以補強孔隙。考量部分工件需經海運，也會配合進行皮膜化成處理，以提升抗鹽霧腐蝕能力。<br><br>
-    <b>➃ 廢水處理</b>：因加工各項程序需使用化學藥劑（如含浸液、振動液、皮膜液），本公司設有自主管理的廢水處理系統，將所有排出液體集中處理、過濾與排放，符合環保與法規要求。
+    <b>➃ 廢水處理</b>：加工過程會有廢水產生，本公司設有自主管理的廢水處理系統，將所有排出液體集中處理、過濾與排放，符合環保與法規要求。
   </p>
 </div>
 """
