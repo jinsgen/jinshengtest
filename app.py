@@ -86,7 +86,7 @@ HOME_HTML = f"""
   <style>
     :root {{ --primary-blue: #6d8ec7; --accent-yellow: #FFD85A; }}
     html {{ scroll-behavior: smooth; }}
-    body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }}
+    body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background: #fff; }}
     header nav a.nav-link {{
       color:white; text-decoration:none; font-weight:600;
       padding:8px 12px; border-radius:4px; margin-left:8px;
@@ -136,16 +136,6 @@ HOME_HTML = f"""
       padding: 0;
     }}
     .slogan-line:last-child{{margin-bottom:0;}}
-    @media(max-width:900px){{
-      .banner-bg,.banner-content{{height:200px;}}
-      .slogan-group{{margin-right:4vw;}}
-      .slogan-line{{font-size:19px;}}
-    }}
-    @media(max-width:480px){{
-      .banner-bg,.banner-content{{height:110px;}}
-      .slogan-group{{margin-right:2vw;}}
-      .slogan-line{{font-size:13px;}}
-    }}
     main {{ max-width:1000px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
     .services {{ display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }}
@@ -154,6 +144,11 @@ HOME_HTML = f"""
       height:220px; padding:20px; border-radius:6px;
       background-size:cover; background-position:center; text-decoration:none;
       overflow:hidden; transition:transform .3s ease,box-shadow .3s ease;
+      min-width: 180px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
     }}
     .service-item::before {{
       content:""; position:absolute; inset:0; background:rgba(0,0,0,0.45); z-index:0;
@@ -163,6 +158,29 @@ HOME_HTML = f"""
     .service-item:hover {{
       transform:translateY(-5px) scale(1.02);
       box-shadow:0 8px 20px rgba(0,0,0,0.3);
+    }}
+    @media(max-width:950px){{
+      main {{padding:0 2vw;}}
+      .service-item{{min-width:130px; height:140px; padding:12px; font-size:13px;}}
+      .services {{gap:12px;}}
+      .slogan-group{{margin-right:4vw;}}
+      .slogan-line{{font-size:20px;}}
+      .banner-bg,.banner-content{{height:200px;}}
+    }}
+    @media(max-width:650px){{
+      .services {{flex-wrap: nowrap; overflow-x: auto; gap: 10px;}}
+      .service-item {{
+        min-width: 180px; max-width: 210px; height: 110px; padding: 10px;
+        font-size:11px;
+      }}
+      .slogan-line{{font-size:13px;}}
+      .banner-bg,.banner-content{{height:110px;}}
+      .slogan-group{{margin-right:2vw;}}
+    }}
+    @media(max-width:480px){{
+      main {{padding:0 1vw;}}
+      .services{{gap:5px;}}
+      .service-item{{min-width: 130px; max-width:170px; height:90px; padding:6px; font-size:10px;}}
     }}
   </style>
 </head>
@@ -203,6 +221,7 @@ HOME_HTML = f"""
 """
 
 def render_subpage(title, content_html, aos_effect="fade-up"):
+    # 已加入 .dragon-flow 拖曳和滾輪橫移功能
     return render_template_string(f"""
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -234,6 +253,8 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       scrollbar-width: thin;
       scrollbar-color: #b1bed7 #f2f7fb;
       -webkit-overflow-scrolling: touch;
+      cursor: grab;
+      user-select: none;
     }}
     .step-card {{
       width: 200px;
@@ -284,6 +305,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }}
     @media (max-width: 1150px) {{
       .step-card {{ width: 165px; min-width:165px; max-width:165px; height: 200px; }}
@@ -309,6 +331,50 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     {content_html}
     {FOOTER_HTML}
   </main>
+  <script>
+  // 鼠標滾輪左右橫移 & 拖拉橫移
+  const dragonFlow = document.querySelector('.dragon-flow');
+  if(dragonFlow){{
+    // 滾輪橫移
+    dragonFlow.addEventListener('wheel', function(e){{
+      if (e.deltaY === 0) return;
+      e.preventDefault();
+      dragonFlow.scrollLeft += e.deltaY;
+    }}, {{ passive: false }});
+
+    // 拖拉橫移（桌面和手機都支援）
+    let isDown = false, startX, scrollLeft;
+    dragonFlow.addEventListener('mousedown', function(e){{
+      isDown = true;
+      dragonFlow.classList.add('dragging');
+      startX = e.pageX - dragonFlow.offsetLeft;
+      scrollLeft = dragonFlow.scrollLeft;
+    }});
+    dragonFlow.addEventListener('mouseleave', ()=>{{isDown=false;dragonFlow.classList.remove('dragging');}});
+    dragonFlow.addEventListener('mouseup', ()=>{{isDown=false;dragonFlow.classList.remove('dragging');}});
+    dragonFlow.addEventListener('mousemove', function(e){{
+      if(!isDown)return;
+      e.preventDefault();
+      const x = e.pageX - dragonFlow.offsetLeft;
+      const walk = (x - startX)*1.1;
+      dragonFlow.scrollLeft = scrollLeft - walk;
+    }});
+    // 手機拖動
+    let isTouch = false, touchStartX, touchScrollLeft;
+    dragonFlow.addEventListener('touchstart', function(e){{
+      isTouch = true;
+      touchStartX = e.touches[0].pageX;
+      touchScrollLeft = dragonFlow.scrollLeft;
+    }});
+    dragonFlow.addEventListener('touchmove', function(e){{
+      if(!isTouch)return;
+      const x = e.touches[0].pageX;
+      const walk = (x - touchStartX)*1.1;
+      dragonFlow.scrollLeft = touchScrollLeft - walk;
+    }});
+    dragonFlow.addEventListener('touchend', function(){{ isTouch = false;}});
+  }}
+  </script>
 </body>
 </html>
 """)
