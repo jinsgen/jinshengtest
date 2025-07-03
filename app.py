@@ -138,7 +138,13 @@ HOME_HTML = f"""
     .slogan-line:last-child{{margin-bottom:0;}}
     main {{ max-width:1000px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
-    .services {{ display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }}
+    .services {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }}
     .service-item {{
       position:relative; flex:1 1 calc(25% - 20px); max-width:calc(25% - 20px);
       height:220px; padding:20px; border-radius:6px;
@@ -159,6 +165,7 @@ HOME_HTML = f"""
       transform:translateY(-5px) scale(1.02);
       box-shadow:0 8px 20px rgba(0,0,0,0.3);
     }}
+    /* 手機排版優化 */
     @media(max-width:950px){{
       main {{padding:0 2vw;}}
       .service-item{{min-width:130px; height:140px; padding:12px; font-size:13px;}}
@@ -168,19 +175,30 @@ HOME_HTML = f"""
       .banner-bg,.banner-content{{height:200px;}}
     }}
     @media(max-width:650px){{
-      .services {{flex-wrap: nowrap; overflow-x: auto; gap: 10px;}}
-      .service-item {{
-        min-width: 180px; max-width: 210px; height: 110px; padding: 10px;
+      .banner-bg, .banner-content{{height:110px;}}
+      .slogan-line{{font-size:13px;}}
+      .slogan-group{{margin-right:2vw;}}
+      .services{{
+        gap:8px;
+      }}
+      .service-item{{
+        min-width: 99vw;
+        max-width: 99vw;
+        height:90px;
+        padding:8px 12px;
         font-size:11px;
       }}
-      .slogan-line{{font-size:13px;}}
-      .banner-bg,.banner-content{{height:110px;}}
-      .slogan-group{{margin-right:2vw;}}
+      .service-item h3, .service-item p {{
+        font-size:12px;
+      }}
     }}
-    @media(max-width:480px){{
-      main {{padding:0 1vw;}}
-      .services{{gap:5px;}}
-      .service-item{{min-width: 130px; max-width:170px; height:90px; padding:6px; font-size:10px;}}
+    @media(max-width:420px){{
+      .banner-content{{height:85px;}}
+      .service-item{{height: 80px; font-size:10px;}}
+      .service-item h3, .service-item p {{
+        font-size:10px;
+      }}
+      .slogan-line{{font-size:10px;}}
     }}
   </style>
 </head>
@@ -332,7 +350,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     {FOOTER_HTML}
   </main>
   <script>
-  // 鼠標滾輪左右橫移 & 拖拉橫移
+  // 僅一條龍產線流程支援橫移
   const dragonFlow = document.querySelector('.dragon-flow');
   if(dragonFlow){{
     // 滾輪橫移
@@ -342,7 +360,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       dragonFlow.scrollLeft += e.deltaY;
     }}, {{ passive: false }});
 
-    // 拖拉橫移（桌面和手機都支援）
+    // 拖拉橫移
     let isDown = false, startX, scrollLeft;
     dragonFlow.addEventListener('mousedown', function(e){{
       isDown = true;
