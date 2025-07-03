@@ -161,104 +161,98 @@ HOME_HTML = f"""
     }}
     .slogan-line:last-child{{margin-bottom:0;}}
 
-    main {{ max-width:1100px; margin:400px auto 0 auto; padding:0 20px; position:relative; z-index:2; }}
+    main {{ max-width:1200px; margin:400px auto 0 auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
 
-    /* 服務項目5格(大格, 第二排兩格置中, 左右空白一樣) */
+    /* 服務項目五格(大格、2排平均) */
     .services {{
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 36px 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 48px 38px;
       justify-content: center;
-      align-items: stretch;
-      margin-bottom: 20px;
-      margin-top: 24px;
-      min-height: 560px;
-      position: relative;
+      align-items: flex-start;
+      margin-bottom: 30px;
+      margin-top: 30px;
+      min-height: 620px;
+      width:100%;
     }}
-    /* 第一排三格（2,3,4） */
-    .services > :nth-child(1) {{ grid-column:2/3; grid-row:1; }}
-    .services > :nth-child(2) {{ grid-column:3/4; grid-row:1; }}
-    .services > :nth-child(3) {{ grid-column:4/5; grid-row:1; }}
-    /* 第二排兩格（3,4），置中分佈 */
-    .services > :nth-child(4) {{ grid-column:3/4; grid-row:2; }}
-    .services > :nth-child(5) {{ grid-column:4/5; grid-row:2; }}
-
     .service-item {{
-      position:relative;
-      height:250px; border-radius:16px;
-      background-size:cover; background-position:center; text-decoration:none;
-      overflow:hidden; transition:transform .3s,box-shadow .3s;
+      width: 325px;
+      height: 265px;
+      border-radius: 18px;
+      background-size:cover;
+      background-position:center;
+      text-decoration:none;
+      overflow:hidden;
+      transition:transform .3s,box-shadow .3s;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       min-width:0;
-      box-shadow: 0 2px 8px rgba(90,110,160,0.12);
+      box-shadow: 0 2px 12px rgba(90,110,160,0.12);
+      margin-bottom:0;
+      margin-right:0;
     }}
     .service-item::before {{
-      content:""; position:absolute; inset:0; background:rgba(0,0,0,0.40); z-index:0;
+      content:""; position:absolute; inset:0; background:rgba(0,0,0,0.38); z-index:0;
     }}
     .service-item h3 {{
       position:relative; z-index:1; 
       color:#fff;
       font-family: 'Montserrat', 'Noto Sans TC', sans-serif;
-      font-size:2rem; 
+      font-size:2.1rem; 
       font-weight: 700;
       letter-spacing: 1.3px;
-      margin:0 0 7px 0;
-      line-height: 1.15;
+      margin:0 0 10px 0;
+      line-height: 1.17;
       text-shadow: 0 3px 9px rgba(45,60,110,0.23);
       text-align: left;
-      padding-left: 14px;
+      padding-left: 16px;
     }}
     .service-item p {{
       position:relative; z-index:1;
       color: #f5f5f7;
       font-family: 'Noto Sans TC', 'Montserrat', sans-serif;
-      font-size:1.2rem;
-      margin:0 0 13px 0;
+      font-size:1.25rem;
+      margin:0 0 18px 0;
       text-align: left;
-      padding-left: 14px;
+      padding-left: 16px;
       text-shadow: 0 1px 4px rgba(50,55,85,0.18);
-      line-height:1.3;
+      line-height:1.4;
       letter-spacing: 0.6px;
     }}
     .service-item:hover {{
-      transform:translateY(-7px) scale(1.045);
-      box-shadow:0 8px 26px rgba(0,0,0,0.21);
+      transform:translateY(-9px) scale(1.06);
+      box-shadow:0 12px 38px rgba(0,0,0,0.21);
     }}
 
-    @media(max-width:1200px){{
-      .slogan-line{{font-size:32px;}}
-      .service-item h3{{font-size:1.19rem;}}
-      .service-item p{{font-size:.9rem;}}
-      .services{{gap:15px 8px; min-height:300px;}}
-    }}
-    @media(max-width:800px){{
-      .header-content{{
-        flex-direction: column;
-        align-items: flex-start;
-        height:auto;
-        padding: 6px 4px;
-        gap: 4px;
+    @media (max-width:1150px) {{
+      .services {{
+        gap:32px 12px;
       }}
-      .logo-area{{gap:6px;}}
-      nav{{gap:5px;font-size:12px;}}
-      .logo{{height:22px; width:22px;}}
-      .brand{{font-size:9.6px;}}
+      .service-item {{
+        width: 250px; height: 165px;
+      }}
+      .service-item h3{{font-size:1.1rem;}}
+      .service-item p{{font-size:0.92rem;}}
     }}
-    @media(max-width:650px){{
+    @media (max-width:900px) {{
+      .services{{gap:12px 8px;}}
+      .service-item{{width:43vw; min-width:150px; max-width:99vw; height:20vw; min-height:60px;}}
+      main{{max-width:98vw;}}
+    }}
+    @media (max-width:650px) {{
       .banner-bg,.banner-content{{height:95px;}}
       main{{margin-top:135px;}}
       .services{{
         display: flex;
         flex-direction: column;
-        gap:8px;
+        gap:10px;
         min-height:unset;
+        width:98vw;
       }}
-      .service-item{{height:88px; padding:6px 10px; font-size:11px;}}
+      .service-item{{width:100%; height:86px; padding:6px 10px; font-size:11px;}}
       .service-item h3{{font-size:1em;}}
       .service-item p{{font-size:0.8em;}}
     }}
@@ -452,7 +446,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       color: #6d8ec7;
       line-height: 1;
       margin-bottom:0;
-      display: block;
+      display:block;
     }}
     @media (max-width: 1250px) {{
       .step-card{{width:150px;min-width:150px;max-width:150px;height:140px;}}
@@ -508,13 +502,6 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
   <main data-aos="{aos_effect}">
     <h2 data-aos="fade-up">{title}</h2>
     {content_html}
-    <div class="dragon-desc-section" data-aos="fade-up" style="margin-bottom:20px;">
-      <h3 style="color:#4166a9; font-size:1.25em; margin:0 0 18px 0;">流程補充說明</h3>
-      <p>
-        （在這裡補充完整的產線步驟介紹、優勢、注意事項等說明內容，無長度限制。<br>
-        你可以自由輸入多段落文字，呈現於此大區塊。）
-      </p>
-    </div>
     {FOOTER_HTML}
   </main>
   <script>
@@ -617,7 +604,17 @@ def onedragon():
   </a>
 </div>
 """
-    return render_subpage("一條龍產線服務", flow_html)
+    # 流程補充說明保留（如需刪除再提醒）
+    desc_html = """
+    <div class="dragon-desc-section" data-aos="fade-up" style="margin-bottom:20px;">
+      <h3 style="color:#4166a9; font-size:1.25em; margin:0 0 18px 0;">流程補充說明</h3>
+      <p>
+        （在這裡補充完整的產線步驟介紹、優勢、注意事項等說明內容，無長度限制。<br>
+        你可以自由輸入多段落文字，呈現於此大區塊。）
+      </p>
+    </div>
+    """
+    return render_subpage("一條龍產線服務", flow_html + desc_html)
 
 @app.route("/vibration")
 def vibration():
