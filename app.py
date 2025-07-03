@@ -3,18 +3,10 @@ from flask import Flask, render_template_string
 app = Flask(__name__)
 
 HEADER_HOME = """
-<header style="
-  background: rgba(109, 142, 199, 0.6);
-  padding: 15px 30px;
-  color: white;
-  display: flex; flex-wrap: wrap;
-  justify-content: space-between; align-items: center;
-  position: sticky; top: 0; z-index: 10;
-  backdrop-filter: blur(4px);
-">
-  <div style="display:flex; align-items:center;">
-    <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
-    <div style="font-size:20px; line-height:1.2; white-space:pre-line;">
+<header class="main-header">
+  <div class="header-left">
+    <img src="/static/logo_transparent.png" alt="LOGO">
+    <div class="brand">
       溍慎有限公司<br>鈦吉有限公司
     </div>
   </div>
@@ -29,17 +21,10 @@ HEADER_HOME = """
 """
 
 HEADER_SOLID = """
-<header style="
-  background: #6d8ec7;
-  padding: 15px 30px;
-  color: white;
-  display: flex; flex-wrap: wrap;
-  justify-content: space-between; align-items: center;
-  position: sticky; top: 0; z-index: 10;
-">
-  <div style="display:flex; align-items:center;">
-    <img src="/static/logo_transparent.png" alt="LOGO" style="height:60px; margin-right:14px;">
-    <div style="font-size:20px; line-height:1.2; white-space:pre-line;">
+<header class="main-header solid">
+  <div class="header-left">
+    <img src="/static/logo_transparent.png" alt="LOGO">
+    <div class="brand">
       溍慎有限公司<br>鈦吉有限公司
     </div>
   </div>
@@ -87,21 +72,49 @@ HOME_HTML = f"""
     :root {{ --primary-blue: #6d8ec7; --accent-yellow: #FFD85A; }}
     html {{ scroll-behavior: smooth; }}
     body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background: #fff; }}
-    header nav a.nav-link {{
-      color:white; text-decoration:none; font-weight:600;
-      padding:8px 12px; border-radius:4px; margin-left:8px;
-      transition: background .2s, transform .1s;
+
+    .main-header {{
+      background: rgba(109, 142, 199, 0.6);
+      color: white;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: blur(4px);
+      flex-wrap: wrap;
     }}
-    header nav a.nav-link:hover {{
+    .main-header.solid {{
+      background: #6d8ec7;
+      backdrop-filter: none;
+    }}
+    .header-left {{
+      display: flex; align-items: center;
+    }}
+    .header-left img {{
+      height: 56px; margin-right: 12px;
+    }}
+    .brand {{
+      font-size: 20px; line-height: 1.2; white-space: pre-line;
+    }}
+    .main-header nav {{
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }}
+    .main-header .nav-link {{
+      color:white; text-decoration:none; font-weight:600;
+      padding:8px 12px; border-radius:4px; transition: background .2s, transform .1s;
+    }}
+    .main-header .nav-link:hover {{
       background: rgba(255,255,255,0.2);
     }}
-    header nav a.nav-link:active {{
-      background: rgba(255,255,255,0.4);
-      transform: translateY(2px);
+    .main-header .nav-link:active {{
+      background: rgba(255,255,255,0.4); transform: translateY(2px);
     }}
+
     .banner-bg {{
-      position: absolute;
-      top: 0; left: 0;
+      position: absolute; top: 0; left: 0;
       width: 100vw; height: 350px;
       background: url('/static/banner_new.jpg') center center/cover no-repeat;
       z-index: 0;
@@ -136,21 +149,23 @@ HOME_HTML = f"""
       padding: 0;
     }}
     .slogan-line:last-child{{margin-bottom:0;}}
+
     main {{ max-width:1000px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
+
     .services {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
+      width:100%;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px;
       justify-content: center;
       margin-bottom: 20px;
     }}
     .service-item {{
-      position:relative; flex:1 1 calc(25% - 20px); max-width:calc(25% - 20px);
+      position:relative;
       height:220px; padding:20px; border-radius:6px;
       background-size:cover; background-position:center; text-decoration:none;
       overflow:hidden; transition:transform .3s ease,box-shadow .3s ease;
-      min-width: 180px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -165,40 +180,48 @@ HOME_HTML = f"""
       transform:translateY(-5px) scale(1.02);
       box-shadow:0 8px 20px rgba(0,0,0,0.3);
     }}
-    /* 手機排版優化 */
-    @media(max-width:950px){{
-      main {{padding:0 2vw;}}
-      .service-item{{min-width:130px; height:140px; padding:12px; font-size:13px;}}
-      .services {{gap:12px;}}
-      .slogan-group{{margin-right:4vw;}}
-      .slogan-line{{font-size:20px;}}
+
+    @media(max-width:1100px){{
       .banner-bg,.banner-content{{height:200px;}}
+      .slogan-line{{font-size:20px;}}
+      .slogan-group{{margin-right:4vw;}}
+      .header-left img{{height:36px;}}
+      .brand{{font-size:13px;}}
+      .services{{grid-template-columns: repeat(2,1fr);}}
+    }}
+    @media(max-width:900px){{
+      .banner-bg,.banner-content{{height:140px;}}
+      .slogan-group{{margin-right:2vw;}}
+    }}
+    @media(max-width:800px){{
+      .main-header, .main-header.solid{{
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 9px 10px;
+      }}
+      .main-header nav{{
+        margin-top: 5px;
+        width:100%;
+        flex-wrap:wrap;
+        gap:6px;
+      }}
+      .header-left{{
+        margin-bottom: 3px;
+      }}
     }}
     @media(max-width:650px){{
-      .banner-bg, .banner-content{{height:110px;}}
+      main {{padding:0 1vw;}}
+      .banner-bg,.banner-content{{height:95px;}}
       .slogan-line{{font-size:13px;}}
-      .slogan-group{{margin-right:2vw;}}
-      .services{{
-        gap:8px;
-      }}
-      .service-item{{
-        min-width: 99vw;
-        max-width: 99vw;
-        height:90px;
-        padding:8px 12px;
-        font-size:11px;
-      }}
-      .service-item h3, .service-item p {{
-        font-size:12px;
-      }}
+      .services{{grid-template-columns: 1fr; gap:7px;}}
+      .service-item{{height:78px; padding:6px 6px;}}
+      .main-header nav{{gap:2px;}}
+      .brand{{font-size:11px;}}
     }}
-    @media(max-width:420px){{
-      .banner-content{{height:85px;}}
-      .service-item{{height: 80px; font-size:10px;}}
-      .service-item h3, .service-item p {{
-        font-size:10px;
-      }}
+    @media(max-width:400px){{
+      .banner-content{{height:60px;}}
       .slogan-line{{font-size:10px;}}
+      .service-item{{height:60px; font-size:9px;}}
     }}
   </style>
 </head>
@@ -239,7 +262,6 @@ HOME_HTML = f"""
 """
 
 def render_subpage(title, content_html, aos_effect="fade-up"):
-    # 已加入 .dragon-flow 拖曳和滾輪橫移功能
     return render_template_string(f"""
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -254,10 +276,40 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     :root {{ --primary-blue: #6d8ec7; }}
     html {{ scroll-behavior: smooth; }}
     body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }}
-    header nav a.nav-link{{ transition:background .2s,transform .1s; color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px; margin-left:8px; }}
-    header nav a.nav-link:hover{{ background:rgba(255,255,255,0.2); }}
-    header nav a.nav-link:active{{ background:rgba(255,255,255,0.4); transform:translateY(2px); }}
-    header{{ background:#6d8ec7; padding:15px 30px; color:white; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10; }}
+    .main-header {{
+      background: #6d8ec7;
+      color: white;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky; top: 0; z-index: 10;
+      flex-wrap: wrap;
+    }}
+    .header-left {{
+      display: flex; align-items: center;
+    }}
+    .header-left img {{
+      height: 56px; margin-right: 12px;
+    }}
+    .brand {{
+      font-size: 20px; line-height: 1.2; white-space: pre-line;
+    }}
+    .main-header nav {{
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }}
+    .main-header .nav-link {{
+      color:white; text-decoration:none; font-weight:600;
+      padding:8px 12px; border-radius:4px; transition: background .2s, transform .1s;
+    }}
+    .main-header .nav-link:hover {{
+      background: rgba(255,255,255,0.2);
+    }}
+    .main-header .nav-link:active {{
+      background: rgba(255,255,255,0.4); transform: translateY(2px);
+    }}
     main{{ max-width:1000px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
     .dragon-flow {{
       display: flex;
@@ -329,12 +381,29 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       .step-card {{ width: 165px; min-width:165px; max-width:165px; height: 200px; }}
       .step-card img {{ height: 90px; }}
     }}
+    @media (max-width: 800px) {{
+      .main-header{{
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 9px 10px;
+      }}
+      .main-header nav{{
+        margin-top: 5px;
+        width:100%;
+        flex-wrap:wrap;
+        gap:6px;
+      }}
+      .header-left{{
+        margin-bottom: 3px;
+      }}
+    }}
     @media (max-width: 700px) {{
       main {{padding:0 3vw;}}
       .dragon-flow {{padding-bottom:10px;}}
       .step-card {{ width: 120px; min-width:120px; max-width:120px; height: 145px; }}
       .step-card img {{ height: 55px; }}
       .dragon-arrow {{ font-size: 22px; min-width: 18px; }}
+      .brand{{font-size:11px;}}
     }}
     h2{{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
     .contact-info{{ background:#f2f7fb; padding:20px; border-radius:6px; line-height:1.8; margin-top:40px; }}
