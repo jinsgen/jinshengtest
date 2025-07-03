@@ -4,19 +4,19 @@ app = Flask(__name__)
 
 HEADER_HOME = """
 <header class="main-header">
-  <div class="header-left">
-    <img src="/static/logo_transparent.png" alt="LOGO">
+  <div class="header-inner">
+    <img src="/static/logo_transparent.png" alt="LOGO" class="logo">
     <div class="brand">
       溍慎有限公司<br>鈦吉有限公司
     </div>
+    <nav>
+      <a href="/"           class="nav-link">首頁</a>
+      <a href="/about"      class="nav-link">關於溍慎</a>
+      <a href="/#services"  class="nav-link">服務項目</a>
+      <a href="/onedragon"  class="nav-link">一條龍產線</a>
+      <a href="#contact"    class="nav-link">聯絡我們</a>
+    </nav>
   </div>
-  <nav>
-    <a href="/"           class="nav-link">首頁</a>
-    <a href="/about"      class="nav-link">關於溍慎</a>
-    <a href="/#services"  class="nav-link">服務項目</a>
-    <a href="/onedragon"  class="nav-link">一條龍產線</a>
-    <a href="#contact"    class="nav-link">聯絡我們</a>
-  </nav>
 </header>
 """
 
@@ -60,49 +60,52 @@ HOME_HTML = f"""
     .main-header {{
       background: rgba(109, 142, 199, 0.6);
       color: white;
-      padding: 16px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       position: sticky; top: 0; z-index: 10;
       backdrop-filter: blur(4px);
-      flex-wrap: wrap;
+      width: 100vw; min-width: 320px;
     }}
     .main-header.solid {{
       background: #6d8ec7;
       backdrop-filter: none;
     }}
-    .header-left {{
-      display: flex; align-items: center;
+    .header-inner {{
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 2px 16px 2px 12px;
     }}
-    .header-left img {{
-      height: 80px; width: 80px; max-width: 90px; min-width:60px; object-fit: contain;
-      margin-right: 18px;
-      transition: height .2s;
+    .logo {{
+      height: 74px; width: 74px; max-width: 100px; min-width:58px; object-fit: contain;
+      margin: 0 16px 0 0;
+      display:block;
     }}
     .brand {{
-      font-size: 30px; line-height: 1.25; white-space: pre-line;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      transition: font-size .2s;
+      font-size: 30px; line-height: 1.22; white-space: pre-line;
+      font-weight: 700; letter-spacing: 1.5px;
+      margin-top: 4px;
     }}
     .main-header nav {{
       display: flex;
-      gap: 18px;
+      gap: 13px;
       flex-wrap: wrap;
-      font-size: 18px;
+      align-items: center;
+      margin-left: 22px;
+      margin-top: 7px;
     }}
     .main-header .nav-link {{
       color:white; text-decoration:none; font-weight:600;
-      padding:10px 18px; border-radius:4px; transition: background .2s, transform .1s;
-      font-size: 18px;
+      padding:9px 17px; border-radius:4px; transition: background .2s, transform .1s;
+      font-size: 17px;
     }}
     .main-header .nav-link:hover {{
-      background: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.22);
     }}
     .main-header .nav-link:active {{
-      background: rgba(255,255,255,0.4); transform: translateY(2px);
+      background: rgba(255,255,255,0.36); transform: translateY(2px);
     }}
+
     .banner-bg {{
       position: absolute; top: 0; left: 0;
       width: 100vw; height: 350px;
@@ -112,19 +115,24 @@ HOME_HTML = f"""
       pointer-events: none;
     }}
     .banner-content {{
-      position: relative;
+      position: absolute; /* Changed from relative to absolute */
+      top: 0; left: 0; right: 0;
       width: 100vw;
       height: 350px;
       z-index: 1;
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      pointer-events: none;
     }}
     .slogan-group {{
       margin-right: 10vw;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
+      justify-content: center;
+      height: 100%;
+      pointer-events: none;
     }}
     .slogan-line {{
       font-size: 38px;
@@ -140,7 +148,7 @@ HOME_HTML = f"""
     }}
     .slogan-line:last-child{{margin-bottom:0;}}
 
-    main {{ max-width:1100px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
+    main {{ max-width:1100px; margin:400px auto 0 auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
 
     .services {{
@@ -182,11 +190,12 @@ HOME_HTML = f"""
       main {{padding:0 2vw;}}
       .service-item{{height:160px; font-size:15px;}}
       .services{{gap:15px 8px;}}
-      .header-left img{{height:52px; width:52px;}}
-      .brand{{font-size:17px;}}
+      .header-inner{{padding: 2px 4px 2px 4px;}}
+      .logo{{height:46px; width:46px;}}
+      .brand{{font-size:15px;}}
     }}
     @media(max-width:800px){{
-      .main-header, .main-header.solid{{
+      .header-inner{{
         flex-direction: column;
         align-items: flex-start;
         padding: 10px 7px;
@@ -197,15 +206,13 @@ HOME_HTML = f"""
         flex-wrap:wrap;
         gap:7px;
       }}
-      .header-left{{
-        margin-bottom: 4px;
-      }}
-      .header-left img{{height:40px; width:40px;}}
-      .brand{{font-size:12px;}}
+      .logo{{height:34px;width:34px;}}
+      .brand{{font-size:11px;}}
     }}
     @media(max-width:650px){{
       .banner-bg,.banner-content{{height:95px;}}
       .slogan-line{{font-size:13px;}}
+      main{{margin-top:135px;}}
       .services{{
         display: flex;
         flex-direction: column;
@@ -214,7 +221,6 @@ HOME_HTML = f"""
       .service-item{{height:88px; padding:6px 10px; font-size:11px;}}
       .service-item h3{{font-size:1em;}}
       .service-item p{{font-size:0.8em;}}
-      .main-header nav{{gap:2px; font-size:12px;}}
       .brand{{font-size:11px;}}
     }}
     @media(max-width:400px){{
@@ -278,43 +284,45 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     .main-header {{
       background: #6d8ec7;
       color: white;
-      padding: 16px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      width: 100vw;
       position: sticky; top: 0; z-index: 10;
-      flex-wrap: wrap;
     }}
-    .header-left {{
-      display: flex; align-items: center;
+    .header-inner {{
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 2px 16px 2px 12px;
     }}
-    .header-left img {{
-      height: 80px; width: 80px; max-width: 90px; min-width:60px; object-fit: contain;
-      margin-right: 18px;
-      transition: height .2s;
+    .logo {{
+      height: 74px; width: 74px; max-width: 100px; min-width:58px; object-fit: contain;
+      margin: 0 16px 0 0;
+      display:block;
     }}
     .brand {{
-      font-size: 30px; line-height: 1.25; white-space: pre-line;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      transition: font-size .2s;
+      font-size: 30px; line-height: 1.22; white-space: pre-line;
+      font-weight: 700; letter-spacing: 1.5px;
+      margin-top: 4px;
     }}
     .main-header nav {{
       display: flex;
-      gap: 18px;
+      gap: 13px;
       flex-wrap: wrap;
-      font-size: 18px;
+      align-items: center;
+      margin-left: 22px;
+      margin-top: 7px;
     }}
     .main-header .nav-link {{
       color:white; text-decoration:none; font-weight:600;
-      padding:10px 18px; border-radius:4px; transition: background .2s, transform .1s;
-      font-size: 18px;
+      padding:9px 17px; border-radius:4px; transition: background .2s, transform .1s;
+      font-size: 17px;
     }}
     .main-header .nav-link:hover {{
-      background: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.22);
     }}
     .main-header .nav-link:active {{
-      background: rgba(255,255,255,0.4); transform: translateY(2px);
+      background: rgba(255,255,255,0.36); transform: translateY(2px);
     }}
     main{{ max-width:1100px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
     .dragon-flow {{
@@ -377,6 +385,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       min-width: 38px;
       font-weight: 800;
       opacity: 0.98;
+      margin-bottom:22px;
     }}
     .dragon-arrow .arrow-num {{
       font-size: 1.18em;
@@ -394,16 +403,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       font-size: 2.1em;
       color: #6d8ec7;
       line-height: 1;
-    }}
-    .dragon-arrow .arrow-note {{
-      font-size: .9em;
-      color: #4f6179;
-      margin-top: 1px;
-      text-align: center;
-      min-width:38px;
-      max-width:70px;
-      white-space:normal;
-      line-height:1.3;
+      margin-bottom:0;
     }}
     @media (max-width: 1250px) {{
       .step-card{{width:150px;min-width:150px;max-width:150px;height:140px;}}
@@ -411,7 +411,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       .dragon-arrow .arrow-num{{width:23px;height:23px;font-size:.86em;}}
     }}
     @media (max-width: 800px) {{
-      .main-header{{
+      .header-inner{{
         flex-direction: column;
         align-items: flex-start;
         padding: 10px 7px;
@@ -422,11 +422,8 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
         flex-wrap:wrap;
         gap:7px;
       }}
-      .header-left{{
-        margin-bottom: 4px;
-      }}
-      .header-left img{{height:40px; width:40px;}}
-      .brand{{font-size:12px;}}
+      .logo{{height:34px;width:34px;}}
+      .brand{{font-size:11px;}}
     }}
     @media (max-width: 700px) {{
       main {{padding:0 3vw;}}
@@ -436,6 +433,17 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       .dragon-arrow .arrow-num{{width:13px;height:13px;font-size:.7em;}}
     }}
     h2{{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
+    .dragon-desc-section {{
+      background: #f7fafb;
+      border-radius: 10px;
+      margin: 40px auto 0 auto;
+      padding: 38px 32px 38px 32px;
+      font-size: 1.12em;
+      color: #284052;
+      box-shadow: 0 2px 8px rgba(110,140,180,0.06);
+      max-width: 980px;
+      line-height: 1.8;
+    }}
     .contact-info{{ background:#f2f7fb; padding:20px; border-radius:6px; line-height:1.8; margin-top:40px; }}
     .contact-info a{{ color:var(--primary-blue); text-decoration:none; }}
     .contact-info a:hover{{ text-decoration:underline; }}
@@ -446,19 +454,24 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
   <main data-aos="{aos_effect}">
     <h2 data-aos="fade-up">{title}</h2>
     {content_html}
+    <div class="dragon-desc-section" data-aos="fade-up" style="margin-bottom:20px;">
+      <h3 style="color:#4166a9; font-size:1.25em; margin:0 0 18px 0;">流程補充說明</h3>
+      <p>
+        （在這裡補充完整的產線步驟介紹、優勢、注意事項等說明內容，無長度限制。<br>
+        你可以自由輸入多段落文字，呈現於此大區塊。）
+      </p>
+    </div>
     {FOOTER_HTML}
   </main>
   <script>
   // 僅一條龍產線流程支援橫移
   const dragonFlow = document.querySelector('.dragon-flow');
   if(dragonFlow){{
-    // 滾輪橫移
     dragonFlow.addEventListener('wheel', function(e){{
       if (e.deltaY === 0) return;
       e.preventDefault();
       dragonFlow.scrollLeft += e.deltaY;
     }}, {{ passive: false }});
-    // 拖拉橫移
     let isDown = false, startX, scrollLeft;
     dragonFlow.addEventListener('mousedown', function(e){{
       isDown = true;
@@ -505,7 +518,6 @@ def about():
 
 @app.route("/onedragon")
 def onedragon():
-    # 補充說明請依需求修改下方 .arrow-note
     flow_html = """
 <div class="dragon-flow">
   <a href="/robotic" class="step-card" data-aos="zoom-in">
@@ -516,7 +528,6 @@ def onedragon():
   <div class="dragon-arrow" data-aos="fade-right">
     <div class="arrow-num">➀</div>
     <div class="arrow-icon">&#8594;</div>
-    <div class="arrow-note">自動上下料</div>
   </div>
   <a href="/vibration" class="step-card" data-aos="zoom-in">
     <img src="/static/vibration.jpg" alt="振動研磨">
@@ -526,7 +537,6 @@ def onedragon():
   <div class="dragon-arrow" data-aos="fade-right">
     <div class="arrow-num">➁</div>
     <div class="arrow-icon">&#8594;</div>
-    <div class="arrow-note">去毛邊/研磨</div>
   </div>
   <a href="/sealing" class="step-card" data-aos="zoom-in">
     <img src="/static/sealing.jpg" alt="含浸封孔">
@@ -536,7 +546,6 @@ def onedragon():
   <div class="dragon-arrow" data-aos="fade-right">
     <div class="arrow-num">➂</div>
     <div class="arrow-icon">&#8594;</div>
-    <div class="arrow-note">增加密封性</div>
   </div>
   <a href="/coating" class="step-card" data-aos="zoom-in">
     <img src="/static/coating.jpg" alt="皮膜化成">
@@ -546,7 +555,6 @@ def onedragon():
   <div class="dragon-arrow" data-aos="fade-right">
     <div class="arrow-num">➃</div>
     <div class="arrow-icon">&#8594;</div>
-    <div class="arrow-note">表面防護</div>
   </div>
   <a href="/wastewater" class="step-card" data-aos="zoom-in">
     <img src="/static/wastewater.jpg" alt="廢水處理">
@@ -554,7 +562,6 @@ def onedragon():
     <p>淨化廢水、達標排放</p>
   </a>
 </div>
-<p data-aos="fade-up" style="margin-top:20px; text-align:center;">我們提供整合式產線，節省客戶物流時間與管理成本。</p>
 """
     return render_subpage("一條龍產線服務", flow_html)
 
