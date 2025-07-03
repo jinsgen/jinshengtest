@@ -664,33 +664,126 @@ def home():
 @app.route("/about")
 def about():
     core_diagram_html = """
+<div class="aboutus-mainblock">
+  <div class="aboutus-imageblock">
+    <img src="/static/company_entrance.jpg" alt="公司門口照">
+  </div>
+  <div class="aboutus-textblock">
+    <h2>關於我們</h2>
+    <div class="aboutus-intro">
+      <p>
+        <b>溍慎有限公司</b>（2018年成立）、<b>鈦吉有限公司</b>（2017年成立），位於台南仁德，專精於汽機車零組件及五金加工品的表面處理與後製加工，提供一站式振動研磨、含浸封孔、皮膜化成、自動化修邊、廢水處理等完整服務。<br><br>
+        公司持續導入創新自動化設備，堅持「溍於專業，慎於品質」，以高品質、穩定可靠的工藝與管理，獲得眾多客戶長期肯定。<br><br>
+        全面導入 <b>ISO 9001:2015 品質管理系統</b>，並依法取得工廠登記證、廢水排放許可證，落實企業社會責任。
+      </p>
+      <div style="font-size:1em; color:#6d8ec7; margin-top:20px;">
+        成立日期：<br>
+        溍慎有限公司 — 2018年5月30日（民國107年）<br>
+        鈦吉有限公司 — 2017年7月12日（民國106年）
+      </div>
+    </div>
+  </div>
+</div>
 <div class="core-value-section">
   <div class="core-diagram-wrap">
-    <!-- SVG連線圓弧 -->
     <svg class="core-curve" viewBox="0 0 380 380">
       <circle cx="190" cy="190" r="150" fill="none" stroke="#bfd4e6" stroke-width="14"/>
     </svg>
-    <!-- 四大重點 -->
     <div class="core-center">核心<br>價值</div>
     <div class="core-point core-point1">具競爭力的技術</div>
     <div class="core-point core-point2">ISO9001<br>證證</div>
     <div class="core-point core-point3">環境責任</div>
     <div class="core-point core-point4">信守承諾</div>
   </div>
-  <div class="core-value-text">
-    <p style="font-size:1.1em; margin-bottom:10px;">
-      成立日期：溍慎有限公司 — 2018年5月30日（民國107年）<br>
-      &emsp;&emsp;&emsp;&emsp;鈦吉有限公司 — 2017年7月12日（民國106年）
-    </p>
-    <p>廣泛應用於汽機車零組件、五金加工品等零件之後製加工，提升產品表面品質與耐用性。</p>
-    <ul>
-      <li><strong>創新</strong>：我們持續導入具市場競爭力的技術與自動化設備，包括機械手臂整修工程、兩套含浸自動化生產線、多軸器與龍門式自動化清洗化成產線，提升產能與穩定度。</li>
-      <li><strong>誠信</strong>：以誠待人、信守承諾，加工品皆保留限度樣供品質比對；報價單明確載明各項作業工段，透明化管理流程，建立與客戶間的長期信任。</li>
-      <li><strong>服務</strong>：我們重視每一道作業流程，嚴格遵守ISO 9001品質管理規範，確保提供穩定、可靠的表面處理服務，並持續優化生產與檢驗流程。</li>
-      <li><strong>永續</strong>：公司依法設立並取得合格工廠登記證及廢水排放許可證，廠區具備完善廢水與廢土處理設施，致力於降低對環境的衝擊。並定期召開勞資會議，促進員工與公司間的雙向溝通，確保勞資雙方權益，實踐企業社會責任。</li>
-    </ul>
-  </div>
 </div>
+<section class="aboutus-philosophy">
+  <ul>
+    <li><strong>創新</strong>：持續導入具市場競爭力的技術與自動化設備，包括機械手臂整修工程、含浸自動化生產線、多軸器與自動化清洗化成產線，全面提升產能與穩定度。</li>
+    <li><strong>誠信</strong>：以誠待人、信守承諾，加工品保留限度樣供品質比對，報價單明確載明各工段，流程透明，與客戶建立長期互信。</li>
+    <li><strong>服務</strong>：嚴格遵守ISO 9001品質管理規範，建立SOP與檢驗制度，確保穩定可靠的表面處理品質，不斷優化生產流程。</li>
+    <li><strong>永續</strong>：合法設立並取得合格工廠登記證及廢水排放許可，廠區配備完善的廢水、廢土處理設施，致力於降低對環境衝擊。定期勞資會議，確保勞資雙方權益，落實企業社會責任。</li>
+  </ul>
+</section>
+<style>
+.aboutus-mainblock {{
+  display: flex; align-items: flex-start; gap: 48px;
+  margin: 48px auto 48px auto; max-width: 1100px; flex-wrap: wrap;
+}}
+.aboutus-imageblock {{
+  flex: 0 0 340px; max-width:340px; width:100%; display: flex; align-items:center; justify-content:center;
+}}
+.aboutus-imageblock img {{
+  width: 100%; max-width:340px; border-radius: 16px; box-shadow:0 4px 16px rgba(60,80,120,0.11);
+}}
+.aboutus-textblock {{
+  flex: 1 1 380px; min-width:240px;
+}}
+.aboutus-textblock h2 {{
+  color:#2a5ba0; margin-top:0; font-size:2.25em; letter-spacing:2px; margin-bottom:18px;
+}}
+.aboutus-intro {{
+  font-size:1.15em; line-height:1.8; color:#314760;
+}}
+.core-value-section {{
+  display: flex; flex-direction: column; align-items: center; margin: 0 auto 28px auto;
+}}
+.core-diagram-wrap {{
+  width: 380px; height: 380px; position: relative; margin-bottom: 36px; min-width:280px;
+}}
+.core-center {{
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%,-50%);
+  width: 120px; height: 120px; border-radius: 50%;
+  background: #e51919;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 2.0rem; font-weight: bold;
+  text-align: center; line-height: 1.25;
+  box-shadow: 0 4px 24px rgba(230,0,0,.09);
+  letter-spacing: 1px; z-index:2;
+}}
+.core-point {{
+  position: absolute;
+  width: 100px; height: 100px; border-radius: 50%;
+  background: #96d0f3;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 1.08rem; font-weight: 500;
+  text-align: center; line-height: 1.28;
+  box-shadow: 0 2px 12px rgba(0,80,150,0.06);
+  z-index:2;
+}}
+.core-point1 {{ left:50%; top:18px; transform:translate(-50%,0); }}
+.core-point2 {{ right:16px; top:50%; transform:translate(0,-50%); }}
+.core-point3 {{ left:50%; bottom:18px; transform:translate(-50%,0); }}
+.core-point4 {{ left:16px; top:50%; transform:translate(0,-50%); }}
+.core-curve {{
+  position:absolute; left:0; top:0; width:100%; height:100%; z-index:1;
+  pointer-events:none;
+}}
+.aboutus-philosophy {{
+  max-width:650px; margin:0 auto 60px auto; font-size:1.11em; background:#f8fafd;
+  border-radius:10px; padding:30px 32px; box-shadow:0 2px 10px rgba(60,90,120,0.05);
+}}
+.aboutus-philosophy ul{{padding-left:1.2em;}}
+.aboutus-philosophy li{{margin-bottom:13px;}}
+@media (max-width: 900px) {{
+  .aboutus-mainblock{{flex-direction:column; gap:22px;}}
+  .aboutus-imageblock{{margin:0 auto;max-width:95vw;}}
+  .aboutus-textblock{{min-width:unset;}}
+  .core-diagram-wrap{{width:80vw;height:80vw;min-width:unset;}}
+}}
+@media (max-width:480px) {{
+  .aboutus-intro{{font-size:1em;}}
+  .aboutus-imageblock img{{border-radius:7px;}}
+  .core-diagram-wrap{{width:97vw;height:84vw;}}
+  .core-center{{width:19vw;height:19vw;font-size:4.9vw;}}
+  .core-point{{width:14vw;height:14vw;font-size:2.7vw;}}
+  .core-point1{{top:4vw;}}
+  .core-point3{{bottom:4vw;}}
+  .core-point2{{right:2vw;}}
+  .core-point4{{left:2vw;}}
+  .aboutus-philosophy{{padding:20px 6vw; font-size:0.98em;}}
+}}
+</style>
 """
     return render_subpage("關於溍慎", core_diagram_html, aos_effect="fade-up")
 
