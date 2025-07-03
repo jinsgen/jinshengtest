@@ -4,10 +4,10 @@ app = Flask(__name__)
 
 HEADER_HOME = """
 <header class="main-header">
-  <div class="header-inner">
-    <img src="/static/logo_transparent.png" alt="LOGO" class="logo">
-    <div class="brand">
-      溍慎有限公司<br>鈦吉有限公司
+  <div class="header-content">
+    <div class="logo-area">
+      <img src="/static/logo_transparent.png" alt="LOGO" class="logo">
+      <div class="brand">溍慎有限公司<br>鈦吉有限公司</div>
     </div>
     <nav>
       <a href="/"           class="nav-link">首頁</a>
@@ -58,54 +58,65 @@ HOME_HTML = f"""
     body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background: #fff; }}
 
     .main-header {{
-      background: rgba(109, 142, 199, 0.6);
+      width: 100vw;
+      background: rgba(109, 142, 199, 0.62);
       color: white;
       position: sticky; top: 0; z-index: 10;
+      box-shadow: 0 1px 6px rgba(90,110,140,.06);
       backdrop-filter: blur(4px);
-      width: 100vw; min-width: 320px;
+      min-width: 320px;
+      font-size: 16px;
     }}
     .main-header.solid {{
       background: #6d8ec7;
       backdrop-filter: none;
     }}
-    .header-inner {{
-      max-width: 1180px;
+    .header-content {{
+      max-width: 1100px;
       margin: 0 auto;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
-      padding: 2px 16px 2px 12px;
+      height: 56px;
+      padding: 0 16px;
+    }}
+    .logo-area {{
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width:0;
     }}
     .logo {{
-      height: 74px; width: 74px; max-width: 100px; min-width:58px; object-fit: contain;
-      margin: 0 16px 0 0;
-      display:block;
+      height: 42px; width: 42px; min-width:38px; object-fit: contain; display: block;
     }}
     .brand {{
-      font-size: 30px; line-height: 1.22; white-space: pre-line;
-      font-weight: 700; letter-spacing: 1.5px;
-      margin-top: 4px;
+      font-size: 1.11rem; line-height: 1.19;
+      font-weight: 700; letter-spacing: 1.1px;
+      white-space: pre-line;
+      text-shadow: 0 2px 6px rgba(30,55,110,0.11);
+      margin-top: 1px;
     }}
-    .main-header nav {{
+    nav {{
       display: flex;
-      gap: 13px;
-      flex-wrap: wrap;
+      gap: 12px;
       align-items: center;
-      margin-left: 22px;
-      margin-top: 7px;
+      flex-wrap: wrap;
+      font-size: 1em;
     }}
-    .main-header .nav-link {{
+    .nav-link {{
       color:white; text-decoration:none; font-weight:600;
-      padding:9px 17px; border-radius:4px; transition: background .2s, transform .1s;
-      font-size: 17px;
+      padding:6px 15px; border-radius:4px; transition: background .2s, transform .1s;
+      font-size: 1em;
+      letter-spacing: 0.5px;
     }}
-    .main-header .nav-link:hover {{
+    .nav-link:hover {{
       background: rgba(255,255,255,0.22);
     }}
-    .main-header .nav-link:active {{
-      background: rgba(255,255,255,0.36); transform: translateY(2px);
+    .nav-link:active {{
+      background: rgba(255,255,255,0.32); transform: translateY(2px);
     }}
 
+    /* Banner 與 Slogan */
     .banner-bg {{
       position: absolute; top: 0; left: 0;
       width: 100vw; height: 350px;
@@ -115,7 +126,7 @@ HOME_HTML = f"""
       pointer-events: none;
     }}
     .banner-content {{
-      position: absolute; /* Changed from relative to absolute */
+      position: absolute;
       top: 0; left: 0; right: 0;
       width: 100vw;
       height: 350px;
@@ -135,13 +146,13 @@ HOME_HTML = f"""
       pointer-events: none;
     }}
     .slogan-line {{
-      font-size: 38px;
+      font-size: 32px;
       font-weight: 700;
       color: #fff;
-      letter-spacing: 1.5px;
+      letter-spacing: 1.2px;
       margin: 0 0 10px 0;
-      line-height: 1.3;
-      text-shadow: 0 3px 8px rgba(40,60,90,0.32), 0 2px 8px rgba(0,0,0,0.23);
+      line-height: 1.22;
+      text-shadow: 0 3px 8px rgba(40,60,90,0.28), 0 2px 8px rgba(0,0,0,0.18);
       background: none;
       border: none;
       padding: 0;
@@ -151,6 +162,7 @@ HOME_HTML = f"""
     main {{ max-width:1100px; margin:400px auto 0 auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
 
+    /* 服務項目區塊 - 5格(3+2)中間置中 */
     .services {{
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -160,7 +172,11 @@ HOME_HTML = f"""
       align-items: stretch;
       margin-bottom: 20px;
       margin-top: 24px;
+      min-height: 560px;
+      position: relative;
     }}
+    .services > :nth-child(4) {{ grid-column:2/3; }}
+    .services > :nth-child(5) {{ grid-column:3/4; }}
     .service-item {{
       position:relative;
       height:250px; border-radius:12px;
@@ -176,52 +192,48 @@ HOME_HTML = f"""
       content:""; position:absolute; inset:0; background:rgba(0,0,0,0.43); z-index:0;
     }}
     .service-item h3, .service-item p {{ position:relative; z-index:1; margin:0; color:white; }}
-    .service-item h3 {{ font-size:1.35rem; margin-bottom:4px; }}
-    .service-item p {{ font-size:1.01rem; }}
+    .service-item h3 {{ font-size:1.24rem; margin-bottom:4px; }}
+    .service-item p {{ font-size:1rem; }}
     .service-item:hover {{
       transform:translateY(-7px) scale(1.035);
       box-shadow:0 8px 22px rgba(0,0,0,0.23);
     }}
 
-    .services > :nth-child(5) {{ grid-column:2/3; }} /* 讓第五格置中 */
-
-    /* 手機排版優化 */
+    /* 響應式(手機)調整 */
     @media(max-width:1100px){{
       main {{padding:0 2vw;}}
       .service-item{{height:160px; font-size:15px;}}
-      .services{{gap:15px 8px;}}
-      .header-inner{{padding: 2px 4px 2px 4px;}}
-      .logo{{height:46px; width:46px;}}
-      .brand{{font-size:15px;}}
+      .services{{gap:15px 8px; min-height:300px;}}
+      .header-content{{height:44px;}}
+      .logo{{height:30px; width:30px;}}
+      .brand{{font-size:12px;}}
+      .slogan-line{{font-size:15px;}}
     }}
     @media(max-width:800px){{
-      .header-inner{{
+      .header-content{{
         flex-direction: column;
         align-items: flex-start;
-        padding: 10px 7px;
+        height:auto;
+        padding: 6px 4px;
+        gap: 4px;
       }}
-      .main-header nav{{
-        margin-top: 5px;
-        width:100%;
-        flex-wrap:wrap;
-        gap:7px;
-      }}
-      .logo{{height:34px;width:34px;}}
-      .brand{{font-size:11px;}}
+      .logo-area{{gap:6px;}}
+      nav{{gap:5px;font-size:12px;}}
+      .logo{{height:22px; width:22px;}}
+      .brand{{font-size:9.6px;}}
     }}
     @media(max-width:650px){{
       .banner-bg,.banner-content{{height:95px;}}
-      .slogan-line{{font-size:13px;}}
       main{{margin-top:135px;}}
       .services{{
         display: flex;
         flex-direction: column;
         gap:8px;
+        min-height:unset;
       }}
       .service-item{{height:88px; padding:6px 10px; font-size:11px;}}
       .service-item h3{{font-size:1em;}}
       .service-item p{{font-size:0.8em;}}
-      .brand{{font-size:11px;}}
     }}
     @media(max-width:400px){{
       .banner-content{{height:60px;}}
@@ -282,47 +294,56 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     html {{ scroll-behavior: smooth; }}
     body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }}
     .main-header {{
+      width: 100vw;
       background: #6d8ec7;
       color: white;
-      width: 100vw;
       position: sticky; top: 0; z-index: 10;
+      min-width: 320px;
+      font-size: 16px;
     }}
-    .header-inner {{
-      max-width: 1180px;
+    .header-content {{
+      max-width: 1100px;
       margin: 0 auto;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
-      padding: 2px 16px 2px 12px;
+      height: 56px;
+      padding: 0 16px;
+    }}
+    .logo-area {{
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width:0;
     }}
     .logo {{
-      height: 74px; width: 74px; max-width: 100px; min-width:58px; object-fit: contain;
-      margin: 0 16px 0 0;
-      display:block;
+      height: 42px; width: 42px; min-width:38px; object-fit: contain; display: block;
     }}
     .brand {{
-      font-size: 30px; line-height: 1.22; white-space: pre-line;
-      font-weight: 700; letter-spacing: 1.5px;
-      margin-top: 4px;
+      font-size: 1.11rem; line-height: 1.19;
+      font-weight: 700; letter-spacing: 1.1px;
+      white-space: pre-line;
+      text-shadow: 0 2px 6px rgba(30,55,110,0.11);
+      margin-top: 1px;
     }}
-    .main-header nav {{
+    nav {{
       display: flex;
-      gap: 13px;
-      flex-wrap: wrap;
+      gap: 12px;
       align-items: center;
-      margin-left: 22px;
-      margin-top: 7px;
+      flex-wrap: wrap;
+      font-size: 1em;
     }}
-    .main-header .nav-link {{
+    .nav-link {{
       color:white; text-decoration:none; font-weight:600;
-      padding:9px 17px; border-radius:4px; transition: background .2s, transform .1s;
-      font-size: 17px;
+      padding:6px 15px; border-radius:4px; transition: background .2s, transform .1s;
+      font-size: 1em;
+      letter-spacing: 0.5px;
     }}
-    .main-header .nav-link:hover {{
+    .nav-link:hover {{
       background: rgba(255,255,255,0.22);
     }}
-    .main-header .nav-link:active {{
-      background: rgba(255,255,255,0.36); transform: translateY(2px);
+    .nav-link:active {{
+      background: rgba(255,255,255,0.32); transform: translateY(2px);
     }}
     main{{ max-width:1100px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
     .dragon-flow {{
@@ -410,22 +431,25 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       .step-card img{{height:60px;}}
       .dragon-arrow .arrow-num{{width:23px;height:23px;font-size:.86em;}}
     }}
-    @media (max-width: 800px) {{
-      .header-inner{{
+    @media(max-width:1100px){{
+      .header-content{{height:44px;}}
+      .logo{{height:30px; width:30px;}}
+      .brand{{font-size:12px;}}
+    }}
+    @media(max-width:800px){{
+      .header-content{{
         flex-direction: column;
         align-items: flex-start;
-        padding: 10px 7px;
+        height:auto;
+        padding: 6px 4px;
+        gap: 4px;
       }}
-      .main-header nav{{
-        margin-top: 5px;
-        width:100%;
-        flex-wrap:wrap;
-        gap:7px;
-      }}
-      .logo{{height:34px;width:34px;}}
-      .brand{{font-size:11px;}}
+      .logo-area{{gap:6px;}}
+      nav{{gap:5px;font-size:12px;}}
+      .logo{{height:22px; width:22px;}}
+      .brand{{font-size:9.6px;}}
     }}
-    @media (max-width: 700px) {{
+    @media(max-width:700px){{
       main {{padding:0 3vw;}}
       .dragon-flow {{padding-bottom:10px;}}
       .step-card {{ width: 105px; min-width:105px; max-width:105px; height: 78px; }}
