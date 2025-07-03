@@ -3,7 +3,7 @@ from flask import Flask, render_template_string
 app = Flask(__name__)
 
 # -----------------------
-# Home 半透明 Header（隨捲動移動）
+# Home 半透明 Header（隨頁面捲動）
 # -----------------------
 HEADER_HOME = """
 <header style="
@@ -19,18 +19,18 @@ HEADER_HOME = """
       溍慎有限公司<br>鈦吉有限公司
     </div>
   </div>
-  <nav style="display:flex; gap:15px; flex-wrap:wrap; margin-top:8px;">
-    <a href="/"           style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
-    <a href="/about"      style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
-    <a href="/#services"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
-    <a href="/onedragon"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">一條龍產線</a>
-    <a href="#contact"    style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">聯絡我們</a>
+  <nav>
+    <a href="/"           class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
+    <a href="/about"      class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
+    <a href="/#services"  class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
+    <a href="/onedragon"  class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">一條龍產線</a>
+    <a href="#contact"    class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">聯絡我們</a>
   </nav>
 </header>
 """
 
 # -----------------------
-# 其他子頁 實心藍 Header（隨捲動移動）
+# 子頁面實心藍 Header（隨頁面捲動）
 # -----------------------
 HEADER_SOLID = """
 <header style="
@@ -46,18 +46,18 @@ HEADER_SOLID = """
       溍慎有限公司<br>鈦吉有限公司
     </div>
   </div>
-  <nav style="display:flex; gap:15px; flex-wrap:wrap; margin-top:8px;">
-    <a href="/"           style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
-    <a href="/about"      style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
-    <a href="/#services"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
-    <a href="/onedragon"  style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">一條龍產線</a>
-    <a href="#contact"    style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">聯絡我們</a>
+  <nav>
+    <a href="/"           class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">首頁</a>
+    <a href="/about"      class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">關於溍慎</a>
+    <a href="/#services"  class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">服務項目</a>
+    <a href="/onedragon"  class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">一條龍產線</a>
+    <a href="#contact"    class="nav-link" style="color:white; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:4px;">聯絡我們</a>
   </nav>
 </header>
 """
 
 # -----------------------
-# Footer（共用，含標題「聯絡資訊」）
+# Footer（共用，含「聯絡資訊」標題）
 # -----------------------
 FOOTER_HTML = """
 <footer id="contact" style="
@@ -99,11 +99,19 @@ HOME_HTML = f"""
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: white;
     }}
+    header nav a.nav-link:hover {{
+      background: rgba(255,255,255,0.2);
+    }}
+    header nav a.nav-link:active {{
+      background: rgba(255,255,255,0.4);
+      transform: translateY(2px);
+    }}
     .banner {{
       background-image: url('/static/banner_new.jpg');
       background-size: cover;
       background-position: center;
       height: 300px;
+      position: relative;
     }}
     .banner-text {{
       margin: 0;
@@ -115,7 +123,6 @@ HOME_HTML = f"""
       text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
     }}
     .banner-text + .banner-text {{
-      padding-top: 0;
       opacity: 0.9;
     }}
     main {{
@@ -219,9 +226,16 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     :root {{ --primary-blue: #6d8ec7; }}
     html {{ scroll-behavior: smooth; }}
     body {{
-      margin: 0;
+      margin: 0; padding-top: 20px;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: white;
+    }}
+    header nav a.nav-link:hover {{
+      background: rgba(255,255,255,0.2);
+    }}
+    header nav a.nav-link:active {{
+      background: rgba(255,255,255,0.4);
+      transform: translateY(2px);
     }}
     header {{
       background: #6d8ec7;
@@ -230,12 +244,15 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       display: flex; flex-wrap: wrap;
       justify-content: space-between; align-items: center;
     }}
-    header nav a {{
-      color: white; text-decoration: none; font-weight: 600;
-      padding: 8px 12px; border-radius: 4px;
-    }}
     main {{
       max-width: 1000px; margin: 40px auto; padding: 0 20px;
+    }}
+    .step-card {{
+      transition: transform .3s, box-shadow .3s;
+    }}
+    .step-card:hover {{
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }}
     h2 {{
       color: var(--primary-blue);
@@ -274,25 +291,25 @@ def onedragon():
 <h2 data-aos="fade-down" style="text-align:center;">一條龍加工流程</h2>
 <div style="display:flex; flex-wrap:wrap; gap:30px; justify-content:center; margin-top:20px;">
   <a href="/robotic" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="100">
-    <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
+    <div class="step-card">
       <img src="/static/step1.jpg" alt="毛邊去除" style="width:100%; border-radius:8px; margin-bottom:10px;">
       <h3>毛邊去除</h3><p>可搭配自動化機械手臂</p>
     </div>
   </a>
   <a href="/vibration" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="200">
-    <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
+    <div class="step-card">
       <img src="/static/step2.jpg" alt="振動研磨" style="width:100%; border-radius:8px; margin-bottom:10px;">
       <h3>振動研磨</h3><p>表面均化處理</p>
     </div>
   </a>
   <a href="/sealing" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="300">
-    <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
+    <div class="step-card">
       <img src="/static/step3.jpg" alt="含浸封孔" style="width:100%; border-radius:8px; margin-bottom:10px;">
       <h3>含浸封孔</h3><p>提升氣密性與耐用性</p>
     </div>
   </a>
   <a href="/coating" style="width:200px; text-align:center; text-decoration:none;" data-aos="fade-right" data-aos-delay="400">
-    <div class="step-card" style="transition:transform .3s, box-shadow .3s;">
+    <div class="step-card">
       <img src="/static/step4.jpg" alt="皮膜化成" style="width:100%; border-radius:8px; margin-bottom:10px;">
       <h3>皮膜化成</h3><p>依需求選擇性進行</p>
     </div>
