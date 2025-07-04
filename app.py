@@ -26,7 +26,6 @@ HEADER_HOME = """
 </header>
 """
 HEADER_SOLID = HEADER_HOME.replace("main-header", "main-header solid", 1)
-
 FOOTER_HTML = """
 <footer id="contact" style="
   background: #f2f7fb;
@@ -46,7 +45,6 @@ FOOTER_HTML = """
 </footer>
 """
 
-# ----------- 首頁 HTML -----------
 HOME_HTML = """
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -122,7 +120,7 @@ HOME_HTML = """
     .slogan-line:last-child{{margin-bottom:0;}}
     main {{ max-width:1200px; margin:400px auto 0 auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
-    /* 服務項目上三下二 */
+    /* 上三下二置中 */
     .services {{
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -208,7 +206,7 @@ HOME_HTML = """
   </style>
 </head>
 <body>
-  {{header}}
+  {{header|safe}}
   <div class="banner-bg"></div>
   <div class="banner-content" data-aos="fade-in">
     <div class="slogan-group" data-aos="fade-right" data-aos-delay="200">
@@ -257,7 +255,7 @@ HOME_HTML = """
         </a>
       </div>
     </section>
-    {{footer}}
+    {{footer|safe}}
   </main>
 </body>
 </html>
@@ -292,11 +290,11 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
   </style>
 </head>
 <body>
-  {{header}}
+  {{header|safe}}
   <main data-aos="{{aos_effect}}">
     <h2 data-aos="fade-up">{{title}}</h2>
     {{content_html|safe}}
-    {{footer}}
+    {{footer|safe}}
   </main>
 </body>
 </html>
@@ -373,7 +371,7 @@ def about():
 """
     return render_subpage("關於溍慎", content_html)
 
-# ------- 其餘頁面與流程圖略（使用你之前的即可） -------
+# ...其餘子頁面如 /process 等請用你前面流程的版本...
 
 if __name__ == "__main__":
     app.run(debug=True)
