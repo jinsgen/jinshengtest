@@ -25,7 +25,6 @@ HEADER_HOME = """
   </div>
 </header>
 """
-
 HEADER_SOLID = HEADER_HOME.replace("main-header", "main-header solid", 1)
 
 FOOTER_HTML = """
@@ -128,7 +127,6 @@ HOME_HTML = f"""
       background: rgba(255,255,255,0.32); transform: translateY(2px);
     }}
 
-    /* Banner（封面）區塊 */
     .banner-bg {{
       position: absolute; top: 0; left: 0;
       width: 100vw; height: 350px;
@@ -175,48 +173,52 @@ HOME_HTML = f"""
     main {{ max-width:1200px; margin:400px auto 0 auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
 
-    /* 服務項目 五格平均分配+浮動特效+黑色遮罩+文字清楚 */
+    /* 服務項目五格自動兩排平均（最後一格平均分配） */
     .services {{
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 28px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px 38px;
       margin-top: 48px;
       width: 100%;
+      max-width: 1000px;
+      justify-content: center;
+      min-height: 520px;
     }}
     .service-item {{
       position: relative;
-      height: 220px;
-      border-radius: 16px;
+      height: 260px;
+      border-radius: 20px;
       overflow: hidden;
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      box-shadow: 0 2px 14px rgba(100,130,180,0.10);
+      box-shadow: 0 2px 14px rgba(100,130,180,0.12);
       transition: box-shadow .22s, transform .16s;
       display: flex;
       align-items: flex-end;
       justify-content: flex-start;
       cursor: pointer;
       text-decoration: none;
+      min-width: 0;
     }}
     .service-item .service-overlay {{
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top,rgba(0,0,0,0.44) 80%,rgba(0,0,0,0.06));
+      background: linear-gradient(to top,rgba(0,0,0,0.49) 80%,rgba(0,0,0,0.08));
       transition: background .24s;
       z-index: 1;
     }}
     .service-item:hover {{
-      box-shadow: 0 10px 30px rgba(90,130,200,0.20);
-      transform: translateY(-9px) scale(1.038);
+      box-shadow: 0 10px 30px rgba(90,130,200,0.26);
+      transform: translateY(-12px) scale(1.045);
     }}
     .service-item:hover .service-overlay {{
-      background: linear-gradient(to top,rgba(0,0,0,0.60) 85%,rgba(0,0,0,0.12));
+      background: linear-gradient(to top,rgba(0,0,0,0.7) 90%,rgba(0,0,0,0.13));
     }}
     .service-texts {{
       position: relative;
       z-index: 2;
-      padding: 22px 20px 20px 20px;
+      padding: 34px 30px 20px 26px;
       width: 100%;
       color: #fff;
       text-shadow: 0 3px 12px rgba(30,35,60,0.22);
@@ -226,35 +228,25 @@ HOME_HTML = f"""
       justify-content: flex-end;
     }}
     .service-texts h3 {{
-      font-size: 1.21em;
+      font-size: 1.32em;
       font-weight: 700;
-      margin: 0 0 10px 0;
+      margin: 0 0 12px 0;
       letter-spacing: 1.2px;
     }}
     .service-texts p {{
-      font-size: 1.04em;
+      font-size: 1.12em;
       font-weight: 500;
       margin: 0;
       line-height: 1.7;
     }}
-    @media (max-width: 1050px) {{
-      .services {{
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-      }}
-      .service-item {{
-        height: 140px;
-      }}
+    @media (max-width: 1100px) {{
+      .services {{grid-template-columns: repeat(2, 1fr);}}
+      .service-item {{height: 190px;}}
     }}
-    @media (max-width: 650px) {{
-      .services {{
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }}
-      .service-item {{
-        height: 90px;
-      }}
-      .service-texts h3{{font-size:1.04em;}}
+    @media (max-width: 700px) {{
+      .services {{grid-template-columns: 1fr;}}
+      .service-item {{height: 140px;}}
+      .service-texts h3{{font-size:1.06em;}}
       .service-texts p{{font-size:.93em;}}
     }}
   </style>
@@ -405,147 +397,135 @@ def home():
 def process():
     flow_html = """
 <style>
-.process-scrollbar-wrap {
+.process-flow-wrap {
   overflow-x: auto;
-  overflow-y: visible;
+  padding-bottom: 28px;
+  margin-bottom: 30px;
   -webkit-overflow-scrolling: touch;
-  cursor: grab;
-  padding-bottom: 24px;
-  margin-bottom: 28px;
 }
-.process-scrollbar-wrap::-webkit-scrollbar {
-  height: 8px;
-  background: #eee;
-  border-radius: 8px;
-}
-.process-scrollbar-wrap::-webkit-scrollbar-thumb {
-  background: #c5daf5;
-  border-radius: 8px;
-}
-.process-timeline {
+.process-flow-inner {
   display: flex;
   align-items: center;
-  gap: 36px;
-  min-width: 850px;
-  padding: 16px 0 8px 0;
-  user-select: none;
+  justify-content: flex-start;
+  gap: 20px;
+  min-width: 1000px;
+  padding: 24px 0 8px 0;
 }
 .process-step-card {
+  background: #f7fbff;
+  border-radius: 24px;
+  box-shadow: 0 2px 12px rgba(90,130,190,0.13);
+  padding: 32px 32px 24px 32px;
+  min-width: 250px;
+  width: 250px;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #f7fbff;
-  border-radius: 18px;
-  box-shadow: 0 2px 10px rgba(70,130,200,0.06);
-  padding: 16px 18px 14px 18px;
-  width: 190px;
-  min-width: 190px;
-  text-align: center;
   transition: transform 0.19s, box-shadow 0.17s;
   cursor: pointer;
   text-decoration: none;
   color: #183A61;
+  z-index: 2;
   position: relative;
-  z-index: 1;
 }
 .process-step-card img {
-  width: 110px;
-  height: 110px;
-  border-radius: 14px;
+  width: 160px;
+  height: 160px;
+  border-radius: 20px;
   object-fit: cover;
-  margin-bottom: 18px;
-  box-shadow: 0 1px 6px rgba(90,120,150,0.14);
+  margin-bottom: 14px;
+  box-shadow: 0 1px 6px rgba(90,120,150,0.12);
   background: #ddeefd;
-}
-.process-step-card:hover {
-  transform: scale(1.055) translateY(-4px);
-  box-shadow: 0 4px 20px rgba(110,140,220,0.16);
-  background: #e9f3fd;
-  color: #0f2c56;
 }
 .process-step-title {
   font-weight: bold;
-  font-size: 1.09em;
+  font-size: 1.25em;
   margin-bottom: 8px;
   color: #4470ad;
   letter-spacing: 0.5px;
 }
 .process-step-desc {
-  font-size: 0.97em;
+  font-size: 1.07em;
   color: #385370;
-  line-height: 1.7;
-  min-height: 34px;
+  line-height: 1.6;
 }
-.process-arrow-block {
+.process-arrow-group {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 54px;
   position: relative;
+  width: 90px;
+  min-width: 90px;
+  height: 68px;
+  justify-content: center;
+  z-index: 1;
 }
-.process-arrow-num {
-  font-size: 0.98em;
-  font-weight: 600;
+.arrow-svg {
+  width: 90px;
+  height: 56px;
+  display: block;
+}
+.arrow-number {
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  transform: translate(-50%, 0);
   background: #6d8ec7;
   color: #fff;
-  border-radius: 50%;
-  width: 32px; height: 32px;
+  font-weight: bold;
+  border-radius: 19px;
+  width: 38px; height: 38px;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 1px 7px rgba(90,120,180,0.08);
-  margin-bottom: 4px;
+  box-shadow: 0 1px 7px rgba(90,120,180,0.13);
+  font-size: 1.15em;
   z-index: 2;
+  border: 3px solid #fff;
 }
-.process-arrow-line {
-  width: 54px; height: 6px;
-  background: linear-gradient(90deg, #e2edfa 18%, #6d8ec7 94%);
-  border-radius: 4px;
-  margin-top: -16px;
-  margin-bottom: -8px;
-  position: relative;
-}
-@media (max-width: 850px) {
-  .process-timeline { min-width: 620px;}
-  .process-step-card {width:144px;min-width:144px;}
-  .process-step-card img{width:68px;height:68px;}
+@media (max-width: 1200px) {
+  .process-flow-inner {{ min-width: 800px; }}
+  .process-step-card {{ width:170px;min-width:170px;padding:12px;}}
+  .process-step-card img{{width:96px;height:96px;}}
+  .arrow-svg{{width:60px;}}
 }
 </style>
-<div class="process-scrollbar-wrap" id="processTimeline">
-  <div class="process-timeline">
+<div class="process-flow-wrap" id="processTimeline">
+  <div class="process-flow-inner">
     <a href="/robotic" class="process-step-card" tabindex="0">
       <img src="/static/robotic.jpg" alt="自動化機械手臂">
       <div class="process-step-title">自動化機械手臂</div>
       <div class="process-step-desc">可搭配工具快速作業</div>
     </a>
-    <div class="process-arrow-block">
-      <div class="process-arrow-num">➀</div>
-      <div class="process-arrow-line"></div>
+    <div class="process-arrow-group">
+      <div class="arrow-number">➀</div>
+      <svg class="arrow-svg" viewBox="0 0 90 56"><path d="M0 28 Q70 28 75 28 Q82 28 82 17 L90 28 L82 39 Q82 28 75 28 Q70 28 0 28" fill="#6d8ec7"/></svg>
     </div>
     <a href="/vibration" class="process-step-card" tabindex="0">
       <img src="/static/vibration.jpg" alt="振動研磨">
       <div class="process-step-title">振動研磨</div>
       <div class="process-step-desc">表面均化處理</div>
     </a>
-    <div class="process-arrow-block">
-      <div class="process-arrow-num">➁</div>
-      <div class="process-arrow-line"></div>
+    <div class="process-arrow-group">
+      <div class="arrow-number">➁</div>
+      <svg class="arrow-svg" viewBox="0 0 90 56"><path d="M0 28 Q70 28 75 28 Q82 28 82 17 L90 28 L82 39 Q82 28 75 28 Q70 28 0 28" fill="#6d8ec7"/></svg>
     </div>
     <a href="/sealing" class="process-step-card" tabindex="0">
       <img src="/static/sealing.jpg" alt="含浸封孔">
       <div class="process-step-title">含浸封孔</div>
       <div class="process-step-desc">提升氣密性與耐用性</div>
     </a>
-    <div class="process-arrow-block">
-      <div class="process-arrow-num">➂</div>
-      <div class="process-arrow-line"></div>
+    <div class="process-arrow-group">
+      <div class="arrow-number">➂</div>
+      <svg class="arrow-svg" viewBox="0 0 90 56"><path d="M0 28 Q70 28 75 28 Q82 28 82 17 L90 28 L82 39 Q82 28 75 28 Q70 28 0 28" fill="#6d8ec7"/></svg>
     </div>
     <a href="/coating" class="process-step-card" tabindex="0">
       <img src="/static/coating.jpg" alt="皮膜化成">
       <div class="process-step-title">皮膜化成</div>
       <div class="process-step-desc">依需求選擇性進行</div>
     </a>
-    <div class="process-arrow-block">
-      <div class="process-arrow-num">➃</div>
-      <div class="process-arrow-line"></div>
+    <div class="process-arrow-group">
+      <div class="arrow-number">➃</div>
+      <svg class="arrow-svg" viewBox="0 0 90 56"><path d="M0 28 Q70 28 75 28 Q82 28 82 17 L90 28 L82 39 Q82 28 75 28 Q70 28 0 28" fill="#6d8ec7"/></svg>
     </div>
     <a href="/wastewater" class="process-step-card" tabindex="0">
       <img src="/static/wastewater.jpg" alt="廢水處理">
@@ -562,27 +542,27 @@ wrap.addEventListener('wheel', e => {
   wrap.scrollLeft += e.deltaY * 1.15;
 });
 let isDown = false, startX, scrollLeft;
-wrap.addEventListener('mousedown', (e) => {
+wrap.addEventListener('mousedown', (e) => {{
   isDown = true;
   wrap.classList.add('dragging');
   startX = e.pageX - wrap.offsetLeft;
   scrollLeft = wrap.scrollLeft;
-});
-wrap.addEventListener('mouseleave', () => {
+}});
+wrap.addEventListener('mouseleave', () => {{
   isDown = false;
   wrap.classList.remove('dragging');
-});
-wrap.addEventListener('mouseup', () => {
+}});
+wrap.addEventListener('mouseup', () => {{
   isDown = false;
   wrap.classList.remove('dragging');
-});
-wrap.addEventListener('mousemove', (e) => {
+}});
+wrap.addEventListener('mousemove', (e) => {{
   if (!isDown) return;
   e.preventDefault();
   const x = e.pageX - wrap.offsetLeft;
   const walk = (x - startX) * 1.3;
   wrap.scrollLeft = scrollLeft - walk;
-});
+}});
 </script>
 <div class="dragon-desc-section" data-aos="fade-up" style="margin-bottom:20px;
   background:#f2f7fb; padding:28px 26px 18px 28px; border-radius:12px; color:#244560; box-shadow:0 2px 8px rgba(100,130,180,0.09); line-height:2;">
@@ -620,36 +600,48 @@ def about():
   </div>
 </div>
 <!-- 核心價值圓環 -->
-<div style="display:flex; flex-direction:column; align-items:center; margin: 32px 0 30px 0; position:relative;">
-  <div style="width:360px; max-width:96vw; height:360px; position:relative;">
+<div style="display:flex; justify-content:center; margin: 38px 0 30px 0; position:relative;">
+  <div style="width:360px; max-width:98vw; height:360px; position:relative;">
     <svg viewBox="0 0 360 360" width="360" height="360" style="width:100%;height:100%;position:absolute;top:0;left:0;z-index:0;" data-aos="fade-in">
       <circle cx="180" cy="180" r="145" stroke="#b3d0ea" stroke-width="16" fill="none"/>
     </svg>
+    <!-- 中央紅圓 -->
     <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;" data-aos="zoom-in" data-aos-delay="100">
       <div style="background:#e51919;color:#fff;text-align:center;font-size:2em;font-weight:700;line-height:1.2;font-family:'Noto Sans TC','Segoe UI',sans-serif;width:124px;height:124px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:50%;box-shadow:0 2px 16px rgba(180,40,50,0.10);">核心<br>價值</div>
     </div>
     <!-- 四個外圓 -->
-    <div style="position:absolute;top:-3px;left:50%;transform:translateX(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-down" data-aos-delay="240">
+    <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-down" data-aos-delay="240">
       <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
         <span style="font-size:1.07em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">具競爭力的<br>技術</span>
       </div>
     </div>
-    <div style="position:absolute;top:50%;left:calc(100% - 3px);transform:translateY(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-left" data-aos-delay="320">
+    <div style="position:absolute;top:90px;left:322px;transform:translate(-50%,-50%);width:96px;height:96px;z-index:2;" data-aos="fade-left" data-aos-delay="320">
       <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
         <span style="font-size:1.04em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">ISO9001<br>認證</span>
       </div>
     </div>
-    <div style="position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-up" data-aos-delay="400">
+    <div style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-up" data-aos-delay="400">
       <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
         <span style="font-size:1.04em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">環境責任</span>
       </div>
     </div>
-    <div style="position:absolute;top:50%;left:-3px;transform:translateY(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-right" data-aos-delay="320">
+    <div style="position:absolute;top:90px;left:38px;transform:translate(-50%,-50%);width:96px;height:96px;z-index:2;" data-aos="fade-right" data-aos-delay="320">
       <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
         <span style="font-size:1.04em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">信守承諾</span>
       </div>
     </div>
   </div>
+</div>
+<div style="background:#f2f7fb;border-radius:10px;max-width:900px;margin:0 auto 32px auto;padding:32px 20px 22px 28px;font-size:1.07em;color:#284052;box-shadow:0 2px 8px rgba(110,140,180,0.06);line-height:2;" data-aos="fade-up" data-aos-delay="320">
+  <b style="color:#4166a9;font-size:1.12em;">• 創新</b><br>
+  我們持續導入具市場競爭力的技術與自動化設備，包括機械手臂整修工程、兩套含浸自動化生產線、多軸器與龍門式自動化清洗化成產線，提升產能與穩定度。<br><br>
+  <b style="color:#4166a9;font-size:1.12em;">• 誠信</b><br>
+  以誠待人、信守承諾，加工品皆保留限度樣供品質比對；報價單明確載明各項作業工段，透明化管理流程，建立與客戶間的長期信任。<br><br>
+  <b style="color:#4166a9;font-size:1.12em;">• 服務</b><br>
+  我們重視每一道作業流程，嚴格遵守ISO 9001品質管理規範，確保提供穩定、可靠的表面處理服務，並持續優化生產與檢驗流程。<br><br>
+  <b style="color:#4166a9;font-size:1.12em;">• 永續</b><br>
+  公司依法設立並取得合格工廠登記證及廢水排放許可證，廠區具備完善廢水與廢土處理設施，致力於降低對環境的衝擊。
+  並定期召開勞資會議，促進員工與公司間的雙向溝通，確保勞資雙方權益，實踐企業社會責任。
 </div>
 """
     return render_subpage("關於溍慎", content_html)
