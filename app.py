@@ -63,6 +63,7 @@ HOME_HTML = f"""
     :root {{ --primary-blue: #6d8ec7; --accent-yellow: #FFD85A; }}
     html {{ scroll-behavior: smooth; }}
     body {{ margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background: #fff; }}
+
     .main-header {{
       width: 100vw;
       background: rgba(109, 142, 199, 0.62);
@@ -126,68 +127,136 @@ HOME_HTML = f"""
     .nav-link:active {{
       background: rgba(255,255,255,0.32); transform: translateY(2px);
     }}
-    /* 服務項目卡片 */
-    .services {{
+
+    /* Banner（封面）區塊 */
+    .banner-bg {{
+      position: absolute; top: 0; left: 0;
+      width: 100vw; height: 350px;
+      background: url('/static/banner_new.jpg') center center/cover no-repeat;
+      z-index: 0;
+      min-height: 200px;
+      pointer-events: none;
+    }}
+    .banner-content {{
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      width: 100vw;
+      height: 350px;
+      z-index: 1;
       display: flex;
-      flex-wrap: wrap;
-      gap: 28px 3vw;
-      justify-content: flex-start;
-      margin: 42px 0 0 0;
-      z-index:2;
-      position:relative;
+      align-items: center;
+      justify-content: flex-end;
+      pointer-events: none;
+    }}
+    .slogan-group {{
+      margin-right: 10vw;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      height: 100%;
+      pointer-events: none;
+    }}
+    .slogan-line {{
+      font-size: 54px;
+      font-family: 'Montserrat', 'Noto Sans TC', sans-serif;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1.2px;
+      margin: 0 0 16px 0;
+      line-height: 1.15;
+      text-shadow: 0 3px 12px rgba(40,60,90,0.32), 0 2px 8px rgba(0,0,0,0.18);
+      background: none;
+      border: none;
+      padding: 0;
+      white-space: nowrap;
+    }}
+    .slogan-line:last-child{{margin-bottom:0;}}
+    main {{ max-width:1200px; margin:400px auto 0 auto; padding:0 20px; position:relative; z-index:2; }}
+    h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
+
+    /* 服務項目 五格平均分配+浮動特效+黑色遮罩+文字清楚 */
+    .services {{
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 28px;
+      margin-top: 48px;
+      width: 100%;
     }}
     .service-item {{
+      position: relative;
+      height: 220px;
+      border-radius: 16px;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      box-shadow: 0 2px 14px rgba(100,130,180,0.10);
+      transition: box-shadow .22s, transform .16s;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      cursor: pointer;
+      text-decoration: none;
+    }}
+    .service-item .service-overlay {{
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top,rgba(0,0,0,0.44) 80%,rgba(0,0,0,0.06));
+      transition: background .24s;
+      z-index: 1;
+    }}
+    .service-item:hover {{
+      box-shadow: 0 10px 30px rgba(90,130,200,0.20);
+      transform: translateY(-9px) scale(1.038);
+    }}
+    .service-item:hover .service-overlay {{
+      background: linear-gradient(to top,rgba(0,0,0,0.60) 85%,rgba(0,0,0,0.12));
+    }}
+    .service-texts {{
+      position: relative;
+      z-index: 2;
+      padding: 22px 20px 20px 20px;
+      width: 100%;
+      color: #fff;
+      text-shadow: 0 3px 12px rgba(30,35,60,0.22);
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-end;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      border-radius: 16px;
-      box-shadow: 0 2px 14px rgba(100,130,180,0.10);
-      width: 232px;
-      min-width: 185px;
-      height: 200px;
-      padding: 18px 22px 18px 18px;
-      color: #234;
-      text-decoration: none;
-      position: relative;
-      overflow: hidden;
-      transition: box-shadow .18s, transform .14s, background-size .22s;
-      font-size: 1em;
-      background-color: #e5effb;
     }}
-    .service-item:hover {{
-      box-shadow: 0 8px 26px rgba(95,140,215,0.18);
-      transform: translateY(-5px) scale(1.03);
-      background-size: 106%;
-    }}
-    .service-item h3 {{
-      font-size: 1.19em;
-      margin: 0 0 7px 0;
+    .service-texts h3 {{
+      font-size: 1.21em;
       font-weight: 700;
-      color: #37557e;
-      text-shadow: 0 2px 6px rgba(100,140,220,0.10);
+      margin: 0 0 10px 0;
       letter-spacing: 1.2px;
     }}
-    .service-item p {{
-      margin: 0;
-      color: #264064;
-      font-size: 1em;
+    .service-texts p {{
+      font-size: 1.04em;
       font-weight: 500;
-      line-height: 1.6;
-      text-shadow: 0 1px 5px rgba(180,210,240,0.09);
+      margin: 0;
+      line-height: 1.7;
     }}
     @media (max-width: 1050px) {{
-      .services {{ gap: 16px 2vw; }}
-      .service-item {{ width: 44vw; min-width:140px; max-width:220px; height: 140px; padding:10px 10px 10px 10px; font-size:0.96em;}}
+      .services {{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }}
+      .service-item {{
+        height: 140px;
+      }}
     }}
     @media (max-width: 650px) {{
-      .services {{ flex-direction:column; gap:18px 0; }}
-      .service-item {{ width: 99vw; min-width:80vw; max-width:98vw; height: 100px; padding:10px 10px 10px 16px; font-size:0.93em;}}
+      .services {{
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }}
+      .service-item {{
+        height: 90px;
+      }}
+      .service-texts h3{{font-size:1.04em;}}
+      .service-texts p{{font-size:.93em;}}
     }}
-    /* ...其他既有樣式... */
   </style>
 </head>
 <body>
@@ -204,24 +273,39 @@ HOME_HTML = f"""
       <h2 data-aos="fade-up">服務項目</h2>
       <div class="services">
         <a href="/vibration" class="service-item" style="background-image:url('/static/vibration.jpg');" data-aos="zoom-in">
-          <h3>振動研磨</h3>
-          <p>去除毛邊、拋光與表面均化。</p>
+          <div class="service-overlay"></div>
+          <div class="service-texts">
+            <h3>振動研磨</h3>
+            <p>去除毛邊、拋光與表面均化。</p>
+          </div>
         </a>
         <a href="/sealing" class="service-item" style="background-image:url('/static/sealing.jpg');" data-aos="zoom-in" data-aos-delay="50">
-          <h3>含浸封孔</h3>
-          <p>提高氣密性與耐用性。</p>
+          <div class="service-overlay"></div>
+          <div class="service-texts">
+            <h3>含浸封孔</h3>
+            <p>提高氣密性與耐用性。</p>
+          </div>
         </a>
         <a href="/coating" class="service-item" style="background-image:url('/static/coating.jpg');" data-aos="zoom-in" data-aos-delay="100">
-          <h3>皮膜化成</h3>
-          <p>耐蝕塗裝處理，自動化產線。</p>
+          <div class="service-overlay"></div>
+          <div class="service-texts">
+            <h3>皮膜化成</h3>
+            <p>耐蝕塗裝處理，自動化產線。</p>
+          </div>
         </a>
         <a href="/robotic" class="service-item" style="background-image:url('/static/robotic.jpg');" data-aos="zoom-in" data-aos-delay="150">
-          <h3>自動化機械手臂</h3>
-          <p>搭配工具快速作業。</p>
+          <div class="service-overlay"></div>
+          <div class="service-texts">
+            <h3>自動化機械手臂</h3>
+            <p>搭配工具快速作業。</p>
+          </div>
         </a>
         <a href="/wastewater" class="service-item" style="background-image:url('/static/wastewater.jpg');" data-aos="zoom-in" data-aos-delay="200">
-          <h3>廢水處理</h3>
-          <p>淨化廢水、達標排放。</p>
+          <div class="service-overlay"></div>
+          <div class="service-texts">
+            <h3>廢水處理</h3>
+            <p>淨化廢水、達標排放。</p>
+          </div>
         </a>
       </div>
     </section>
@@ -353,7 +437,7 @@ def process():
   background: #f7fbff;
   border-radius: 18px;
   box-shadow: 0 2px 10px rgba(70,130,200,0.06);
-  padding: 20px 18px 18px 18px;
+  padding: 16px 18px 14px 18px;
   width: 190px;
   min-width: 190px;
   text-align: center;
@@ -365,11 +449,11 @@ def process():
   z-index: 1;
 }
 .process-step-card img {
-  width: 78px;
-  height: 78px;
-  border-radius: 12px;
+  width: 110px;
+  height: 110px;
+  border-radius: 14px;
   object-fit: cover;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   box-shadow: 0 1px 6px rgba(90,120,150,0.14);
   background: #ddeefd;
 }
@@ -422,7 +506,7 @@ def process():
 @media (max-width: 850px) {
   .process-timeline { min-width: 620px;}
   .process-step-card {width:144px;min-width:144px;}
-  .process-step-card img{width:52px;height:52px;}
+  .process-step-card img{width:68px;height:68px;}
 }
 </style>
 <div class="process-scrollbar-wrap" id="processTimeline">
@@ -471,14 +555,12 @@ def process():
   </div>
 </div>
 <script>
-// 支援橫向滾輪
 const wrap = document.getElementById('processTimeline');
 wrap.addEventListener('wheel', e => {
   if (e.deltaY === 0) return;
   e.preventDefault();
   wrap.scrollLeft += e.deltaY * 1.15;
 });
-// 支援滑鼠拖曳橫移
 let isDown = false, startX, scrollLeft;
 wrap.addEventListener('mousedown', (e) => {
   isDown = true;
@@ -502,7 +584,8 @@ wrap.addEventListener('mousemove', (e) => {
   wrap.scrollLeft = scrollLeft - walk;
 });
 </script>
-<div class="dragon-desc-section" data-aos="fade-up" style="margin-bottom:20px;">
+<div class="dragon-desc-section" data-aos="fade-up" style="margin-bottom:20px;
+  background:#f2f7fb; padding:28px 26px 18px 28px; border-radius:12px; color:#244560; box-shadow:0 2px 8px rgba(100,130,180,0.09); line-height:2;">
   <h3 style="color:#4166a9; font-size:1.25em; margin:0 0 18px 0;">加工流程補充說明</h3>
   <p>
     本公司依據 <b>ISO 9001:2015 品質管理系統</b> 作業，從客戶送來的貨件開始，即進行嚴格的<span style="color:#4166a9;"><b>進料檢驗</b></span>。若發現異常情形，如生鏽、碰損或其他瑕疵，會第一時間主動通知廠商，並依廠商決定是否退回或繼續加工。<br><br>
@@ -536,7 +619,38 @@ def about():
     </div>
   </div>
 </div>
-<!-- 核心價值圓環設計可補充 -->
+<!-- 核心價值圓環 -->
+<div style="display:flex; flex-direction:column; align-items:center; margin: 32px 0 30px 0; position:relative;">
+  <div style="width:360px; max-width:96vw; height:360px; position:relative;">
+    <svg viewBox="0 0 360 360" width="360" height="360" style="width:100%;height:100%;position:absolute;top:0;left:0;z-index:0;" data-aos="fade-in">
+      <circle cx="180" cy="180" r="145" stroke="#b3d0ea" stroke-width="16" fill="none"/>
+    </svg>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;" data-aos="zoom-in" data-aos-delay="100">
+      <div style="background:#e51919;color:#fff;text-align:center;font-size:2em;font-weight:700;line-height:1.2;font-family:'Noto Sans TC','Segoe UI',sans-serif;width:124px;height:124px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:50%;box-shadow:0 2px 16px rgba(180,40,50,0.10);">核心<br>價值</div>
+    </div>
+    <!-- 四個外圓 -->
+    <div style="position:absolute;top:-3px;left:50%;transform:translateX(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-down" data-aos-delay="240">
+      <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
+        <span style="font-size:1.07em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">具競爭力的<br>技術</span>
+      </div>
+    </div>
+    <div style="position:absolute;top:50%;left:calc(100% - 3px);transform:translateY(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-left" data-aos-delay="320">
+      <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
+        <span style="font-size:1.04em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">ISO9001<br>認證</span>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-up" data-aos-delay="400">
+      <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
+        <span style="font-size:1.04em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">環境責任</span>
+      </div>
+    </div>
+    <div style="position:absolute;top:50%;left:-3px;transform:translateY(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-right" data-aos-delay="320">
+      <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
+        <span style="font-size:1.04em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">信守承諾</span>
+      </div>
+    </div>
+  </div>
+</div>
 """
     return render_subpage("關於溍慎", content_html)
 
