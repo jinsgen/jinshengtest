@@ -308,11 +308,11 @@ HOME_HTML = f"""
       }}
     }}
 
-    /* ===== 服務項目 新排版 三上二下 中下格放大 ===== */
+    /* ===== 服務項目 五格三上二下 一樣大 & 居中 ===== */
     .services {{
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: 260px 180px;
+      grid-template-rows: repeat(2, 200px);
       gap: 36px 30px;
       margin: 44px auto 0 auto;
       max-width: 1000px;
@@ -334,7 +334,7 @@ HOME_HTML = f"""
       align-items: flex-start;
       cursor: pointer;
       transition: transform .25s, box-shadow .19s, filter .18s;
-      width: 99%;
+      width: 98%;
       height: 100%;
       color: #fff;
       font-size:1.14em;
@@ -386,52 +386,45 @@ HOME_HTML = f"""
       line-height:1.6;
       text-shadow:0 3px 12px #181818;
     }}
-
-    /* 位置對應 grid-area, 中下兩格放在跨欄中間 */
-    .services .service-item:nth-child(1) {{
-      grid-row: 1; grid-column: 1;
-    }}
-    .services .service-item:nth-child(2) {{
-      grid-row: 1; grid-column: 2;
-    }}
-    .services .service-item:nth-child(3) {{
-      grid-row: 1; grid-column: 3;
-    }}
-    .services .service-item:nth-child(4) {{ /* 自動化機械手臂：下排左中間 */
-      grid-row: 2; grid-column: 1 / span 2; /* 跨1,2欄 */
-      width: 98%;
-      justify-self: end;
-      z-index:1;
-    }}
-    .services .service-item:nth-child(5) {{ /* 廢水處理：下排右中間 */
-      grid-row: 2; grid-column: 2 / span 2; /* 跨2,3欄 */
-      width: 98%;
-      justify-self: start;
-      z-index:1;
-    }}
+    /* 五格一樣大，三上二下，二下居中 */
+    .services .service-item:nth-child(1) {{ grid-row: 1; grid-column: 1; }}
+    .services .service-item:nth-child(2) {{ grid-row: 1; grid-column: 2; }}
+    .services .service-item:nth-child(3) {{ grid-row: 1; grid-column: 3; }}
+    .services .service-item:nth-child(4) {{ grid-row: 2; grid-column: 2; }}
+    .services .service-item:nth-child(5) {{ grid-row: 2; grid-column: 3; }}
     @media (max-width:1000px){{
       .services {{
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(3, 170px);
         gap:22px 10px;
         max-width:99vw;
       }}
       .service-item {{
         font-size:1em;
+        min-width:0;
       }}
+      .services .service-item:nth-child(1) {{ grid-row: 1; grid-column: 1; }}
+      .services .service-item:nth-child(2) {{ grid-row: 1; grid-column: 2; }}
+      .services .service-item:nth-child(3) {{ grid-row: 2; grid-column: 1; }}
+      .services .service-item:nth-child(4) {{ grid-row: 2; grid-column: 2; }}
+      .services .service-item:nth-child(5) {{ grid-row: 3; grid-column: 1; }}
     }}
-    @media (max-width:900px){{
+    @media (max-width:600px){{
       .services {{
         grid-template-columns: 1fr;
         grid-template-rows: none;
-        gap:22px;
-        justify-items:center;
+        gap:18px;
       }}
       .service-item {{
-        min-width:0;width:97vw;max-width:500px;min-height:130px;height:34vw;max-height:230px;
+        width:96vw;
+        min-width:0;
+        max-width:400px;
+        min-height:90px;
+        height:27vw;
+        max-height:160px;
       }}
-      .services .service-item:nth-child(4),
-      .services .service-item:nth-child(5) {{
-        grid-column:1; width:97vw; max-width:500px;
+      .services .service-item:nth-child(n) {{
+        grid-row: auto; grid-column: auto;
       }}
     }}
 
@@ -506,7 +499,6 @@ HOME_HTML = f"""
 """
 
 def render_subpage(title, content_html, aos_effect="fade-up"):
-    # 注意，這裡 style 多了 flow-horizontal/flow-step 專用CSS
     return render_template_string(f"""
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -576,7 +568,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     }}
     main{{ max-width:1100px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
 
-    /* ===== flow-horizontal 橫向流程圖專用 ===== */
+    /* ===== flow-horizontal 橫向流程圖專用 深藍背景 ===== */
     .flow-horizontal {{
       display: flex;
       align-items: flex-end;
@@ -594,9 +586,9 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       cursor: grabbing;
     }}
     .flow-step {{
-      background: #262a36;
+      background: #274785; /* 深藍 */
       border-radius: 16px;
-      box-shadow: 0 2px 12px rgba(90,110,180,0.09);
+      box-shadow: 0 2px 12px rgba(90,110,180,0.12);
       min-width: 175px;
       max-width: 210px;
       width: 15vw;
