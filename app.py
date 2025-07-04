@@ -308,23 +308,24 @@ HOME_HTML = f"""
       }}
     }}
 
-    /* ===== 服務項目新排版：三上二下，下排分開置中 ===== */
+    /* ===== 服務項目 新排版 三上二下 中下格放大 ===== */
     .services {{
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: 210px 210px;
-      gap: 32px;
-      margin: 38px auto 0 auto;
-      max-width: 900px;
+      grid-template-rows: 260px 180px;
+      gap: 36px 30px;
+      margin: 44px auto 0 auto;
+      max-width: 1000px;
       width:100%;
       justify-items: center;
       align-items: center;
+      position:relative;
     }}
     .service-item {{
       position: relative;
       background-size: cover;
       background-position: center;
-      border-radius: 18px;
+      border-radius: 22px;
       box-shadow: 0 2px 16px rgba(90,110,180,0.11);
       overflow: hidden;
       display: flex;
@@ -333,9 +334,11 @@ HOME_HTML = f"""
       align-items: flex-start;
       cursor: pointer;
       transition: transform .25s, box-shadow .19s, filter .18s;
-      width: 96%;
+      width: 99%;
       height: 100%;
       color: #fff;
+      font-size:1.14em;
+      min-width: 0;
     }}
     .service-item::before {{
       content:'';
@@ -346,7 +349,7 @@ HOME_HTML = f"""
       z-index:1;
     }}
     .service-item:hover, .service-item:focus {{
-      transform: scale(1.045) translateY(-2px);
+      transform: scale(1.055) translateY(-2px);
       box-shadow:0 6px 28px rgba(80,110,160,0.17);
       z-index:2;
     }}
@@ -360,14 +363,14 @@ HOME_HTML = f"""
     .service-item-content {{
       position: relative;
       z-index:2;
-      padding: 20px 20px 18px 22px;
+      padding: 28px 20px 18px 26px;
       width:100%;
       color:#fff;
       text-shadow: 0 2px 8px rgba(20,20,20,0.36),0 2px 14px #222;
       font-weight: 700;
     }}
     .service-item h3 {{
-      font-size:1.28em;
+      font-size:1.31em;
       font-family:'Montserrat','Noto Sans TC',sans-serif;
       font-weight:900;
       letter-spacing:1.2px;
@@ -376,23 +379,45 @@ HOME_HTML = f"""
       text-shadow: 0 4px 12px #1a1a1a;
     }}
     .service-item p {{
-      font-size:1.09em;
+      font-size:1.13em;
       font-weight:600;
       margin:0;
       color:#fff;
       line-height:1.6;
       text-shadow:0 3px 12px #181818;
     }}
-    /* 三上二下配置，下排分開左右，左右間距一致 */
-    .services .service-item:nth-child(4) {{
-      grid-column: 1 / 2;
-      grid-row: 2 / 3;
-      justify-self: end;
+
+    /* 位置對應 grid-area, 中下兩格放在跨欄中間 */
+    .services .service-item:nth-child(1) {{
+      grid-row: 1; grid-column: 1;
     }}
-    .services .service-item:nth-child(5) {{
-      grid-column: 3 / 4;
-      grid-row: 2 / 3;
+    .services .service-item:nth-child(2) {{
+      grid-row: 1; grid-column: 2;
+    }}
+    .services .service-item:nth-child(3) {{
+      grid-row: 1; grid-column: 3;
+    }}
+    .services .service-item:nth-child(4) {{ /* 自動化機械手臂：下排左中間 */
+      grid-row: 2; grid-column: 1 / span 2; /* 跨1,2欄 */
+      width: 98%;
+      justify-self: end;
+      z-index:1;
+    }}
+    .services .service-item:nth-child(5) {{ /* 廢水處理：下排右中間 */
+      grid-row: 2; grid-column: 2 / span 2; /* 跨2,3欄 */
+      width: 98%;
       justify-self: start;
+      z-index:1;
+    }}
+    @media (max-width:1000px){{
+      .services {{
+        grid-template-columns: 1fr 1fr 1fr;
+        gap:22px 10px;
+        max-width:99vw;
+      }}
+      .service-item {{
+        font-size:1em;
+      }}
     }}
     @media (max-width:900px){{
       .services {{
@@ -406,9 +431,10 @@ HOME_HTML = f"""
       }}
       .services .service-item:nth-child(4),
       .services .service-item:nth-child(5) {{
-        grid-column:1; justify-self:center; width:97vw; max-width:500px;
+        grid-column:1; width:97vw; max-width:500px;
       }}
     }}
+
   </style>
 </head>
 <body>
@@ -480,6 +506,7 @@ HOME_HTML = f"""
 """
 
 def render_subpage(title, content_html, aos_effect="fade-up"):
+    # 注意，這裡 style 多了 flow-horizontal/flow-step 專用CSS
     return render_template_string(f"""
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -548,6 +575,122 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       background: rgba(255,255,255,0.32); transform: translateY(2px);
     }}
     main{{ max-width:1100px; margin:40px auto; padding:0 20px; position:relative; z-index:2; }}
+
+    /* ===== flow-horizontal 橫向流程圖專用 ===== */
+    .flow-horizontal {{
+      display: flex;
+      align-items: flex-end;
+      gap: 36px;
+      overflow-x: auto;
+      padding: 22px 6px 22px 6px;
+      margin: 38px auto 34px auto;
+      max-width: 98vw;
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      cursor: grab;
+      user-select: none;
+    }}
+    .flow-horizontal:active {{
+      cursor: grabbing;
+    }}
+    .flow-step {{
+      background: #262a36;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(90,110,180,0.09);
+      min-width: 175px;
+      max-width: 210px;
+      width: 15vw;
+      padding: 18px 12px 10px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+      position: relative;
+      cursor: pointer;
+      transition: transform .22s, box-shadow .16s;
+      flex-shrink: 0;
+    }}
+    .flow-step:hover, .flow-step:focus {{
+      transform: translateY(-4px) scale(1.06);
+      box-shadow: 0 4px 28px rgba(70,100,180,0.17);
+      z-index: 2;
+    }}
+    .flow-step-num {{
+      font-size: 1.21em;
+      background: #6d8ec7;
+      color: #fff;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      font-weight: 900;
+      margin-bottom: 8px;
+      margin-top: -18px;
+      box-shadow: 0 2px 8px #3334;
+    }}
+    .flow-step-img {{
+      width: 95px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      background: #eee;
+      box-shadow: 0 2px 6px #2222;
+      transition: filter .22s;
+      filter: brightness(0.93) grayscale(0.05);
+    }}
+    .flow-step h3 {{
+      font-size: 1.07em;
+      font-weight: 900;
+      margin: 7px 0 2px 0;
+      color: #fff;
+      letter-spacing: 1.2px;
+    }}
+    .flow-step p {{
+      font-size: .97em;
+      margin: 0 0 2px 0;
+      color: #ccd7f2;
+      line-height: 1.7;
+    }}
+    .flow-arrow {{
+      font-size: 2.2em;
+      color: #6d8ec7;
+      align-self: center;
+      font-weight: 900;
+      margin: 0 6px;
+      user-select: none;
+    }}
+    @media (max-width: 700px) {{
+      .flow-horizontal {{
+        gap: 10px;
+        padding: 10px 2vw;
+      }}
+      .flow-step {{
+        min-width: 118px;
+        max-width: 148px;
+        width: 40vw;
+        padding: 10px 4px 10px 4px;
+      }}
+      .flow-step-img {{
+        width: 65px;
+        height: 42px;
+      }}
+    }}
+    /* ===== 補充說明 淡藍背景 ===== */
+    .dragon-desc-section {{
+      background: #f2f7fb;
+      border-radius: 12px;
+      padding: 32px 24px 20px 26px;
+      margin: 30px 0 20px 0;
+      font-size: 1.07em;
+      color: #284052;
+      box-shadow: 0 2px 8px rgba(110,140,180,0.06);
+      line-height: 2;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }}
   </style>
 </head>
 <body>
@@ -557,6 +700,28 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
     {content_html}
     {FOOTER_HTML}
   </main>
+  <script>
+    // 滑鼠拖曳橫向流程圖
+    const el = document.querySelector('.flow-horizontal');
+    if (el) {{
+      let isDown = false;
+      let startX, scrollLeft;
+      el.addEventListener('mousedown', e => {{
+        isDown = true;
+        el.classList.add('active');
+        startX = e.pageX - el.offsetLeft;
+        scrollLeft = el.scrollLeft;
+      }});
+      el.addEventListener('mouseleave', e => {{ isDown = false; el.classList.remove('active'); }});
+      el.addEventListener('mouseup', e => {{ isDown = false; el.classList.remove('active'); }});
+      el.addEventListener('mousemove', e => {{
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - el.offsetLeft;
+        el.scrollLeft = scrollLeft - (x - startX);
+      }});
+    }}
+  </script>
 </body>
 </html>
 """)
