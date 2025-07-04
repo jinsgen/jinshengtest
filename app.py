@@ -248,7 +248,7 @@ HOME_HTML = f"""
     main {{ max-width:1200px; margin:400px auto 0 auto; padding:0 20px; position:relative; z-index:2; }}
     h2 {{ color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); padding-bottom:8px; }}
 
-    /* ===== 服務項目新排版：三上二下 ===== */
+    /* ===== 服務項目新排版：三上二下，下排置中 ===== */
     .services {{
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -257,6 +257,7 @@ HOME_HTML = f"""
       margin: 38px auto 0 auto;
       max-width: 900px;
       width:100%;
+      justify-items: center;
     }}
     .service-item {{
       position: relative;
@@ -272,12 +273,15 @@ HOME_HTML = f"""
       cursor: pointer;
       transition: transform .25s cubic-bezier(.22,1.14,.36,1), box-shadow .19s, filter .18s;
       min-width: 0;
+      width: 100%;
+      height: 100%;
+      color: #fff;
     }}
     .service-item::before {{
       content:'';
       display:block;
       position:absolute;inset:0;
-      background:rgba(255,255,255,0.61);
+      background:rgba(30,32,45,0.36); /* 淡黑色 */
       transition: background .18s;
       z-index:1;
     }}
@@ -291,15 +295,16 @@ HOME_HTML = f"""
       box-shadow:0 2px 7px rgba(80,110,160,0.17);
     }}
     .service-item:hover::before {{
-      background:rgba(255,255,255,0.40);
+      background:rgba(30,32,45,0.22);
     }}
     .service-item-content {{
       position: relative;
       z-index:2;
       padding: 20px 20px 18px 22px;
       width:100%;
-      color:#294766;
-      text-shadow:0 2px 6px rgba(255,255,255,0.07);
+      color:#fff;
+      text-shadow: 0 2px 8px rgba(20,20,20,0.36),0 2px 14px #222;
+      font-weight: 700;
     }}
     .service-item h3 {{
       font-size:1.28em;
@@ -307,18 +312,18 @@ HOME_HTML = f"""
       font-weight:900;
       letter-spacing:1.2px;
       margin:0 0 10px 0;
-      color:#1a385c;
-      text-shadow:0 3px 12px rgba(250,255,255,0.22);
+      color:#fff;
+      text-shadow: 0 4px 12px #1a1a1a;
     }}
     .service-item p {{
       font-size:1.09em;
       font-weight:600;
       margin:0;
-      color:#345377;
+      color:#fff;
       line-height:1.6;
-      text-shadow:0 3px 12px rgba(255,255,255,0.12);
+      text-shadow:0 3px 12px #181818;
     }}
-    /* 三上二下配置 */
+    /* 三上二下配置，下排置中 */
     .services .service-item:nth-child(4) {{
       grid-column: 2/3;
       grid-row: 2/3;
@@ -329,7 +334,19 @@ HOME_HTML = f"""
       grid-row: 2/3;
       justify-self: center;
     }}
-    /* 移動端優化 */
+    /* 排版寬度修正，保證兩格置中，左右等距 */
+    .services .service-item:nth-child(4), .services .service-item:nth-child(5) {{
+      width: 95%;
+      max-width: 270px;
+    }}
+    .services .service-item:nth-child(4) {{
+      margin-left: 65%;
+      margin-right: auto;
+    }}
+    .services .service-item:nth-child(5) {{
+      margin-left: 0;
+      margin-right: auto;
+    }}
     @media (max-width:900px){{
       .services {{
         grid-template-columns: 1fr;
@@ -342,7 +359,7 @@ HOME_HTML = f"""
       }}
       .services .service-item:nth-child(4),
       .services .service-item:nth-child(5) {{
-        grid-column:1;
+        grid-column:1; margin-left:0; margin-right:0; width:97vw; max-width:500px;
       }}
     }}
   </style>
@@ -499,6 +516,8 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       transition: transform .18s, box-shadow .18s;
       position:relative;
       border: 2px solid #dde8f5;
+      color:#1a385c;
+      text-decoration:none;
     }}
     .flow-step:hover, .flow-step:focus {{
       transform: scale(1.045) translateY(-2px);
@@ -560,7 +579,6 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
       font-weight: 800;
       text-shadow: 0 2px 8px rgba(110,140,200,0.08);
     }}
-    /* 行動裝置橫滑優化 */
     @media (max-width:900px){{
       .flow-horizontal {{
         gap:18px;
@@ -629,48 +647,112 @@ def home():
 
 @app.route("/about")
 def about():
-    content_html = "<p style='margin:40px 0;'>（原 about 內容可保留，略）</p>"
+    content_html = """
+<div style="display:flex;flex-wrap:wrap;gap:32px 3vw;align-items:flex-start;margin-bottom:42px;">
+  <div style="flex:1 1 300px;min-width:220px;max-width:370px;" data-aos="fade-right">
+    <img src="/static/company_entrance.jpg" alt="公司入口" style="width:100%;border-radius:16px;box-shadow:0 2px 16px rgba(60,90,150,0.14);object-fit:cover;">
+  </div>
+  <div style="flex:2 1 330px;min-width:240px;max-width:700px;" data-aos="fade-left">
+    <h3 style="color:#4166a9;font-size:1.44em;margin:0 0 18px 0;letter-spacing:1.2px;">關於溍慎有限公司</h3>
+    <div style="font-size:1.13em;color:#2d425c;line-height:1.92;">
+      溍慎有限公司自2018年成立於台南，專注於精密零件表面處理與自動化加工，擁有多項先進設備與 ISO 9001 國際認證，為汽車、工業、五金等產業客戶提供穩定可靠、高效率且貼心的解決方案。<br><br>
+      我們以「品質第一、誠信經營、持續創新」為核心精神，協助客戶提升競爭力，並積極落實環保與永續理念，成為值得信賴的專業夥伴。
+      <div style="margin:22px 0 0 0;font-size:1.03em;line-height:1.7;color:#4470ad;">
+        <b>公司資訊：</b><br>
+        溍慎有限公司：2018年5月30日（民國107年）<br>
+        鈦吉有限公司：2017年7月12日（民國106年）
+      </div>
+    </div>
+  </div>
+</div>
+<div style="display:flex; flex-direction:column; align-items:center; margin: 32px 0 30px 0; position:relative;">
+  <div style="width:360px; max-width:96vw; height:360px; position:relative;">
+    <svg viewBox="0 0 360 360" width="360" height="360" style="width:100%;height:100%;position:absolute;top:0;left:0;z-index:0;" data-aos="fade-in"></svg>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;" data-aos="zoom-in" data-aos-delay="100">
+      <div style="background:#e51919;color:#fff;text-align:center;font-size:2em;font-weight:700;line-height:1.2;font-family:'Noto Sans TC','Segoe UI',sans-serif;width:124px;height:124px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:50%;box-shadow:0 2px 16px rgba(180,40,50,0.10);">核心<br>價值</div>
+    </div>
+    <div style="position:absolute;top:-3px;left:50%;transform:translateX(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-down" data-aos-delay="240">
+      <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
+        <span style="font-size:1.07em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">具競爭力的<br>技術</span>
+      </div>
+    </div>
+    <div style="position:absolute;top:50%;left:calc(100% - 3px);transform:translateY(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-left" data-aos-delay="320">
+      <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
+        <span style="font-size:1.04em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">ISO9001<br>認證</span>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-up" data-aos-delay="400">
+      <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
+        <span style="font-size:1.04em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">環境責任</span>
+      </div>
+    </div>
+    <div style="position:absolute;top:50%;left:-3px;transform:translateY(-50%);width:96px;height:96px;z-index:2;" data-aos="fade-right" data-aos-delay="320">
+      <div style="background:#98ceef;border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(80,130,200,0.08);">
+        <span style="font-size:1.04em;color:#294766;font-weight:700;text-align:center;line-height:1.32;white-space:pre-line;">信守承諾</span>
+      </div>
+    </div>
+    <svg viewBox="0 0 360 360" width="360" height="360" style="width:100%;height:100%;position:absolute;top:0;left:0;z-index:0;pointer-events:none;" data-aos="zoom-in-up" data-aos-delay="140">
+      <circle cx="180" cy="180" r="145" stroke="#b3d0ea" stroke-width="16" fill="none"/>
+    </svg>
+  </div>
+</div>
+<div style="background:#f5f7fc;border-radius:10px;max-width:900px;margin:0 auto;padding:32px 20px 22px 28px;font-size:1.07em;color:#284052;box-shadow:0 2px 8px rgba(110,140,180,0.06);line-height:2;" data-aos="fade-up" data-aos-delay="320">
+  <b style="color:#4166a9;font-size:1.12em;">• 創新</b><br>
+  我們持續導入具市場競爭力的技術與自動化設備，包括機械手臂整修工程、兩套含浸自動化生產線、多軸器與龍門式自動化清洗化成產線，提升產能與穩定度。<br><br>
+  <b style="color:#4166a9;font-size:1.12em;">• 誠信</b><br>
+  以誠待人、信守承諾，加工品皆保留限度樣供品質比對；報價單明確載明各項作業工段，透明化管理流程，建立與客戶間的長期信任。<br><br>
+  <b style="color:#4166a9;font-size:1.12em;">• 服務</b><br>
+  我們重視每一道作業流程，嚴格遵守ISO 9001品質管理規範，確保提供穩定、可靠的表面處理服務，並持續優化生產與檢驗流程。<br><br>
+  <b style="color:#4166a9;font-size:1.12em;">• 永續</b><br>
+  公司依法設立並取得合格工廠登記證及廢水排放許可證，廠區具備完善廢水與廢土處理設施，致力於降低對環境的衝擊。
+  並定期召開勞資會議，促進員工與公司間的雙向溝通，確保勞資雙方權益，實踐企業社會責任。
+</div>
+"""
     return render_subpage("關於溍慎", content_html)
 
 @app.route("/process")
 def process():
-    # 橫向流程圖步驟內容（五步驟 + 箭頭）
     steps = [
         {
             "num": "1",
             "img": "/static/robotic.jpg",
             "title": "自動化機械手臂",
-            "desc": "可搭配工具快速作業"
+            "desc": "可搭配工具快速作業",
+            "route": "robotic"
         },
         {
             "num": "2",
             "img": "/static/vibration.jpg",
             "title": "振動研磨",
-            "desc": "表面均化處理"
+            "desc": "表面均化處理",
+            "route": "vibration"
         },
         {
             "num": "3",
             "img": "/static/sealing.jpg",
             "title": "含浸封孔",
-            "desc": "提升氣密性與耐用性"
+            "desc": "提升氣密性與耐用性",
+            "route": "sealing"
         },
         {
             "num": "4",
             "img": "/static/coating.jpg",
             "title": "皮膜化成",
-            "desc": "依需求選擇性進行"
+            "desc": "依需求選擇性進行",
+            "route": "coating"
         },
         {
             "num": "5",
             "img": "/static/wastewater.jpg",
             "title": "廢水處理",
-            "desc": "淨化廢水、達標排放"
+            "desc": "淨化廢水、達標排放",
+            "route": "wastewater"
         }
     ]
     flow_html = """<div class="flow-horizontal" tabindex="0" data-aos="fade-in">"""
     for i, s in enumerate(steps):
         flow_html += f"""
-        <a href="/{s['title'][:8]}" class="flow-step" tabindex="0">
+        <a href="/{s['route']}" class="flow-step" tabindex="0">
             <div class="flow-step-num">{s['num']}</div>
             <img src="{s['img']}" class="flow-step-img" alt="{s['title']}">
             <h3>{s['title']}</h3>
@@ -680,7 +762,6 @@ def process():
         if i != len(steps)-1:
             flow_html += """<div class="flow-arrow">→</div>"""
     flow_html += "</div>"
-    # 補充說明
     desc_html = """
     <div class="dragon-desc-section" data-aos="fade-up">
       <h3 style="color:#4166a9; font-size:1.25em; margin:0 0 18px 0;">加工流程補充說明</h3>
