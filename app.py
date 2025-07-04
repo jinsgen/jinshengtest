@@ -57,7 +57,7 @@ HOME_HTML = f"""
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init({duration:800,once:true}));</script>
+  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init({{duration:800,once:true}}));</script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Noto+Sans+TC:wght@700&display=swap');
     :root {{ --primary-blue: #6d8ec7; --accent-yellow: #FFD85A; }}
@@ -241,7 +241,7 @@ def render_subpage(title, content_html, aos_effect="fade-up"):
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init({duration:800,once:true}));</script>
+  <script>document.addEventListener('DOMContentLoaded',()=>AOS.init({{duration:800,once:true}}));</script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Noto+Sans+TC:wght@700&display=swap');
     :root {{ --primary-blue: #6d8ec7; }}
@@ -536,7 +536,7 @@ def about():
     </div>
   </div>
 </div>
-<!-- 核心價值圓環設計，內容略... -->
+<!-- 核心價值圓環設計可補充 -->
 """
     return render_subpage("關於溍慎", content_html)
 
